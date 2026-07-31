@@ -32,7 +32,8 @@ TARGETS = {
 MIN_TAP = 48
 PREVIEW_URL = "https://plotvisionai-preview.pplx.app"
 # Routes spot-checked for the persistent app CTA and an ungated primary CTA.
-PAGES = ["index.html", "pricing.html", "free-preview.html", "gallery.html", "contact.html"]
+PAGES = ["index.html", "pricing.html", "corporate-pricing.html", "free-preview.html",
+         "gallery.html", "contact.html"]
 
 
 def rect(page, sel):

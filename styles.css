@@ -6611,3 +6611,184 @@ body {
     transform: none;
   }
 }
+
+/* ------------------------------------------------------------------------- */
+/* Corporate and team pricing                                                 */
+/* Reuses .tier wholesale; this only adds the billing toggle, the two extra   */
+/* lines a team card carries, and the treatment that marks a button as an     */
+/* activation request rather than live checkout.                              */
+
+.tiers--corp,
+.tiers--pair {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 34rem) {
+  .tiers--corp,
+  .tiers--pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 68rem) {
+  .tiers--corp {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.tier--corp .tier__amount {
+  font-size: 2.1rem;
+}
+
+.tier__alt {
+  font-size: var(--text-xs);
+  color: var(--fg-mute);
+  line-height: 1.5;
+}
+
+/* Reads as an amber caution rather than a teal call to action, so a request
+   button is never mistaken for a live payment link. */
+.reqnote {
+  margin-top: var(--sp-5);
+  padding: var(--sp-4);
+  border: 1px solid var(--lume-soft);
+  border-left: 3px solid var(--lume);
+  border-radius: var(--radius);
+  background: rgba(244, 201, 135, 0.06);
+  font-size: var(--text-sm);
+  color: var(--fg-soft);
+  line-height: 1.6;
+  max-width: var(--measure-wide);
+}
+
+.reqnote strong {
+  color: var(--lume);
+}
+
+.reqtag {
+  display: inline-block;
+  margin-right: 0.35rem;
+  padding: 0.1rem 0.45rem;
+  border: 1px solid var(--lume-soft);
+  border-radius: 999px;
+  background: rgba(244, 201, 135, 0.08);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--lume);
+  white-space: nowrap;
+}
+
+.btn--request {
+  border-color: rgba(244, 201, 135, 0.38);
+  color: var(--lume);
+}
+
+.btn--request:hover,
+.btn--request:focus-visible {
+  border-color: var(--lume);
+  background: rgba(244, 201, 135, 0.1);
+}
+
+.billtoggle {
+  margin-top: var(--sp-5);
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(3, 16, 15, 0.5);
+}
+
+.billtoggle__opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 48px;
+  padding: 0 1.1rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg-soft);
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.billtoggle__opt.is-on {
+  background: var(--teal);
+  color: #032420;
+}
+
+.billtoggle__opt:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+
+.billtoggle__save {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.billtoggle__state {
+  margin-top: var(--sp-2);
+  font-size: var(--text-xs);
+  color: var(--fg-mute);
+}
+
+/* The toggle is the only way to reach annual prices, so without scripting the
+   cards stay on monthly and the control is hidden rather than shown dead. */
+html:not(.js) .billtoggle,
+html:not(.js) .billtoggle__state {
+  display: none;
+}
+
+/* Plan carried over from a pricing page, shown above the contact form. */
+.planpick {
+  margin-bottom: var(--sp-4);
+  padding: var(--sp-4);
+  border: 1px solid rgba(63, 224, 193, 0.32);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--radius);
+  background: rgba(63, 224, 193, 0.07);
+  font-size: var(--text-sm);
+  color: var(--fg-soft);
+  line-height: 1.6;
+}
+
+.planpick strong {
+  color: var(--fg-warm);
+}
+
+@media (max-width: 47.999rem) {
+  .billtoggle {
+    display: flex;
+    width: 100%;
+  }
+
+  .billtoggle__opt {
+    flex: 1 1 0;
+    justify-content: center;
+    min-height: 56px;
+    padding: 0 0.75rem;
+  }
+
+  .billtoggle__save {
+    display: block;
+    font-size: 0.6875rem;
+  }
+
+  .tier--corp .tier__cta .btn {
+    min-height: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .billtoggle__opt {
+    transition: none;
+  }
+}

@@ -1192,6 +1192,127 @@
     });
   }
 
+  /* ------------------------- checkout targets ------------------------- */
+  /* Every buy button names a key in checkout-links.js. A key with a Payment
+     Link opens Stripe; a key without one falls back to the contact route with
+     the plan pre-selected, and says it is requesting activation. The markup
+     already carries a safe href, so this only has to keep it in step with the
+     config and with the monthly/annual toggle. */
+  var checkout = window.PV_CHECKOUT;
+
+  if (checkout) {
+    var contactRoute = checkout.CONTACT_ROUTE || "contact.html";
+    var pageRef = (window.location.pathname.split("/").pop() || "index.html").replace(/\.html$/, "");
+
+    var requestHref = function (key) {
+      var req = (checkout.requests || {})[key] || {};
+      var query = [];
+      if (req.plan) query.push("plan=" + encodeURIComponent(req.plan));
+      if (req.billing) query.push("billing=" + encodeURIComponent(req.billing));
+      query.push("ref=" + encodeURIComponent(pageRef));
+      return contactRoute + "?" + query.join("&");
+    };
+
+    var applyCheckout = function (el, key) {
+      var url = (checkout.links || {})[key];
+      if (url) {
+        el.setAttribute("href", url);
+        el.setAttribute("target", "_blank");
+        el.setAttribute("rel", "noopener noreferrer");
+        el.setAttribute("data-checkout-state", "live");
+      } else {
+        el.setAttribute("href", requestHref(key));
+        el.removeAttribute("target");
+        el.setAttribute("rel", "nofollow");
+        el.setAttribute("data-checkout-state", "request");
+      }
+    };
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-checkout]"), function (el) {
+      applyCheckout(el, el.getAttribute("data-checkout"));
+    });
+
+    /* Monthly / annual. Each card carries both sets of copy, so switching is a
+       swap of text plus the checkout key the button resolves against. */
+    var billBar = document.querySelector("[data-billing-toggle]");
+    var planCards = Array.prototype.slice.call(document.querySelectorAll("[data-plan-card]"));
+
+    if (billBar && planCards.length) {
+      var billState = document.querySelector("[data-billing-state]");
+      var billOpts = Array.prototype.slice.call(billBar.querySelectorAll("[data-billing]"));
+
+      var setBilling = function (period) {
+        var annual = period === "annual";
+        var prefix = annual ? "data-a-" : "data-m-";
+
+        planCards.forEach(function (card) {
+          var read = function (part) { return card.getAttribute(prefix + part) || ""; };
+          var amount = card.querySelector("[data-price-amount]");
+          var per = card.querySelector("[data-price-per]");
+          var alt = card.querySelector("[data-price-alt]");
+          var cta = card.querySelector("[data-checkout-plan]");
+          var label = card.querySelector("[data-cta-label]");
+
+          if (amount) amount.textContent = read("amount");
+          if (per) per.textContent = read("per");
+          if (alt) alt.textContent = read("alt");
+          if (label) label.textContent = read("cta");
+          if (cta) applyCheckout(cta, cta.getAttribute("data-checkout-plan") + "_" + period);
+        });
+
+        billOpts.forEach(function (opt) {
+          var on = opt.getAttribute("data-billing") === period;
+          opt.classList.toggle("is-on", on);
+          opt.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+
+        if (billState) {
+          billState.textContent = annual
+            ? "Showing annual prices — twelve months for the price of ten."
+            : "Showing monthly prices.";
+        }
+      };
+
+      billOpts.forEach(function (opt) {
+        opt.addEventListener("click", function () {
+          setBilling(opt.getAttribute("data-billing"));
+        });
+      });
+
+      setBilling("monthly");
+    }
+  }
+
+  /* ------------------- plan carried into the contact form ---------------- */
+  /* An unreleased plan sends people here with ?plan= and ?billing=. Show what
+     they asked for and seed the message, so the request arrives complete and
+     nobody has to retype the plan name. */
+  var planParams = new URLSearchParams(window.location.search);
+  var wantedPlan = planParams.get("plan");
+  var planSlot = document.querySelector("[data-plan-pick]");
+
+  if (planSlot && wantedPlan) {
+    var wantedBilling = planParams.get("billing") || "";
+    var billingWord = { monthly: "billed monthly", annual: "billed annually", custom: "custom terms",
+      "one-time": "a one-time payment" }[wantedBilling] || "";
+    var planLine = wantedPlan + (billingWord ? ", " + billingWord : "");
+
+    planSlot.innerHTML = "";
+    var strong = document.createElement("strong");
+    strong.textContent = "You are asking us to activate " + planLine + ".";
+    planSlot.appendChild(strong);
+    planSlot.appendChild(document.createTextNode(
+      " Send this form and we will reply with the next step. Nothing has been charged and no seats exist yet."));
+    planSlot.hidden = false;
+
+    var msgField = document.getElementById("c-message");
+    if (msgField && !msgField.value) {
+      msgField.value = "Please activate " + planLine + " for us.\n\nHow many people will need a seat:\nCompany:\n";
+    }
+    var proRole = document.querySelector('input[name="role"][value="Landscape professional"]');
+    if (proRole && !document.querySelector('input[name="role"]:checked')) proRole.checked = true;
+  }
+
   /* --------------------------- contact form --------------------------- */
   /* No server and no third-party processor: the submit builds a structured
      message in the visitor's own mail client. It never claims to have sent. */
@@ -1273,11 +1394,15 @@
         "Name: " + name,
         "Email: " + email,
         "I am a: " + who,
-        "Project interest: " + interest,
-        "",
-        "Message:",
-        message || "(none)"
+        "Project interest: " + interest
       ];
+
+      if (wantedPlan) {
+        lines.push("Plan requested: " + wantedPlan +
+          (planParams.get("billing") ? " (" + planParams.get("billing") + ")" : ""));
+      }
+
+      lines.push("", "Message:", message || "(none)");
 
       var linkVal = link && link.value.trim();
       var storyVal = story && story.value.trim();
