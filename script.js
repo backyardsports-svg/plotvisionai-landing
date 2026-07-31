@@ -537,26 +537,17 @@
   /* ---------------- share + desktop view (mobile affordances) -------------- */
   /* Two things phone visitors could not do before: share the page, and see the
      desktop layout. Desktop view rewrites the viewport meta, which is the only
-     mechanism that actually reflows a responsive site on a phone. State is kept
-     in sessionStorage (not localStorage - it should not outlive the visit) with
-     a ?view=desktop parameter as the fallback and as the thing that carries the
-     mode across navigations when storage is blocked. */
+     mechanism that actually reflows a responsive site on a phone. The mode is
+     transient: currentView holds it for this page, and the ?view=desktop
+     parameter carries it across navigations. The parameter was always the
+     durable half - it is written into the URL and into every internal link
+     below - so nothing is persisted by the browser. */
   (function () {
-    var KEY = "pv-view";
     var DESKTOP_WIDTH = 1280;
-
-    function readStore() {
-      try { return window.sessionStorage.getItem(KEY); } catch (e) { return null; }
-    }
-    function writeStore(v) {
-      try {
-        if (v) window.sessionStorage.setItem(KEY, v);
-        else window.sessionStorage.removeItem(KEY);
-      } catch (e) { /* private mode: the query parameter still carries the mode */ }
-    }
+    var currentView = "mobile";
 
     var params = new URLSearchParams(window.location.search);
-    var wantDesktop = params.get("view") === "desktop" || readStore() === "desktop";
+    var wantDesktop = params.get("view") === "desktop";
 
     var meta = document.querySelector('meta[name="viewport"]');
     var MOBILE_VIEWPORT = "width=device-width, initial-scale=1";
@@ -572,8 +563,8 @@
             : MOBILE_VIEWPORT
         );
       }
-      document.documentElement.setAttribute("data-view", desktop ? "desktop" : "mobile");
-      writeStore(desktop ? "desktop" : null);
+      currentView = desktop ? "desktop" : "mobile";
+      document.documentElement.setAttribute("data-view", currentView);
       Array.prototype.forEach.call(document.querySelectorAll("[data-view-toggle]"), function (b) {
         b.setAttribute("aria-pressed", desktop ? "true" : "false");
         var lab = b.querySelector("[data-view-label]");
@@ -601,7 +592,7 @@
 
     Array.prototype.forEach.call(document.querySelectorAll("[data-view-toggle]"), function (btn) {
       btn.addEventListener("click", function () {
-        var nowDesktop = document.documentElement.getAttribute("data-view") !== "desktop";
+        var nowDesktop = currentView !== "desktop";
         applyView(nowDesktop, true);
         var bar = document.querySelector("[data-view-bar]");
         if (bar) bar.hidden = !nowDesktop;
@@ -610,7 +601,7 @@
     });
 
     var bar = document.querySelector("[data-view-bar]");
-    if (bar) bar.hidden = document.documentElement.getAttribute("data-view") !== "desktop";
+    if (bar) bar.hidden = currentView !== "desktop";
 
     /* -------------------------------- share ------------------------------- */
     function shareState(msg) {
@@ -1495,8 +1486,8 @@
 /* The preview link is public and is a plain anchor in the markup, so it works */
 /* with JavaScript off and nothing here can block it. This form only records an */
 /* address for launch news. With no endpoint configured it is switched off and  */
-/* says so rather than faking a signup. The address is never written to         */
-/* localStorage or sessionStorage.                                              */
+/* says so rather than faking a signup. The address is POSTed and then dropped: */
+/* nothing is written to any browser-side store.                                */
 (function () {
   var form = document.querySelector("[data-preview-gate]");
   if (!form) return;
