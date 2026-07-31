@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- 32-48px rendition of the approved organic topographic circuit-eye.
+       Same geometry as icon-small-16.svg with slightly finer strokes and the
+       family's radial background glow, which survives at this size. The spokes
+       and ring nodes stay off: at 32px they collapse into a crosshair, which is
+       the exact harsh look that was rejected. -->
+  <defs>
+    <radialGradient id="bg-glow" cx="0.5" cy="0.44" r="0.6">
+      <stop offset="0" stop-color="#0a2b28" />
+      <stop offset="0.55" stop-color="#061a18" />
+      <stop offset="1" stop-color="#03100f" />
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="180" ry="180" fill="#03100f" />
+  <circle cx="512" cy="512" r="470" fill="url(#bg-glow)" />
+  <g transform="translate(102 289) scale(3.40)">
+    <g fill="none" stroke="#6cffe0" stroke-linecap="round">
+      <path d="M12 70C34 30 70 14 120 14c50 0 86 16 108 56-22 40-58 56-108 56S34 110 12 70Z" stroke-width="10" />
+      <path d="M138 32c20 8 34 24 34 42 0 19-14 35-34 43" stroke-width="7.6" />
+      <path d="M104 117c-21-6-36-23-36-43 0-20 15-37 36-43" stroke-width="7.6" />
+    </g>
+    <circle cx="120" cy="70" r="14" fill="#d8fff5" />
+  </g>
+</svg>

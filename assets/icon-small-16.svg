@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- 16px rendition of the approved organic topographic circuit-eye.
+       Same mark and same 240x140 coordinate space as icon-master.svg /
+       icon-medium.svg — identical almond path and iris crescents — but the
+       contour leaves, spokes and ring nodes are dropped and the strokes
+       thickened, because below ~24px they fall under one device pixel and the
+       mark turns to grey mush. Replaces the rejected harsh crosshair eyeball. -->
+  <rect width="1024" height="1024" rx="180" ry="180" fill="#03100f" />
+  <g transform="translate(96 292) scale(3.44)">
+    <g fill="none" stroke="#6cffe0" stroke-linecap="round">
+      <path d="M12 70C34 30 70 14 120 14c50 0 86 16 108 56-22 40-58 56-108 56S34 110 12 70Z" stroke-width="12" />
+      <path d="M138 32c20 8 34 24 34 42 0 19-14 35-34 43" stroke-width="9" />
+      <path d="M104 117c-21-6-36-23-36-43 0-20 15-37 36-43" stroke-width="9" />
+    </g>
+    <circle cx="120" cy="70" r="15" fill="#d8fff5" />
+  </g>
+</svg>
