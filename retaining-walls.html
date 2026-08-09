@@ -184,92 +184,7 @@
           <path d="M12 12c-4.2 0-6-2.4-6-5.6 3.8 0 6 2 6 5.6Z" />
           <path d="M12 13.5c4 0 5.8-2.2 5.8-5.2-3.6 0-5.8 1.9-5.8 5.2Z" />
           <path d="M4 20h16" />
-        </g>
-
-        <symbol id="mark-eye" viewBox="0 0 240 140">
-          <defs>
-            <linearGradient id="mark-line" x1="0" y1="0.1" x2="1" y2="0.9">
-              <stop offset="0" stop-color="#9df6dc" />
-              <stop offset="0.42" stop-color="#54e6c8" />
-              <stop offset="1" stop-color="#22c8b2" />
-            </linearGradient>
-            <radialGradient id="mark-iris" cx="0.42" cy="0.38" r="0.72">
-              <stop offset="0" stop-color="#f2fffb" />
-              <stop offset="0.3" stop-color="#8df6ef" />
-              <stop offset="0.66" stop-color="#2fd6d2" />
-              <stop offset="1" stop-color="#0f8f95" />
-            </radialGradient>
-            <radialGradient id="mark-halo" cx="0.5" cy="0.5" r="0.5">
-              <stop offset="0" stop-color="#4fe3c4" stop-opacity="0.5" />
-              <stop offset="0.6" stop-color="#2ec2ae" stop-opacity="0.14" />
-              <stop offset="1" stop-color="#2ec2ae" stop-opacity="0" />
-            </radialGradient>
-            <clipPath id="mark-eye-clip">
-              <path d="M12 70C34 30 70 14 120 14c50 0 86 16 108 56-22 40-58 56-108 56S34 110 12 70Z" />
-            </clipPath>
-          </defs>
-
-          <ellipse cx="120" cy="70" rx="118" ry="66" fill="url(#mark-halo)" />
-
-          <!-- topographic leaves, clipped inside the almond -->
-          <g clip-path="url(#mark-eye-clip)" fill="none" stroke="url(#mark-line)" stroke-linecap="round">
-            <!-- right lobe: nested contour leaves + one organic wave -->
-            <g stroke-width="2.5" opacity="0.95">
-              <path d="M148 30c34 7 58 20 73 38" />
-              <path d="M156 46c26 6 44 14 56 22" />
-              <path d="M148 110c34-7 58-20 73-38" />
-              <path d="M156 94c26-6 44-14 56-22" />
-              <path d="M166 70c9-9 17-4 21 5 4 9 12 12 21 4" />
-            </g>
-            <!-- left lobe: nested contour leaves + faceted fan -->
-            <g stroke-width="2.5" opacity="0.95">
-              <path d="M92 30C58 37 34 50 19 68" />
-              <path d="M84 46C58 52 40 60 28 68" />
-              <path d="M92 110C58 103 34 90 19 72" />
-              <path d="M84 94C58 88 40 80 28 72" />
-              <path d="M54 70 36 57M54 70 36 83M54 70 70 48M54 70 70 92M54 70H26" />
-            </g>
-            <circle cx="54" cy="70" r="2.6" fill="url(#mark-line)" stroke="none" />
-          </g>
-
-          <!-- almond silhouette + tip ticks -->
-          <g fill="none" stroke="url(#mark-line)" stroke-linecap="round">
-            <path d="M12 70C34 30 70 14 120 14c50 0 86 16 108 56-22 40-58 56-108 56S34 110 12 70Z" stroke-width="4.4" />
-            <g stroke-width="2.2" opacity="0.85">
-              <path d="M13 70 26 59M13 70l13 11M227 70l-13-11M227 70l-13 11" />
-            </g>
-
-            <!-- iris ring, opened top-right and bottom-left like the reference -->
-            <g stroke-width="3.4">
-              <path d="M134 29.5c22 5.5 38 24 38 44.5 0 20-14.5 37-35 42" />
-              <path d="M112 116c-23-4-40-22-40-44s16-40 38-45" />
-            </g>
-            <!-- offset crescent (the "moon" inside the eye) -->
-            <path d="M108 26C82 34 68 48 68 70s14 36 40 44" stroke-width="2.7" opacity="0.85" />
-          </g>
-
-          <!-- circuit branches: eight symmetrical spokes with ring nodes -->
-          <g fill="none" stroke="url(#mark-line)" stroke-linecap="round">
-            <path stroke-width="2.8" d="M120 57V44M129.2 61.2 138.4 52M133 70h13M129.2 78.8 138.4 88M120 83v13M110.8 78.8 101.6 88M107 70H94M110.8 61.2 101.6 52" />
-            <path d="M120 38.5c0-7 6-11 12.5-8.5" stroke-width="2.1" opacity="0.85" />
-            <g stroke-width="2.4">
-              <circle cx="120" cy="39.5" r="4.6" />
-              <circle cx="141.6" cy="48.8" r="4.6" />
-              <circle cx="151" cy="70" r="4.6" />
-              <circle cx="141.6" cy="91.2" r="4.6" />
-              <circle cx="120" cy="100.5" r="4.6" />
-              <circle cx="98.4" cy="91.2" r="4.6" />
-              <circle cx="89" cy="70" r="4.6" />
-              <circle cx="98.4" cy="48.8" r="4.6" />
-            </g>
-          </g>
-
-          <!-- glowing iris -->
-          <circle cx="120" cy="70" r="21" fill="url(#mark-halo)" />
-          <circle cx="120" cy="70" r="10" fill="url(#mark-iris)" />
-          <circle cx="120" cy="70" r="10" fill="none" stroke="#c9fff2" stroke-width="0.9" opacity="0.5" />
-        </symbol>
-        <g id="i-house" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        </g><g id="i-house" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 10.2 12 3.5l9 6.7V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z" />
         </g>
         <g id="i-hardhat" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -344,7 +259,7 @@
     <header class="site-header" id="site-header">
       <div class="shell site-header__inner">
         <a class="brand" href="index.html" aria-label="PlotVisionAI — home">
-          <svg class="brand__mark" viewBox="0 0 240 140" aria-hidden="true" focusable="false"><use href="#mark-eye" /></svg>
+          <img class="brand__mark" src="assets/plotvisionai-mark-current.webp" alt="" width="980" height="500" />
           <span>
             <span class="brand__word">PlotVision<span class="brand__ai">AI</span><span class="tm">&trade;</span></span>
             <span class="brand__descriptor">Landscape visualization</span>
@@ -695,7 +610,7 @@
         <div class="sf__grid">
           <div class="sf__col sf__col--brand">
             <div class="brand brand--sm sf__brand">
-              <svg class="brand__mark" viewBox="0 0 240 140" aria-hidden="true" focusable="false"><use href="#mark-eye" /></svg>
+              <img class="brand__mark" src="assets/plotvisionai-mark-current.webp" alt="" width="980" height="500" />
               <span class="brand__word">PlotVision<span class="brand__ai">AI</span><span class="tm">&trade;</span></span>
             </div>
             <p class="sf__descriptor">AI Landscape Visualization &amp; Concept Design Tool</p>

@@ -1,13 +1,12 @@
 # PlotVisionAI Brand Asset Policy
 
-The only approved PlotVisionAI mark is the complete organic topographic circuit-eye defined by the `mark-eye` symbol in `index.html`.
+The approved PlotVisionAI artwork is the metallic teal circuit-eye identity supplied in the Aug. 2 Google Photos album.
 
-Every website placement and exported icon must preserve:
+Use the full-resolution approved source artwork for:
 
-- the elongated almond eye silhouette
-- the organic contour fans on both sides
-- the complete eight-spoke circuit iris and circular nodes
-- the glowing turquoise center
-- aqua linework on deep premium teal
+- the metallic circuit-eye mark
+- the chrome `PlotVisionAI` wordmark
+- the `AI LANDSCAPE VISUALIZATION & DESIGN TOOL` tagline lockup
+- the illuminated gift-box reveal artwork
 
-Do not use, regenerate, or restore the simplified thick-outline eye, reduced four-node eye, favicon-only variant, earlier logo concept sheets, or discarded YardVision marks.
+Do not restore the earlier flat SVG mark, old concept sheets, lower-resolution duplicate JPGs, storyboard sheet, fabricated file-packet mockup, or discarded YardVision marks.
