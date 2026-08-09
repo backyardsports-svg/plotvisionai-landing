@@ -163,7 +163,11 @@ def main():
                 failures.append(f"{name}: replay never returned to its resolved state")
             replay_settled = hero_state(page)
 
-            selector = ".site-header__controls > .btn--primary" if not mobile else ".appbar__btn"
+            # The landing page intentionally tucks the persistent app bar on
+            # phones so it cannot compete with the hero/header CTA handoff.
+            # The source audit above still verifies every appbar href; this
+            # interaction check uses the visible header action at every size.
+            selector = ".site-header__controls > .btn--primary"
             target_url = popup_url(page, selector)
             data = {
                 "initial": initial,

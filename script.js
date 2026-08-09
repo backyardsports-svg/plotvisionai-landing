@@ -21,6 +21,46 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
+  /* -------- Context-aware persistent and duplicate app CTAs ------------- */
+  /* The desktop app card must never sit above the working controls in the
+     editable concept demo. On phones, the landing hero's primary action owns
+     the viewport while it is visible; the compact header action returns only
+     after that hero action leaves the viewport. */
+  (function () {
+    var root = document.documentElement;
+    var concept = document.getElementById("concept");
+    var heroPrimary = document.querySelector(".hero__actions .btn--primary");
+
+    function observeRegion(element, onChange) {
+      if (!element) return;
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            onChange(entry.isIntersecting);
+          });
+        }, { threshold: 0 });
+        observer.observe(element);
+        return;
+      }
+
+      var update = function () {
+        var rect = element.getBoundingClientRect();
+        onChange(rect.bottom > 0 && rect.top < window.innerHeight);
+      };
+      update();
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update);
+    }
+
+    observeRegion(concept, function (inView) {
+      root.classList.toggle("concept-demo-in-view", inView);
+    });
+
+    observeRegion(heroPrimary, function (inView) {
+      root.classList.toggle("home-hero-primary-away", !inView);
+    });
+  })();
+
   /* --------------- drawn-into-reality before/after reveal ---------------
    * Replaces the old draggable seam and the plain wipe. Each featured pair
    * plays one restrained sequence when it scrolls into view:

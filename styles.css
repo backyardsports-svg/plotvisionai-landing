@@ -6258,6 +6258,74 @@ html[data-view="desktop"] .mnav {
   }
 }
 
+/* Landing-page CTA handoff: JavaScript starts with the header action tucked
+   away, then shows it only after the hero's primary action is no longer in the
+   viewport. The header keeps its two-row height throughout, so the handoff
+   does not move the page. The persistent app bar stays out of this landing
+   page's mobile CTA hierarchy altogether. */
+@media (max-width: 47.999rem) {
+  html.js body[data-home-hero-cta] .site-header__inner {
+    grid-template-areas:
+      "brand menu"
+      "share share";
+  }
+
+  html.js body[data-home-hero-cta] .site-header__controls > .btn--primary {
+    display: none;
+  }
+
+  html.js body[data-home-hero-cta] .site-header.is-stuck .hshare-wrap {
+    display: block;
+  }
+
+  html.js.home-hero-primary-away body[data-home-hero-cta] .site-header__inner {
+    grid-template-areas:
+      "brand menu"
+      "share cta";
+  }
+
+  html.js.home-hero-primary-away body[data-home-hero-cta] .site-header.is-stuck .site-header__inner {
+    grid-template-areas:
+      "brand menu"
+      "cta cta";
+  }
+
+  html.js.home-hero-primary-away body[data-home-hero-cta] .site-header__controls > .btn--primary {
+    display: inline-flex;
+  }
+
+  html.js.home-hero-primary-away body[data-home-hero-cta] .site-header.is-stuck .hshare-wrap {
+    display: none;
+  }
+}
+
+/* The 320px header gets a compact but still readable wordmark treatment. It
+   creates a genuine 12px gutter before the 56px Menu control instead of
+   allowing the two visual groups to touch. */
+@media (max-width: 335px) {
+  .site-header__inner {
+    column-gap: 0.75rem;
+  }
+
+  .brand {
+    gap: 0.4rem;
+  }
+
+  .brand__mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .brand__word {
+    font-size: 0.9375rem;
+    letter-spacing: 0;
+  }
+
+  .brand .tm {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hshare {
     transition: none;
@@ -6616,6 +6684,30 @@ body {
 
   .appbar__btn:hover {
     transform: none;
+  }
+}
+
+/* Context-aware app-bar safety. Hiding the card while the desktop concept
+   editor is in view removes its click surface entirely, rather than merely
+   lowering its z-index and risking it intercepting Remove or Undo. */
+@media (min-width: 48rem) {
+  html.concept-demo-in-view .appbar {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(1rem);
+    pointer-events: none;
+  }
+
+  html.concept-demo-in-view .appbar__btn {
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 47.999rem) {
+  html.js body[data-home-hero-cta] .appbar,
+  html.js body[data-home-hero-cta] .appbar__btn {
+    visibility: hidden;
+    pointer-events: none;
   }
 }
 

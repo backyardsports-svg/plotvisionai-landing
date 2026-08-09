@@ -22,7 +22,6 @@ PAGES = {
             ("Header Try Free", ".site-header__controls > .btn--primary", MIN_PRIMARY, MIN_FONT),
             ("Share This Page", ".hshare", MIN_PRIMARY, MIN_FONT),
             ("Menu", ".mnav__btn", MIN_PRIMARY, MIN_FONT),
-            ("Sticky app CTA", ".appbar__btn", MIN_PRIMARY, MIN_FONT),
             ("Hero replay", ".hero__replay", MIN_PRIMARY, MIN_FONT),
         ],
     },
@@ -166,9 +165,10 @@ def main():
                         for second in names[i + 1 :]:
                             if overlaps(header_controls[first], header_controls[second]):
                                 failures.append(f"{width}px home: {first} overlaps {second}")
-                    appbar = item["controls"].get("Sticky app CTA")
-                    if isinstance(appbar, dict) and appbar["height"] > 88:
-                        failures.append(f"{width}px home: sticky app bar button is too tall at {appbar['height']}px")
+                    appbar = page.locator(".appbar")
+                    item["landing_appbar_tucked"] = not appbar.is_visible()
+                    if not item["landing_appbar_tucked"]:
+                        failures.append(f"{width}px home: landing app bar competes with the header/hero CTA handoff")
                     check_menu(page, width, item, failures)
                     page.screenshot(path=str(shots / f"final_touch_home_{width}.png"))
                     page.evaluate("() => window.scrollTo(0, 1000)")
