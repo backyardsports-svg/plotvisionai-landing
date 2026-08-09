@@ -3,7 +3,7 @@
    here: this file is served to the browser. The Edge Function must do the insert
    with its own server-side key.
 
-   PREVIEW_URL      public preview build (pplx.app), live and public
+   PREVIEW_URL      current public PlotVisionAI app
    SIGNUP_ENDPOINT  Supabase Edge Function URL that records the address
    SIGNUP_ANON_KEY  public publishable/anon key, sent as apikey + Bearer if present
    CONSENT_VERSION  version stamp for the consent copy shown next to the form
@@ -12,7 +12,7 @@
    valid address, makes no request, and states on the page that nothing is recorded.
    With no PREVIEW_URL the form is disabled outright. */
 window.PV_CONFIG = {
-  PREVIEW_URL: "https://plotvisionai-preview.pplx.app",
+  PREVIEW_URL: "https://getplotvisionai.com",
   SIGNUP_ENDPOINT: "https://dtryhdykdbncxxwgqmta.supabase.co/functions/v1/register-preview-signup",
   SIGNUP_ANON_KEY: "sb_publishable_oNlZDcyFna0_ZIfCSFzk0g_FYO6ALAd",
   SIGNUP_SOURCE: "free-preview",
