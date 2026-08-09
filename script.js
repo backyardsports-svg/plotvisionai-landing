@@ -78,6 +78,13 @@
   var DRAW_BLOOM_FROM = 0.34;  // colour starts resolving while lines finish
   var DRAW_FADE_FROM = 0.66;   // lines begin to dissolve
   var DRAW_DELAY = 240;
+  /* The landing hero carries no playback UI at all, so the comparison has to be
+     legible from the picture alone: the concept resolves, holds, and then the
+     frame returns to the daylight photograph 15 seconds later and reveals
+     again. Same reveal/crossfade as before, just self-driving. */
+  var DAY_RETURN_MS = 15000;   // hold on the resolved concept before returning
+  var DAY_RETURN_FADE = 1100;  // crossfade back to the daylight photograph
+  var DAY_RETURN_PAUSE = 420;  // beat on daylight before the next reveal
 
   /* Line vocabularies. Coordinates are in a 100x62 grid stretched over the
      frame, so the traced shapes read as a design overlay on the photograph
@@ -421,6 +428,10 @@
     var overlayIsDetail = false;
 
     var raf = null;
+    var cycles = isHero && !btn;   // hero: no control, so it cycles on its own
+    var holdTimer = null;
+    var pauseTimer = null;
+    var returnRaf = null;
     var startedAt = 0;
     var elapsed = 0;
     var played = false;
@@ -434,6 +445,35 @@
 
     function stop() {
       if (raf) { window.cancelAnimationFrame(raf); raf = null; }
+      if (returnRaf) { window.cancelAnimationFrame(returnRaf); returnRaf = null; }
+      if (holdTimer) { window.clearTimeout(holdTimer); holdTimer = null; }
+      if (pauseTimer) { window.clearTimeout(pauseTimer); pauseTimer = null; }
+    }
+
+    /* Crossfade back to the daylight photograph, then reveal again. */
+    function returnToDaylight() {
+      var from = null;
+      fig.classList.remove("is-resolved");
+      fig.classList.add("is-drawing");
+      var step = function (now) {
+        if (from === null) from = now;
+        var t = Math.min(1, (now - from) / DAY_RETURN_FADE);
+        paint(1 - easeInOutCubic(t));
+        if (t >= 1) {
+          returnRaf = null;
+          elapsed = 0;
+          showingAfter = false;
+          fig.classList.remove("is-drawing");
+          say("Returned to the daylight photograph of the property.");
+          pauseTimer = window.setTimeout(function () {
+            pauseTimer = null;
+            if (visible) play(true);
+          }, DAY_RETURN_PAUSE);
+          return;
+        }
+        returnRaf = window.requestAnimationFrame(step);
+      };
+      returnRaf = window.requestAnimationFrame(step);
     }
 
     function ensureOverlay(wantDetail) {
@@ -491,8 +531,16 @@
         fig.classList.remove("is-drawing");
         fig.classList.add("is-resolved");
         showingAfter = true;
-        say("Concept visualization resolved over the before photo. Use Replay reveal to watch it drawn again.");
+        say(cycles
+          ? "Concept visualization resolved over the daylight photograph of the property."
+          : "Concept visualization resolved over the before photo. Use Replay reveal to watch it drawn again.");
         if (label) label.textContent = "Replay reveal";
+        if (cycles) {
+          holdTimer = window.setTimeout(function () {
+            holdTimer = null;
+            if (visible) returnToDaylight();
+          }, DAY_RETURN_MS);
+        }
         return;
       }
       raf = window.requestAnimationFrame(frame);
@@ -511,7 +559,7 @@
       fig.classList.add("is-drawn", "is-drawing");
       fig.classList.remove("is-resolved");
       say(noTrace
-        ? "Revealing the concept visualization over the before photo."
+        ? "Revealing the concept visualization over the daylight photograph of the property."
         : overlayIsDetail
           ? "Tracing the property lines \u2014 roof, wall, patio and court edges \u2014 then resolving them into the concept visualization."
           : "Drawing the design lines over the before photo, then resolving them into the concept visualization.");
@@ -520,8 +568,9 @@
     }
 
     function pause() {
-      if (!raf) return;
-      elapsed = Math.min(DRAW_MS, elapsed + (window.performance.now() - startedAt));
+      if (raf) {
+        elapsed = Math.min(DRAW_MS, elapsed + (window.performance.now() - startedAt));
+      }
       stop();
       fig.classList.remove("is-drawing");
     }
@@ -553,7 +602,9 @@
 
     fig.style.setProperty("--bloom", "0");
     fig.style.setProperty("--lines", "1");
-    say("Before photo shown. The concept is drawn in when this scrolls into view.");
+    say(cycles
+      ? "Daylight photograph of the property. The concept visualization resolves over it automatically."
+      : "Before photo shown. The concept is drawn in when this scrolls into view.");
 
     if (btn) {
       btn.hidden = false;
@@ -572,6 +623,12 @@
                 window.setTimeout(function () { if (visible && !played) play(true); }, DRAW_DELAY);
               } else if (elapsed < DRAW_MS) {
                 play(false);
+              } else if (cycles && !holdTimer && !returnRaf && !pauseTimer) {
+                // Came back to a resolved, self-cycling hero: restart the hold.
+                holdTimer = window.setTimeout(function () {
+                  holdTimer = null;
+                  if (visible) returnToDaylight();
+                }, DAY_RETURN_MS);
               }
             } else {
               pause();

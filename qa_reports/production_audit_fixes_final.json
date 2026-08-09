@@ -1,0 +1,673 @@
+{
+  "desktop_demo": {
+    "1024": {
+      "initial_appbar": {
+        "x": 668,
+        "y": 820,
+        "right": 1004,
+        "bottom": 880,
+        "width": 336,
+        "height": 60,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "fontSize": 16
+      },
+      "hidden_appbar": {
+        "x": 668,
+        "y": 836,
+        "right": 1004,
+        "bottom": 896,
+        "width": 336,
+        "height": 60,
+        "display": "block",
+        "visibility": "hidden",
+        "opacity": "0",
+        "fontSize": 16
+      },
+      "control_hits": {
+        "#ce-remove": {
+          "x": 750.8984375,
+          "y": 849.0609741210938,
+          "hitId": "ce-remove",
+          "hitText": "Remove",
+          "within": true
+        },
+        "#ce-undo": {
+          "x": 897.09375,
+          "y": 849.0609741210938,
+          "hitId": "ce-undo",
+          "hitText": "Undo",
+          "within": true
+        }
+      },
+      "restored_appbar": {
+        "x": 668,
+        "y": 820,
+        "right": 1004,
+        "bottom": 880,
+        "width": 336,
+        "height": 60,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "fontSize": 16
+      },
+      "errors": [],
+      "console_errors": []
+    },
+    "1280": {
+      "initial_appbar": {
+        "x": 924,
+        "y": 820,
+        "right": 1260,
+        "bottom": 880,
+        "width": 336,
+        "height": 60,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "fontSize": 16
+      },
+      "hidden_appbar": {
+        "x": 924,
+        "y": 836,
+        "right": 1260,
+        "bottom": 896,
+        "width": 336,
+        "height": 60,
+        "display": "block",
+        "visibility": "hidden",
+        "opacity": "0",
+        "fontSize": 16
+      },
+      "control_hits": {
+        "#ce-remove": {
+          "x": 1006.8984375,
+          "y": 847.1755981445312,
+          "hitId": "ce-remove",
+          "hitText": "Remove",
+          "within": true
+        },
+        "#ce-undo": {
+          "x": 1153.09375,
+          "y": 847.1755981445312,
+          "hitId": "ce-undo",
+          "hitText": "Undo",
+          "within": true
+        }
+      },
+      "restored_appbar": {
+        "x": 924,
+        "y": 820,
+        "right": 1260,
+        "bottom": 880,
+        "width": 336,
+        "height": 60,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "fontSize": 16
+      },
+      "errors": [],
+      "console_errors": []
+    },
+    "1440": {
+      "initial_appbar": {
+        "x": 1084,
+        "y": 820,
+        "right": 1420,
+        "bottom": 880,
+        "width": 336,
+        "height": 60,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "fontSize": 16
+      },
+      "hidden_appbar": {
+        "x": 1084,
+        "y": 836,
+        "right": 1420,
+        "bottom": 896,
+        "width": 336,
+        "height": 60,
+        "display": "block",
+        "visibility": "hidden",
+        "opacity": "0",
+        "fontSize": 16
+      },
+      "control_hits": {
+        "#ce-remove": {
+          "x": 1118.8984375,
+          "y": 848.7943115234375,
+          "hitId": "ce-remove",
+          "hitText": "Remove",
+          "within": true
+        },
+        "#ce-undo": {
+          "x": 1265.09375,
+          "y": 848.7943115234375,
+          "hitId": "ce-undo",
+          "hitText": "Undo",
+          "within": true
+        }
+      },
+      "restored_appbar": {
+        "x": 1084,
+        "y": 820,
+        "right": 1420,
+        "bottom": 880,
+        "width": 336,
+        "height": 60,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "fontSize": 16
+      },
+      "errors": [],
+      "console_errors": []
+    },
+    "1600": {
+      "initial_appbar": {
+        "x": 1244,
+        "y": 820,
+        "right": 1580,
+        "bottom": 880,
+        "width": 336,
+        "height": 60,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "fontSize": 16
+      },
+      "hidden_appbar": {
+        "x": 1244,
+        "y": 836,
+        "right": 1580,
+        "bottom": 896,
+        "width": 336,
+        "height": 60,
+        "display": "block",
+        "visibility": "hidden",
+        "opacity": "0",
+        "fontSize": 16
+      },
+      "control_hits": {
+        "#ce-remove": {
+          "x": 1198.8984375,
+          "y": 848.7991333007812,
+          "hitId": "ce-remove",
+          "hitText": "Remove",
+          "within": true
+        },
+        "#ce-undo": {
+          "x": 1345.09375,
+          "y": 847.473388671875,
+          "hitId": "ce-undo",
+          "hitText": "Undo",
+          "within": true
+        }
+      },
+      "restored_appbar": {
+        "x": 1244,
+        "y": 820,
+        "right": 1580,
+        "bottom": 880,
+        "width": 336,
+        "height": 60,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "fontSize": 16
+      },
+      "errors": [],
+      "console_errors": []
+    }
+  },
+  "mobile_home": {
+    "320": {
+      "initial": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 133,
+          "width": 320,
+          "height": 133,
+          "display": "block",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "brand": {
+          "x": 18,
+          "y": 21,
+          "right": 180.890625,
+          "bottom": 51,
+          "width": 162.890625,
+          "height": 30,
+          "display": "flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "menu": {
+          "x": 192.890625,
+          "y": 8,
+          "right": 302,
+          "bottom": 64,
+          "width": 109.109375,
+          "height": 56,
+          "display": "inline-flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "gap": 12,
+        "headerCta": {
+          "x": 192.890625,
+          "y": 72,
+          "right": 302,
+          "bottom": 124,
+          "width": 109.109375,
+          "height": 52,
+          "display": "flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "heroCta": {
+          "x": 41.921875,
+          "y": 904.40625,
+          "right": 278.0625,
+          "bottom": 962.6875,
+          "width": 236.140625,
+          "height": 58.28125,
+          "display": "flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "appbar": {
+          "x": 0,
+          "y": 764,
+          "right": 320,
+          "bottom": 844,
+          "width": 320,
+          "height": 80,
+          "display": "block",
+          "visibility": "hidden",
+          "fontSize": 16
+        },
+        "overflow": 0
+      },
+      "hero_visible": {
+        "header": {
+          "top": 0,
+          "bottom": 131.390625,
+          "height": 131.390625,
+          "display": "block",
+          "visibility": "visible"
+        },
+        "headerCta": {
+          "top": 0,
+          "bottom": 0,
+          "height": 0,
+          "display": "none",
+          "visibility": "visible"
+        },
+        "heroCta": {
+          "top": 436.796875,
+          "bottom": 495.078125,
+          "height": 58.28125,
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "appbar": {
+          "top": 764,
+          "bottom": 844,
+          "height": 80,
+          "display": "block",
+          "visibility": "hidden"
+        },
+        "overflow": 0
+      },
+      "after_handoff": {
+        "header": {
+          "height": 131.390625,
+          "display": "block",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "headerCta": {
+          "height": 52,
+          "display": "flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "appbar": {
+          "height": 80,
+          "display": "block",
+          "visibility": "hidden",
+          "fontSize": 16
+        },
+        "overflow": 0
+      },
+      "errors": [],
+      "console_errors": []
+    },
+    "360": {
+      "initial": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "right": 360,
+          "bottom": 133,
+          "width": 360,
+          "height": 133,
+          "display": "block",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "brand": {
+          "x": 18,
+          "y": 19,
+          "right": 224.890625,
+          "bottom": 53,
+          "width": 206.890625,
+          "height": 34,
+          "display": "flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "menu": {
+          "x": 232.890625,
+          "y": 8,
+          "right": 342,
+          "bottom": 64,
+          "width": 109.109375,
+          "height": 56,
+          "display": "inline-flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "gap": 8,
+        "headerCta": {
+          "x": 232.890625,
+          "y": 72,
+          "right": 342,
+          "bottom": 124,
+          "width": 109.109375,
+          "height": 52,
+          "display": "flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "heroCta": {
+          "x": 61.921875,
+          "y": 948.21875,
+          "right": 298.0625,
+          "bottom": 1006.5,
+          "width": 236.140625,
+          "height": 58.28125,
+          "display": "flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "appbar": {
+          "x": 0,
+          "y": 764,
+          "right": 360,
+          "bottom": 844,
+          "width": 360,
+          "height": 80,
+          "display": "block",
+          "visibility": "hidden",
+          "fontSize": 16
+        },
+        "overflow": 0
+      },
+      "hero_visible": {
+        "header": {
+          "top": 0,
+          "bottom": 131.390625,
+          "height": 131.390625,
+          "display": "block",
+          "visibility": "visible"
+        },
+        "headerCta": {
+          "top": 0,
+          "bottom": 0,
+          "height": 0,
+          "display": "none",
+          "visibility": "visible"
+        },
+        "heroCta": {
+          "top": 437.609375,
+          "bottom": 495.890625,
+          "height": 58.28125,
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "appbar": {
+          "top": 764,
+          "bottom": 844,
+          "height": 80,
+          "display": "block",
+          "visibility": "hidden"
+        },
+        "overflow": 0
+      },
+      "after_handoff": {
+        "header": {
+          "height": 131.390625,
+          "display": "block",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "headerCta": {
+          "height": 52,
+          "display": "flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "appbar": {
+          "height": 80,
+          "display": "block",
+          "visibility": "hidden",
+          "fontSize": 16
+        },
+        "overflow": 0
+      },
+      "errors": [],
+      "console_errors": []
+    },
+    "430": {
+      "initial": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "right": 430,
+          "bottom": 133,
+          "width": 430,
+          "height": 133,
+          "display": "block",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "brand": {
+          "x": 18,
+          "y": 14.953125,
+          "right": 294.890625,
+          "bottom": 57.046875,
+          "width": 276.890625,
+          "height": 42.09375,
+          "display": "flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "menu": {
+          "x": 302.890625,
+          "y": 8,
+          "right": 412,
+          "bottom": 64,
+          "width": 109.109375,
+          "height": 56,
+          "display": "inline-flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "gap": 8,
+        "headerCta": {
+          "x": 302.890625,
+          "y": 72,
+          "right": 412,
+          "bottom": 124,
+          "width": 109.109375,
+          "height": 52,
+          "display": "flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "heroCta": {
+          "x": 96.921875,
+          "y": 929.828125,
+          "right": 333.0625,
+          "bottom": 988.109375,
+          "width": 236.140625,
+          "height": 58.28125,
+          "display": "flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "appbar": {
+          "x": 0,
+          "y": 764,
+          "right": 430,
+          "bottom": 844,
+          "width": 430,
+          "height": 80,
+          "display": "block",
+          "visibility": "hidden",
+          "fontSize": 16
+        },
+        "overflow": 0
+      },
+      "hero_visible": {
+        "header": {
+          "top": 0,
+          "bottom": 131.390625,
+          "height": 131.390625,
+          "display": "block",
+          "visibility": "visible"
+        },
+        "headerCta": {
+          "top": 0,
+          "bottom": 0,
+          "height": 0,
+          "display": "none",
+          "visibility": "visible"
+        },
+        "heroCta": {
+          "top": 437.21875,
+          "bottom": 495.5,
+          "height": 58.28125,
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "appbar": {
+          "top": 764,
+          "bottom": 844,
+          "height": 80,
+          "display": "block",
+          "visibility": "hidden"
+        },
+        "overflow": 0
+      },
+      "after_handoff": {
+        "header": {
+          "height": 131.390625,
+          "display": "block",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "headerCta": {
+          "height": 52,
+          "display": "flex",
+          "visibility": "visible",
+          "fontSize": 16
+        },
+        "appbar": {
+          "height": 80,
+          "display": "block",
+          "visibility": "hidden",
+          "fontSize": 16
+        },
+        "overflow": 0
+      },
+      "errors": [],
+      "console_errors": []
+    }
+  },
+  "interior_mobile": {
+    "320": {
+      "header_cta": {
+        "x": 192.890625,
+        "y": 72,
+        "right": 302,
+        "bottom": 124,
+        "width": 109.109375,
+        "height": 52,
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "fontSize": 16
+      },
+      "overflow": 0,
+      "errors": []
+    },
+    "360": {
+      "header_cta": {
+        "x": 232.890625,
+        "y": 72,
+        "right": 342,
+        "bottom": 124,
+        "width": 109.109375,
+        "height": 52,
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "fontSize": 16
+      },
+      "overflow": 0,
+      "errors": []
+    },
+    "430": {
+      "header_cta": {
+        "x": 302.890625,
+        "y": 72,
+        "right": 412,
+        "bottom": 124,
+        "width": 109.109375,
+        "height": 52,
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "fontSize": 16
+      },
+      "overflow": 0,
+      "errors": []
+    }
+  },
+  "hero_replay": {
+    "1440": {
+      "initial_drawplans": 0,
+      "replay_drawplans": 0,
+      "label": "Revealing\u2026",
+      "errors": []
+    },
+    "320": {
+      "initial_drawplans": 0,
+      "replay_drawplans": 0,
+      "label": "Revealing\u2026",
+      "errors": []
+    }
+  },
+  "failures": []
+}

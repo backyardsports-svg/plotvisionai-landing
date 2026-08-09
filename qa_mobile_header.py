@@ -23,6 +23,8 @@ OUT = Path(__file__).parent / "qa_shots"
 # Every control a thumb is meant to hit in the header region.
 TARGETS = {
     "Menu": ".mnav__btn",
+    # The rebuilt landing hero owns the only app CTA in the first viewport.
+    "Hero CTA": ".hero__actions--single .btn--primary",
     # Direct child only — the menu sheet contains its own primary CTA.
     "Try Free": ".site-header__controls > .btn--primary",
     "Share This Page": ".hshare",
@@ -30,6 +32,11 @@ TARGETS = {
     "brand": ".brand",
 }
 MIN_TAP = 48
+# On the landing page these two are intentionally absent from the first
+# viewport: the header app CTA waits until the hero CTA scrolls away (one app
+# CTA per viewport) and the share icon defers to the menu sheet on narrow
+# phones. They are still asserted in the scrolled state and in the menu below.
+OPTIONAL_FIRST_VIEW = {"Try Free", "Share This Page"}
 PREVIEW_URL = "https://plotvisionai-preview.pplx.app"
 # Routes spot-checked for the persistent app CTA and an ungated primary CTA.
 PAGES = ["index.html", "pricing.html", "corporate-pricing.html", "free-preview.html",
@@ -39,6 +46,26 @@ PAGES = ["index.html", "pricing.html", "corporate-pricing.html", "free-preview.h
 def rect(page, sel):
     el = page.query_selector(sel)
     return el.bounding_box() if el else None
+
+
+def visible_rect(page, sel):
+    """Box only for controls a thumb can actually reach.
+
+    The landing page parks the persistent app bar off-screen (and fades it) while
+    the hero CTA owns the viewport, so its raw bounding box must not count as an
+    overlapping control.
+    """
+    el = page.query_selector(sel)
+    if not el or not el.is_visible():
+        return None
+    state = el.evaluate("""e => {
+      const s = getComputedStyle(e), r = e.getBoundingClientRect();
+      return {opacity: parseFloat(s.opacity), pe: s.pointerEvents,
+              offscreen: r.bottom <= 0 || r.top >= window.innerHeight};
+    }""")
+    if state["opacity"] < 0.05 or state["pe"] == "none" or state["offscreen"]:
+        return None
+    return el.bounding_box()
 
 
 def main():
@@ -63,8 +90,9 @@ def main():
             for name, sel in TARGETS.items():
                 box = rect(page, sel)
                 if box is None:
-                    entry["targets"][name] = "MISSING"
-                    failures.append(f"{w}px: {name} missing ({sel})")
+                    entry["targets"][name] = "ABSENT (by design)" if name in OPTIONAL_FIRST_VIEW else "MISSING"
+                    if name not in OPTIONAL_FIRST_VIEW:
+                        failures.append(f"{w}px: {name} missing ({sel})")
                     continue
                 entry["targets"][name] = {
                     "w": round(box["width"], 1), "h": round(box["height"], 1),
@@ -75,7 +103,7 @@ def main():
                         f"{w}px: {name} is {box['width']:.0f}x{box['height']:.0f}, under {MIN_TAP}")
 
             # Overlap between the three action controls.
-            boxes = {n: rect(page, s) for n, s in TARGETS.items() if n != "brand"}
+            boxes = {n: visible_rect(page, s) for n, s in TARGETS.items() if n != "brand"}
             names = [n for n, b in boxes.items() if b]
             for i in range(len(names)):
                 for j in range(i + 1, len(names)):
@@ -90,11 +118,11 @@ def main():
             if stage:
                 entry["hero_stage_h"] = round(stage["height"], 1)
                 entry["hero_pct_of_fold"] = round(100 * stage["height"] / 740, 1)
-            cta = boxes.get("Try Free")
+            cta = boxes.get("Hero CTA")
             if cta:
                 entry["cta_fully_above_fold"] = (cta["y"] + cta["height"]) <= 740
                 if not entry["cta_fully_above_fold"]:
-                    failures.append(f"{w}px: Try Free is below the fold")
+                    failures.append(f"{w}px: the hero CTA is below the fold")
 
             entry["hero_title_top"] = (rect(page, "#hero-title") or {}).get("y")
             if entry["hero_title_top"] is not None:
@@ -129,7 +157,7 @@ def main():
             entry["stuck_header_h"] = round(hdr["height"], 1) if hdr else None
             for name in ("Menu", "Try Free"):
                 box = rect(page, TARGETS[name])
-                if not box or box["height"] < MIN_TAP:
+                if not box or box["height"] < MIN_TAP or box["width"] < MIN_TAP:
                     failures.append(f"{w}px scrolled: {name} is under {MIN_TAP}")
             if hdr and hdr["height"] > 0.25 * 740:
                 failures.append(

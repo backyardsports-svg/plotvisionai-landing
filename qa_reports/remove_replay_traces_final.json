@@ -1,0 +1,96 @@
+{
+  "scope": {
+    "deployment": "Not deployed.",
+    "landing_trace_change": "Only the index.html hero has data-reveal-no-trace. Its shared replay controller skips ensureOverlay/buildDrawOverlay and primeStrokes for both automatic initial play and user-initiated replay. The before/after image layers, bloom/glow paint values, animation duration/delay, replay control, and other comparison tracing remain unchanged.",
+    "mobile_header": "On phone widths, Share This Page and the header Try Free link are adjacent 52px secondary controls; the persistent bottom bar remains the single filled app CTA.",
+    "app_destination": "Canonical preview destination: https://plotvisionai-preview.pplx.app"
+  },
+  "app_link_audit": {
+    "canonical_preview_links": 5,
+    "persistent_app_ctas": 25,
+    "header_app_ctas": 25,
+    "menu_app_ctas": 25,
+    "intentionally_different_mobile_information_links": 74,
+    "intentional_destination": "download.html",
+    "result": "All audited app CTAs point to the canonical preview URL. The clearly labeled Mobile app/Get the app informational links retain download.html."
+  },
+  "landing_replay_qa": {
+    "viewports": [
+      "1440x900",
+      "320x740",
+      "360x740",
+      "430x740"
+    ],
+    "trace_nodes_at_initial_settled_replay_and_replay_settled": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "hero_images_loaded": true,
+    "replay_control_returned_to_replay_reveal": true,
+    "errors": [],
+    "horizontal_overflow": false
+  },
+  "mobile_touch_measurements": {
+    "320": {
+      "header_try_free": "109.1x52px / 16px",
+      "share": "166.9x52px / 16px",
+      "menu": "109.1x56px / 16px",
+      "hero_replay": "141.5x52px / 16px",
+      "sticky_app_cta": "296x64px / 16px"
+    },
+    "360": {
+      "header_try_free": "109.1x52px / 16px",
+      "share": "206.9x52px / 16px",
+      "menu": "109.1x56px / 16px",
+      "hero_replay": "141.5x52px / 16px",
+      "sticky_app_cta": "336x64px / 16px"
+    },
+    "430": {
+      "header_try_free": "109.1x52px / 16px",
+      "share": "276.9x52px / 16px",
+      "menu": "109.1x56px / 16px",
+      "hero_replay": "141.5x52px / 16px",
+      "sticky_app_cta": "406x64px / 16px"
+    }
+  },
+  "corporate_copy_qa": {
+    "spaced_prices": [
+      "$299 one-time",
+      "$249 one-time",
+      "$999 one-time"
+    ],
+    "activation_request_notes": "Verified space after the badge at desktop, 320, 360, and 430px.",
+    "qr_caption": "Scan for the mobile app Opens the PlotVisionAI app page on your phone"
+  },
+  "tests_passed": [
+    "node --check script.js",
+    "python3 -m py_compile qa_replay_and_app_links.py qa_touch_targets.py qa_visual_and_navigation.py",
+    "git diff --check",
+    "python3 qa_replay_and_app_links.py 4321",
+    "python3 qa_touch_targets.py 4321",
+    "python3 qa_mobile_header.py final2 4321",
+    "python3 qa_visual_and_navigation.py 4321",
+    "python3 qa_corporate_pricing.py final2 4321",
+    "python3 qa_checkout_links.py",
+    "Static local-anchor audit: 2012 destinations checked, none missing"
+  ],
+  "visual_artifacts": [
+    "qa_shots/final_tracefree_initial_desktop.png",
+    "qa_shots/final_tracefree_replay_mobile-320.png",
+    "qa_shots/final_tracefree_replay_mobile-360.png",
+    "qa_shots/final_tracefree_replay_mobile-430.png",
+    "qa_shots/final_touch_corporate_320.png"
+  ],
+  "commit": "8c95a1f",
+  "committed_files": [
+    "corporate-pricing.html",
+    "index.html",
+    "script.js",
+    "styles.css",
+    "qa_replay_and_app_links.py",
+    "qa_touch_targets.py",
+    "qa_visual_and_navigation.py"
+  ]
+}

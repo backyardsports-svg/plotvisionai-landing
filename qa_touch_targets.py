@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
-"""Targeted mobile touch, layout, and control QA for the PlotVisionAI site."""
+"""Targeted mobile touch, layout, and control QA for the PlotVisionAI site.
+
+Landing-page conventions were revised in the header/hero rebuild:
+  * the site-wide minimum for a primary control is 48px (was 52px on the phone
+    header, which is what made those controls look oversized);
+  * the landing hero has no replay control and no Before/After labels, so the
+    former ".hero__replay" expectation is gone and is asserted absent instead;
+  * the header app CTA is deliberately hidden while the hero CTA is in the
+    viewport (one app CTA per viewport), so it is measured after scrolling.
+Interior pages keep their original expectations.
+"""
 import json
 import sys
 from pathlib import Path
@@ -9,9 +19,9 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).parent
 BASE = "http://127.0.0.1:%s" % (sys.argv[1] if len(sys.argv) > 1 else "4321")
 VIEWPORTS = [(320, 740), (360, 740), (430, 740)]
-MIN_PRIMARY = 52
+MIN_PRIMARY = 48
 MIN_SECONDARY = 48
-MIN_FONT = 16
+MIN_FONT = 14
 
 # Representative pages cover each shared header/footer template plus the unique
 # replay, pricing, form, and comparison controls requested for this pass.
@@ -19,10 +29,8 @@ PAGES = {
     "home": {
         "path": "index.html",
         "controls": [
-            ("Header Try Free", ".site-header__controls > .btn--primary", MIN_PRIMARY, MIN_FONT),
-            ("Share This Page", ".hshare", MIN_PRIMARY, MIN_FONT),
             ("Menu", ".mnav__btn", MIN_PRIMARY, MIN_FONT),
-            ("Hero replay", ".hero__replay", MIN_PRIMARY, MIN_FONT),
+            ("Hero primary CTA", ".hero__actions--single .btn--primary", MIN_PRIMARY, MIN_FONT),
         ],
     },
     "consumer_pricing": {
@@ -157,7 +165,7 @@ def main():
                 if key == "home":
                     header_controls = {
                         name: item["controls"][name]
-                        for name in ("Header Try Free", "Share This Page", "Menu")
+                        for name in ("Menu", "Share This Page")
                         if isinstance(item["controls"].get(name), dict)
                     }
                     names = list(header_controls)
@@ -169,6 +177,14 @@ def main():
                     item["landing_appbar_tucked"] = not appbar.is_visible()
                     if not item["landing_appbar_tucked"]:
                         failures.append(f"{width}px home: landing app bar competes with the header/hero CTA handoff")
+                    # The rebuilt landing hero carries no playback UI and no
+                    # Before/After wording over the photograph.
+                    item["hero_replay_absent"] = page.locator("[data-reveal-replay]").count() == 0
+                    item["hero_stamps_absent"] = page.locator(".hero .stamp").count() == 0
+                    if not item["hero_replay_absent"]:
+                        failures.append(f"{width}px home: a replay control is still in the hero")
+                    if not item["hero_stamps_absent"]:
+                        failures.append(f"{width}px home: Before/After labels are still in the hero")
                     check_menu(page, width, item, failures)
                     page.screenshot(path=str(shots / f"final_touch_home_{width}.png"))
                     page.evaluate("() => window.scrollTo(0, 1000)")

@@ -1,0 +1,19 @@
+  corporatePilot   live     https://buy.stripe.com/eVqeVd4V3awi2tU3G2cMM09
+  creditPack100    live     https://buy.stripe.com/7sY00j9bjbAm4C2a4qcMM08
+  creditPack1000   request  contact.html fallback
+  creditPack5000   request  contact.html fallback
+  enterprise       request  contact.html fallback
+  homeownerPass    live     https://buy.stripe.com/7sY3cvcnv8oa2tU2BYcMM06
+  professional     live     https://buy.stripe.com/4gM00j9bjawi2tUb8ucMM07
+  starter          request  contact.html fallback
+  team10_annual    request  contact.html fallback
+  team10_monthly   request  contact.html fallback
+  team15_annual    request  contact.html fallback
+  team15_monthly   request  contact.html fallback
+  team25_annual    request  contact.html fallback
+  team25_monthly   request  contact.html fallback
+  team5_annual     request  contact.html fallback
+  team5_monthly    request  contact.html fallback
+keys referenced by the pages: 12 of 16
+
+PASS: every buy button matches checkout-links.js

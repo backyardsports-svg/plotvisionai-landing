@@ -1,0 +1,507 @@
+{
+  "320": {
+    "stamps": 0,
+    "replay_controls": 0,
+    "stage_text": "",
+    "hero_has_before_word": false,
+    "hero_has_after_word": false,
+    "hero_has_replay_word": false,
+    "first_viewport_app_ctas": [
+      {
+        "text": "Try PlotVisionAI Free",
+        "cls": "btn btn--primary btn--lg",
+        "area": 16552,
+        "alpha": 1,
+        "dominant": true
+      }
+    ],
+    "dominant_count": 1,
+    "touch_targets": [
+      {
+        "sel": ".mnav__btn",
+        "w": 89,
+        "h": 48
+      },
+      {
+        "sel": ".hero__actions--single .btn--primary",
+        "w": 284,
+        "h": 58
+      },
+      {
+        "sel": ".hero__links a",
+        "w": 53,
+        "h": 48
+      },
+      {
+        "sel": ".hero__links a",
+        "w": 127,
+        "h": 48
+      }
+    ],
+    "header": {
+      "brand": {
+        "x": 18,
+        "y": 13.390625,
+        "w": 187.5,
+        "h": 34,
+        "right": 205.5,
+        "bottom": 47.390625,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "mark": {
+        "x": 18,
+        "y": 13.390625,
+        "w": 34,
+        "h": 34,
+        "right": 52,
+        "bottom": 47.390625,
+        "display": "block",
+        "visibility": "visible"
+      },
+      "controls": {
+        "x": 213.5,
+        "y": 6.390625,
+        "w": 88.5,
+        "h": 48,
+        "right": 302,
+        "bottom": 54.390625,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "inner": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 60.78125,
+        "right": 320,
+        "bottom": 60.78125,
+        "display": "flex",
+        "visibility": "visible"
+      }
+    },
+    "brand_word_right": 157.421875,
+    "brand_right": 205.5,
+    "controls_left": 213.5,
+    "overflow": 0,
+    "console_errors": [],
+    "h1_bottom": 412.609375,
+    "viewport_h": 780,
+    "bloom_start": "0.0058",
+    "bloom_resolved": "1.0000",
+    "is_resolved": true,
+    "scrolled_header": {
+      "wordRight": 151.390625,
+      "ctrlLeft": 167.546875,
+      "tooSmall": 0,
+      "overflow": 0,
+      "ctas": 2
+    }
+  },
+  "360": {
+    "stamps": 0,
+    "replay_controls": 0,
+    "stage_text": "",
+    "hero_has_before_word": false,
+    "hero_has_after_word": false,
+    "hero_has_replay_word": false,
+    "first_viewport_app_ctas": [
+      {
+        "text": "Try PlotVisionAI Free",
+        "cls": "btn btn--primary btn--lg",
+        "area": 18883,
+        "alpha": 1,
+        "dominant": true
+      }
+    ],
+    "dominant_count": 1,
+    "touch_targets": [
+      {
+        "sel": ".mnav__btn",
+        "w": 89,
+        "h": 48
+      },
+      {
+        "sel": ".hero__actions--single .btn--primary",
+        "w": 324,
+        "h": 58
+      },
+      {
+        "sel": ".hero__links a",
+        "w": 53,
+        "h": 48
+      },
+      {
+        "sel": ".hero__links a",
+        "w": 127,
+        "h": 48
+      }
+    ],
+    "header": {
+      "brand": {
+        "x": 18,
+        "y": 13.390625,
+        "w": 227.5,
+        "h": 34,
+        "right": 245.5,
+        "bottom": 47.390625,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "mark": {
+        "x": 18,
+        "y": 13.390625,
+        "w": 34,
+        "h": 34,
+        "right": 52,
+        "bottom": 47.390625,
+        "display": "block",
+        "visibility": "visible"
+      },
+      "controls": {
+        "x": 253.5,
+        "y": 6.390625,
+        "w": 88.5,
+        "h": 48,
+        "right": 342,
+        "bottom": 54.390625,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "inner": {
+        "x": 0,
+        "y": 0,
+        "w": 360,
+        "h": 60.78125,
+        "right": 360,
+        "bottom": 60.78125,
+        "display": "flex",
+        "visibility": "visible"
+      }
+    },
+    "brand_word_right": 157.421875,
+    "brand_right": 245.5,
+    "controls_left": 253.5,
+    "overflow": 0,
+    "console_errors": [],
+    "h1_bottom": 448.640625,
+    "viewport_h": 780,
+    "bloom_start": "0.0045",
+    "bloom_resolved": "1.0000",
+    "is_resolved": true,
+    "scrolled_header": {
+      "wordRight": 151.390625,
+      "ctrlLeft": 207.546875,
+      "tooSmall": 0,
+      "overflow": 0,
+      "ctas": 2
+    }
+  },
+  "390": {
+    "stamps": 0,
+    "replay_controls": 0,
+    "stage_text": "",
+    "hero_has_before_word": false,
+    "hero_has_after_word": false,
+    "hero_has_replay_word": false,
+    "first_viewport_app_ctas": [
+      {
+        "text": "Try PlotVisionAI Free",
+        "cls": "btn btn--primary btn--lg",
+        "area": 20515,
+        "alpha": 1,
+        "dominant": true
+      }
+    ],
+    "dominant_count": 1,
+    "touch_targets": [
+      {
+        "sel": ".mnav__btn",
+        "w": 96,
+        "h": 48
+      },
+      {
+        "sel": ".hshare",
+        "w": 48,
+        "h": 48
+      },
+      {
+        "sel": ".hero__actions--single .btn--primary",
+        "w": 352,
+        "h": 58
+      },
+      {
+        "sel": ".hero__links a",
+        "w": 53,
+        "h": 48
+      },
+      {
+        "sel": ".hero__links a",
+        "w": 127,
+        "h": 48
+      }
+    ],
+    "header": {
+      "brand": {
+        "x": 18,
+        "y": 9.390625,
+        "w": 185.890625,
+        "h": 42,
+        "right": 203.890625,
+        "bottom": 51.390625,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "mark": {
+        "x": 18,
+        "y": 9.390625,
+        "w": 42,
+        "h": 42,
+        "right": 60,
+        "bottom": 51.390625,
+        "display": "block",
+        "visibility": "visible"
+      },
+      "controls": {
+        "x": 275.890625,
+        "y": 6.390625,
+        "w": 96.109375,
+        "h": 48,
+        "right": 372,
+        "bottom": 54.390625,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "inner": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 60.78125,
+        "right": 390,
+        "bottom": 60.78125,
+        "display": "flex",
+        "visibility": "visible"
+      }
+    },
+    "brand_word_right": 185,
+    "brand_right": 203.890625,
+    "controls_left": 215.890625,
+    "overflow": 0,
+    "console_errors": [],
+    "h1_bottom": 475.671875,
+    "viewport_h": 780,
+    "bloom_start": "0.0074",
+    "bloom_resolved": "1.0000",
+    "is_resolved": true,
+    "scrolled_header": {
+      "wordRight": 151.390625,
+      "ctrlLeft": 237.546875,
+      "tooSmall": 0,
+      "overflow": 0,
+      "ctas": 2
+    },
+    "daylight_return": {
+      "returned": true,
+      "ms": 12728
+    },
+    "menu_open": true,
+    "menu_closed": true,
+    "scrolled_dominant": 1
+  },
+  "430": {
+    "stamps": 0,
+    "replay_controls": 0,
+    "stage_text": "",
+    "hero_has_before_word": false,
+    "hero_has_after_word": false,
+    "hero_has_replay_word": false,
+    "first_viewport_app_ctas": [
+      {
+        "text": "Try PlotVisionAI Free",
+        "cls": "btn btn--primary btn--lg",
+        "area": 20515,
+        "alpha": 1,
+        "dominant": true
+      }
+    ],
+    "dominant_count": 1,
+    "touch_targets": [
+      {
+        "sel": ".mnav__btn",
+        "w": 96,
+        "h": 48
+      },
+      {
+        "sel": ".hshare",
+        "w": 48,
+        "h": 48
+      },
+      {
+        "sel": ".hero__actions--single .btn--primary",
+        "w": 352,
+        "h": 58
+      },
+      {
+        "sel": ".hero__links a",
+        "w": 53,
+        "h": 48
+      },
+      {
+        "sel": ".hero__links a",
+        "w": 127,
+        "h": 48
+      }
+    ],
+    "header": {
+      "brand": {
+        "x": 18,
+        "y": 7.71875,
+        "w": 225.890625,
+        "h": 45.34375,
+        "right": 243.890625,
+        "bottom": 53.0625,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "mark": {
+        "x": 18,
+        "y": 9.390625,
+        "w": 42,
+        "h": 42,
+        "right": 60,
+        "bottom": 51.390625,
+        "display": "block",
+        "visibility": "visible"
+      },
+      "controls": {
+        "x": 315.890625,
+        "y": 6.390625,
+        "w": 96.109375,
+        "h": 48,
+        "right": 412,
+        "bottom": 54.390625,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "inner": {
+        "x": 0,
+        "y": 0,
+        "w": 430,
+        "h": 60.78125,
+        "right": 430,
+        "bottom": 60.78125,
+        "display": "flex",
+        "visibility": "visible"
+      }
+    },
+    "brand_word_right": 185,
+    "brand_right": 243.890625,
+    "controls_left": 255.890625,
+    "overflow": 0,
+    "console_errors": [],
+    "h1_bottom": 495.28125,
+    "viewport_h": 780,
+    "bloom_start": "0.0115",
+    "bloom_resolved": "1.0000",
+    "is_resolved": true,
+    "scrolled_header": {
+      "wordRight": 151.390625,
+      "ctrlLeft": 215.078125,
+      "tooSmall": 0,
+      "overflow": 0,
+      "ctas": 2
+    }
+  },
+  "1440": {
+    "stamps": 0,
+    "replay_controls": 0,
+    "stage_text": "",
+    "hero_has_before_word": false,
+    "hero_has_after_word": false,
+    "hero_has_replay_word": false,
+    "first_viewport_app_ctas": [
+      {
+        "text": "Try PlotVisionAI Free",
+        "cls": "btn btn--primary btn--lg",
+        "area": 16785,
+        "alpha": 1,
+        "dominant": true
+      }
+    ],
+    "dominant_count": 1,
+    "touch_targets": [
+      {
+        "sel": ".hshare",
+        "w": 155,
+        "h": 48
+      },
+      {
+        "sel": ".hero__actions--single .btn--primary",
+        "w": 288,
+        "h": 58
+      },
+      {
+        "sel": ".hero__links a",
+        "w": 53,
+        "h": 48
+      },
+      {
+        "sel": ".hero__links a",
+        "w": 127,
+        "h": 48
+      }
+    ],
+    "header": {
+      "brand": {
+        "x": 88,
+        "y": 9.953125,
+        "w": 214.21875,
+        "h": 44.09375,
+        "right": 302.21875,
+        "bottom": 54.046875,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "mark": {
+        "x": 88,
+        "y": 12,
+        "w": 40,
+        "h": 40,
+        "right": 128,
+        "bottom": 52,
+        "display": "block",
+        "visibility": "visible"
+      },
+      "controls": {
+        "x": 614.609375,
+        "y": 10,
+        "w": 737.390625,
+        "h": 44,
+        "right": 1352,
+        "bottom": 54,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "inner": {
+        "x": 48,
+        "y": 0,
+        "w": 1344,
+        "h": 64,
+        "right": 1392,
+        "bottom": 64,
+        "display": "flex",
+        "visibility": "visible"
+      }
+    },
+    "overflow": 0,
+    "console_errors": [],
+    "h1_bottom": 278.82928466796875,
+    "viewport_h": 900,
+    "bloom_start": "0.0001",
+    "bloom_resolved": "1.0000",
+    "is_resolved": true,
+    "appbar_over_demo": false
+  },
+  "failures": [],
+  "passed": true
+}

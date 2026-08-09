@@ -95,7 +95,8 @@ def hero_state(page):
           const stage = document.querySelector('.hero__stage');
           const before = document.querySelector('.hero__half--before img');
           const after = document.querySelector('.hero__half--after img');
-          const replay = document.querySelector('[data-reveal-replay]');
+          const replayEl = document.querySelector('.hero [data-reveal-replay], .hero__replay, .hero__reveal');
+          const replay = replayEl && getComputedStyle(replayEl).display !== 'none' ? replayEl : null;
           const b = stage && stage.getBoundingClientRect();
           return {
             heroClasses: hero && hero.className,
@@ -105,6 +106,8 @@ def hero_state(page):
             afterLoaded: !!(after && after.complete && after.naturalWidth),
             replayVisible: !!(replay && !replay.hidden),
             replayLabel: replay && replay.innerText.replace(/\\s+/g, " ").trim(),
+            stampCount: hero ? [...hero.querySelectorAll('.stamp, .hero__labels, .hero__hint')]
+              .filter(e => getComputedStyle(e).display !== 'none').length : -1,
             overflow: document.documentElement.scrollWidth > window.innerWidth + 1,
           };
         }"""
@@ -151,24 +154,35 @@ def main():
                 failures.append(f"{name}: initial hero never reached its resolved state")
             settled = hero_state(page)
 
-            page.locator("[data-reveal-replay]").click()
+            # The rebuilt landing hero has no playback UI at all: after roughly
+            # 15 seconds it crossfades back to the daylight photograph and
+            # re-reveals the concept on its own.
+            page.wait_for_timeout(11000)
             try:
-                page.wait_for_function("() => document.querySelector('.hero').classList.contains('is-drawing')", timeout=1500)
+                page.wait_for_function(
+                    "() => !document.querySelector('.hero').classList.contains('is-resolved')",
+                    timeout=9000,
+                )
             except Exception:
-                failures.append(f"{name}: replay did not start after a normal click")
+                failures.append(f"{name}: the hero never returned to daylight on its own")
             replaying = hero_state(page)
             try:
-                page.wait_for_function("() => document.querySelector('.hero').classList.contains('is-resolved')", timeout=7000)
+                page.wait_for_function("() => document.querySelector('.hero').classList.contains('is-resolved')", timeout=9000)
             except Exception:
-                failures.append(f"{name}: replay never returned to its resolved state")
+                failures.append(f"{name}: the automatic cycle never resolved again")
             replay_settled = hero_state(page)
 
             # The landing page intentionally tucks the persistent app bar on
             # phones so it cannot compete with the hero/header CTA handoff.
             # The source audit above still verifies every appbar href; this
             # interaction check uses the visible header action at every size.
+            # One app CTA per viewport: the header action is deliberately hidden
+            # while the hero CTA is on screen, so scroll past the hero first.
             selector = ".site-header__controls > .btn--primary"
+            page.evaluate("() => window.scrollTo(0, 1600)")
+            page.wait_for_timeout(600)
             target_url = popup_url(page, selector)
+            page.evaluate("() => window.scrollTo(0, 0)")
             data = {
                 "initial": initial,
                 "settled": settled,
@@ -188,8 +202,11 @@ def main():
                     failures.append(f"{name} {point}: horizontal overflow")
             if not settled["beforeLoaded"] or not settled["afterLoaded"]:
                 failures.append(f"{name}: a hero image did not load")
-            if not settled["replayVisible"] or settled["replayLabel"] != "Replay reveal":
-                failures.append(f"{name}: replay control is missing or has the wrong settled label")
+            for point, state in (("settled", settled), ("cycle", replaying), ("cycle settled", replay_settled)):
+                if state["replayVisible"]:
+                    failures.append(f"{name} {point}: a replay control is visible in the hero")
+                if state["stampCount"]:
+                    failures.append(f"{name} {point}: {state['stampCount']} Before/After label(s) in the hero")
             if target_url.rstrip("/") != CANONICAL.rstrip("/"):
                 failures.append(f"{name}: clicked app CTA opened {target_url!r}, not {CANONICAL!r}")
             if errors:

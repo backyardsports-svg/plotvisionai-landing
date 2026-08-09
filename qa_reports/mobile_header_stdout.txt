@@ -1,0 +1,188 @@
+{
+  "320": {
+    "targets": {
+      "Menu": {
+        "w": 106.4,
+        "h": 56,
+        "top": 8,
+        "bottom": 64
+      },
+      "Try Free": {
+        "w": 106.4,
+        "h": 52,
+        "top": 72,
+        "bottom": 124
+      },
+      "Share This Page": {
+        "w": 169.6,
+        "h": 52,
+        "top": 72,
+        "bottom": 124
+      },
+      "App CTA": {
+        "w": 296,
+        "h": 64,
+        "top": 668,
+        "bottom": 732
+      },
+      "brand": {
+        "w": 169.6,
+        "h": 30,
+        "top": 21,
+        "bottom": 51
+      }
+    },
+    "errors": [],
+    "hero_stage_h": 320,
+    "hero_pct_of_fold": 43.2,
+    "cta_fully_above_fold": true,
+    "hero_title_top": 539.9,
+    "appbar_h": 80,
+    "body_pad_bottom": 96,
+    "h_overflow": false,
+    "stuck_header_h": 131.4
+  },
+  "360": {
+    "targets": {
+      "Menu": {
+        "w": 106.4,
+        "h": 56,
+        "top": 8,
+        "bottom": 64
+      },
+      "Try Free": {
+        "w": 106.4,
+        "h": 52,
+        "top": 72,
+        "bottom": 124
+      },
+      "Share This Page": {
+        "w": 209.6,
+        "h": 52,
+        "top": 72,
+        "bottom": 124
+      },
+      "App CTA": {
+        "w": 336,
+        "h": 64,
+        "top": 668,
+        "bottom": 732
+      },
+      "brand": {
+        "w": 209.6,
+        "h": 34,
+        "top": 19,
+        "bottom": 53
+      }
+    },
+    "errors": [],
+    "hero_stage_h": 340.4,
+    "hero_pct_of_fold": 46.0,
+    "cta_fully_above_fold": true,
+    "hero_title_top": 562.3,
+    "appbar_h": 80,
+    "body_pad_bottom": 96,
+    "h_overflow": false,
+    "stuck_header_h": 131.4
+  },
+  "430": {
+    "targets": {
+      "Menu": {
+        "w": 106.4,
+        "h": 56,
+        "top": 8,
+        "bottom": 64
+      },
+      "Try Free": {
+        "w": 106.4,
+        "h": 52,
+        "top": 72,
+        "bottom": 124
+      },
+      "Share This Page": {
+        "w": 279.6,
+        "h": 52,
+        "top": 72,
+        "bottom": 124
+      },
+      "App CTA": {
+        "w": 406,
+        "h": 64,
+        "top": 668,
+        "bottom": 732
+      },
+      "brand": {
+        "w": 279.6,
+        "h": 42.1,
+        "top": 15.0,
+        "bottom": 57.0
+      }
+    },
+    "errors": [],
+    "hero_stage_h": 340.4,
+    "hero_pct_of_fold": 46.0,
+    "cta_fully_above_fold": true,
+    "hero_title_top": 565.8,
+    "appbar_h": 80,
+    "body_pad_bottom": 96,
+    "h_overflow": false,
+    "stuck_header_h": 131.4
+  },
+  "routes": {
+    "index.html": {
+      "href": "https://plotvisionai-preview.pplx.app",
+      "label": "Try the New Mobile App",
+      "sub": "Coming soon to the App Store",
+      "h": 64,
+      "gatedCtas": 0,
+      "gateRequiredEmail": 0
+    },
+    "pricing.html": {
+      "href": "https://plotvisionai-preview.pplx.app",
+      "label": "Try the New Mobile App",
+      "sub": "Coming soon to the App Store",
+      "h": 64,
+      "gatedCtas": 0,
+      "gateRequiredEmail": 0
+    },
+    "corporate-pricing.html": {
+      "href": "https://plotvisionai-preview.pplx.app",
+      "label": "Try the New Mobile App",
+      "sub": "Coming soon to the App Store",
+      "h": 64,
+      "gatedCtas": 0,
+      "gateRequiredEmail": 0
+    },
+    "free-preview.html": {
+      "href": "https://plotvisionai-preview.pplx.app",
+      "label": "Try the New Mobile App",
+      "sub": "Coming soon to the App Store",
+      "h": 64,
+      "gatedCtas": 0,
+      "gateRequiredEmail": 0
+    },
+    "gallery.html": {
+      "href": "https://plotvisionai-preview.pplx.app",
+      "label": "Try the New Mobile App",
+      "sub": "Coming soon to the App Store",
+      "h": 64,
+      "gatedCtas": 0,
+      "gateRequiredEmail": 0
+    },
+    "contact.html": {
+      "href": "https://plotvisionai-preview.pplx.app",
+      "label": "Try the New Mobile App",
+      "sub": "Coming soon to the App Store",
+      "h": 64,
+      "gatedCtas": 0,
+      "gateRequiredEmail": 0
+    }
+  },
+  "1440": {
+    "header_display": "flex",
+    "section_nav_display": "flex",
+    "h_overflow": false
+  }
+}
+
+PASS: all header targets >= 48px, no overlap, no overflow, CTA above the fold.

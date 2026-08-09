@@ -1,0 +1,575 @@
+{
+  "minimums": {
+    "primary": 52,
+    "secondary": 48,
+    "font": 16
+  },
+  "viewports": {
+    "320": {
+      "home": {
+        "path": "index.html",
+        "controls": {
+          "Header Try Free": {
+            "x": 192.9,
+            "y": 72,
+            "width": 109.1,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(63, 224, 193, 0.07)",
+            "visible": true
+          },
+          "Share This Page": {
+            "x": 18,
+            "y": 72,
+            "width": 162.9,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(63, 224, 193, 0.06)",
+            "visible": true
+          },
+          "Menu": {
+            "x": 192.9,
+            "y": 8,
+            "width": 109.1,
+            "height": 56,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "color(srgb 0.0117647 0.0627451 0.0588235 / 0.55)",
+            "visible": true
+          },
+          "Hero replay": {
+            "x": 166.5,
+            "y": 145,
+            "width": 141.5,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(3, 16, 15, 0.68)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false,
+        "landing_appbar_tucked": true,
+        "menu": {
+          "Close menu": {
+            "x": 204.7,
+            "y": 150,
+            "width": 95.3,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "color(srgb 0.027451 0.12549 0.121569 / 0.7)",
+            "visible": true
+          },
+          "Menu app CTA": {
+            "x": 20,
+            "y": 1504.4,
+            "width": 280,
+            "height": 55.1,
+            "font_size": 16,
+            "color": "rgb(3, 36, 32)",
+            "background": "rgb(63, 224, 193)",
+            "visible": true
+          },
+          "Menu share": {
+            "x": 20,
+            "y": 1600.5,
+            "width": 280,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(255, 255, 255, 0.02)",
+            "visible": true
+          }
+        },
+        "stuck_header_height": 131.4
+      },
+      "consumer_pricing": {
+        "path": "pricing.html",
+        "controls": {
+          "Pricing purchase": {
+            "x": 35,
+            "y": 1173.3,
+            "width": 250,
+            "height": 55.1,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(0, 0, 0, 0)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      },
+      "corporate_pricing": {
+        "path": "corporate-pricing.html",
+        "controls": {
+          "Corporate activation request": {
+            "x": 35,
+            "y": 1788.8,
+            "width": 250,
+            "height": 81,
+            "font_size": 16,
+            "color": "rgb(244, 201, 135)",
+            "background": "rgba(0, 0, 0, 0)",
+            "visible": true
+          },
+          "Billing choice": {
+            "x": 23,
+            "y": 1230.8,
+            "width": 135,
+            "height": 56,
+            "font_size": 16,
+            "color": "rgb(3, 36, 32)",
+            "background": "rgb(63, 224, 193)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      },
+      "contact": {
+        "path": "contact.html",
+        "controls": {
+          "Contact form submit": {
+            "x": 18,
+            "y": 1515.7,
+            "width": 284,
+            "height": 55.1,
+            "font_size": 16,
+            "color": "rgb(3, 36, 32)",
+            "background": "rgb(63, 224, 193)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      },
+      "preview": {
+        "path": "free-preview.html",
+        "controls": {
+          "Preview form submit": {
+            "x": 18,
+            "y": 3140.2,
+            "width": 284,
+            "height": 55.1,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(0, 0, 0, 0)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      },
+      "comparison": {
+        "path": "backyard-sports-center.html",
+        "controls": {
+          "Comparison replay": {
+            "x": 58,
+            "y": 4553,
+            "width": 160.8,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(3, 16, 15, 0.68)",
+            "visible": true
+          },
+          "Crossfade replay": {
+            "x": 18,
+            "y": 1386.9,
+            "width": 180.6,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(185, 207, 202)",
+            "background": "rgba(0, 0, 0, 0)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      }
+    },
+    "360": {
+      "home": {
+        "path": "index.html",
+        "controls": {
+          "Header Try Free": {
+            "x": 232.9,
+            "y": 72,
+            "width": 109.1,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(63, 224, 193, 0.07)",
+            "visible": true
+          },
+          "Share This Page": {
+            "x": 18,
+            "y": 72,
+            "width": 206.9,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(63, 224, 193, 0.06)",
+            "visible": true
+          },
+          "Menu": {
+            "x": 232.9,
+            "y": 8,
+            "width": 109.1,
+            "height": 56,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "color(srgb 0.0117647 0.0627451 0.0588235 / 0.55)",
+            "visible": true
+          },
+          "Hero replay": {
+            "x": 186.9,
+            "y": 145,
+            "width": 141.5,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(3, 16, 15, 0.68)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false,
+        "landing_appbar_tucked": true,
+        "menu": {
+          "Close menu": {
+            "x": 240.7,
+            "y": 150,
+            "width": 95.3,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "color(srgb 0.027451 0.12549 0.121569 / 0.7)",
+            "visible": true
+          },
+          "Menu app CTA": {
+            "x": 24,
+            "y": 1496.2,
+            "width": 312,
+            "height": 55.1,
+            "font_size": 16,
+            "color": "rgb(3, 36, 32)",
+            "background": "rgb(63, 224, 193)",
+            "visible": true
+          },
+          "Menu share": {
+            "x": 24,
+            "y": 1592.3,
+            "width": 312,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(255, 255, 255, 0.02)",
+            "visible": true
+          }
+        },
+        "stuck_header_height": 131.4
+      },
+      "consumer_pricing": {
+        "path": "pricing.html",
+        "controls": {
+          "Pricing purchase": {
+            "x": 35,
+            "y": 1119.4,
+            "width": 290,
+            "height": 55.1,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(0, 0, 0, 0)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      },
+      "corporate_pricing": {
+        "path": "corporate-pricing.html",
+        "controls": {
+          "Corporate activation request": {
+            "x": 35,
+            "y": 1673.6,
+            "width": 290,
+            "height": 81,
+            "font_size": 16,
+            "color": "rgb(244, 201, 135)",
+            "background": "rgba(0, 0, 0, 0)",
+            "visible": true
+          },
+          "Billing choice": {
+            "x": 23,
+            "y": 1154.6,
+            "width": 155,
+            "height": 56,
+            "font_size": 16,
+            "color": "rgb(3, 36, 32)",
+            "background": "rgb(63, 224, 193)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      },
+      "contact": {
+        "path": "contact.html",
+        "controls": {
+          "Contact form submit": {
+            "x": 18,
+            "y": 1516.9,
+            "width": 324,
+            "height": 55.1,
+            "font_size": 16,
+            "color": "rgb(3, 36, 32)",
+            "background": "rgb(63, 224, 193)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      },
+      "preview": {
+        "path": "free-preview.html",
+        "controls": {
+          "Preview form submit": {
+            "x": 18,
+            "y": 2916,
+            "width": 324,
+            "height": 55.1,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(0, 0, 0, 0)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      },
+      "comparison": {
+        "path": "backyard-sports-center.html",
+        "controls": {
+          "Comparison replay": {
+            "x": 58,
+            "y": 4394,
+            "width": 160.8,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(3, 16, 15, 0.68)",
+            "visible": true
+          },
+          "Crossfade replay": {
+            "x": 18,
+            "y": 1347.9,
+            "width": 180.6,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(185, 207, 202)",
+            "background": "rgba(0, 0, 0, 0)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      }
+    },
+    "430": {
+      "home": {
+        "path": "index.html",
+        "controls": {
+          "Header Try Free": {
+            "x": 302.9,
+            "y": 72,
+            "width": 109.1,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(63, 224, 193, 0.07)",
+            "visible": true
+          },
+          "Share This Page": {
+            "x": 18,
+            "y": 72,
+            "width": 276.9,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(63, 224, 193, 0.06)",
+            "visible": true
+          },
+          "Menu": {
+            "x": 302.9,
+            "y": 8,
+            "width": 109.1,
+            "height": 56,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "color(srgb 0.0117647 0.0627451 0.0588235 / 0.55)",
+            "visible": true
+          },
+          "Hero replay": {
+            "x": 186,
+            "y": 145.9,
+            "width": 141.5,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(3, 16, 15, 0.68)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false,
+        "landing_appbar_tucked": true,
+        "menu": {
+          "Close menu": {
+            "x": 310.7,
+            "y": 150,
+            "width": 95.3,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "color(srgb 0.027451 0.12549 0.121569 / 0.7)",
+            "visible": true
+          },
+          "Menu app CTA": {
+            "x": 24,
+            "y": 1496.2,
+            "width": 382,
+            "height": 55.1,
+            "font_size": 16,
+            "color": "rgb(3, 36, 32)",
+            "background": "rgb(63, 224, 193)",
+            "visible": true
+          },
+          "Menu share": {
+            "x": 24,
+            "y": 1592.3,
+            "width": 382,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(255, 255, 255, 0.02)",
+            "visible": true
+          }
+        },
+        "stuck_header_height": 131.4
+      },
+      "consumer_pricing": {
+        "path": "pricing.html",
+        "controls": {
+          "Pricing purchase": {
+            "x": 35,
+            "y": 1045.6,
+            "width": 360,
+            "height": 55.1,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(0, 0, 0, 0)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      },
+      "corporate_pricing": {
+        "path": "corporate-pricing.html",
+        "controls": {
+          "Corporate activation request": {
+            "x": 35,
+            "y": 1443.8,
+            "width": 360,
+            "height": 56,
+            "font_size": 16,
+            "color": "rgb(244, 201, 135)",
+            "background": "rgba(0, 0, 0, 0)",
+            "visible": true
+          },
+          "Billing choice": {
+            "x": 23,
+            "y": 966.8,
+            "width": 190,
+            "height": 56,
+            "font_size": 16,
+            "color": "rgb(3, 36, 32)",
+            "background": "rgb(63, 224, 193)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      },
+      "contact": {
+        "path": "contact.html",
+        "controls": {
+          "Contact form submit": {
+            "x": 18,
+            "y": 1389.4,
+            "width": 394,
+            "height": 55.1,
+            "font_size": 16,
+            "color": "rgb(3, 36, 32)",
+            "background": "rgb(63, 224, 193)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      },
+      "preview": {
+        "path": "free-preview.html",
+        "controls": {
+          "Preview form submit": {
+            "x": 18,
+            "y": 2644.1,
+            "width": 394,
+            "height": 55.1,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(0, 0, 0, 0)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      },
+      "comparison": {
+        "path": "backyard-sports-center.html",
+        "controls": {
+          "Comparison replay": {
+            "x": 58,
+            "y": 4115.6,
+            "width": 160.8,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(233, 244, 241)",
+            "background": "rgba(3, 16, 15, 0.68)",
+            "visible": true
+          },
+          "Crossfade replay": {
+            "x": 18,
+            "y": 1313.3,
+            "width": 180.6,
+            "height": 52,
+            "font_size": 16,
+            "color": "rgb(185, 207, 202)",
+            "background": "rgba(0, 0, 0, 0)",
+            "visible": true
+          }
+        },
+        "errors": [],
+        "horizontal_overflow": false
+      }
+    }
+  }
+}
+
+PASS: shared mobile controls, replay controls, pricing CTAs, and form submits meet the requested touch-target pass.

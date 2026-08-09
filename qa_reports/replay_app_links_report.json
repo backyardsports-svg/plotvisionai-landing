@@ -1,0 +1,345 @@
+{
+  "source_link_audit": {
+    "preview": 5,
+    "mobile_info": 74,
+    "persistent_app_cta": 25,
+    "header_app_cta": 25,
+    "menu_app_cta": 25
+  },
+  "viewports": {
+    "desktop": {
+      "initial": {
+        "heroClasses": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "stage": {
+          "width": 792,
+          "height": 841
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "settled": {
+        "heroClasses": "hero is-drawn is-resolved",
+        "traceNodes": 0,
+        "stage": {
+          "width": 792,
+          "height": 841
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "replaying": {
+        "heroClasses": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "stage": {
+          "width": 792,
+          "height": 841
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "replay_settled": {
+        "heroClasses": "hero is-drawn is-resolved",
+        "traceNodes": 0,
+        "stage": {
+          "width": 792,
+          "height": 841
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "clicked_app_link": "https://plotvisionai-preview.pplx.app/",
+      "errors": []
+    },
+    "mobile-320": {
+      "initial": {
+        "heroClasses": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "stage": {
+          "width": 320,
+          "height": 256
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "settled": {
+        "heroClasses": "hero is-drawn is-resolved",
+        "traceNodes": 0,
+        "stage": {
+          "width": 320,
+          "height": 256
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "replaying": {
+        "heroClasses": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "stage": {
+          "width": 320,
+          "height": 256
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "replay_settled": {
+        "heroClasses": "hero is-drawn is-resolved",
+        "traceNodes": 0,
+        "stage": {
+          "width": 320,
+          "height": 256
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "clicked_app_link": "https://plotvisionai-preview.pplx.app/",
+      "errors": []
+    },
+    "mobile-360": {
+      "initial": {
+        "heroClasses": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "stage": {
+          "width": 360,
+          "height": 288
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "settled": {
+        "heroClasses": "hero is-drawn is-resolved",
+        "traceNodes": 0,
+        "stage": {
+          "width": 360,
+          "height": 288
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "replaying": {
+        "heroClasses": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "stage": {
+          "width": 360,
+          "height": 288
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "replay_settled": {
+        "heroClasses": "hero is-drawn is-resolved",
+        "traceNodes": 0,
+        "stage": {
+          "width": 360,
+          "height": 288
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "clicked_app_link": "https://plotvisionai-preview.pplx.app/",
+      "errors": []
+    },
+    "mobile-430": {
+      "initial": {
+        "heroClasses": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "stage": {
+          "width": 388,
+          "height": 311
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "settled": {
+        "heroClasses": "hero is-drawn is-resolved",
+        "traceNodes": 0,
+        "stage": {
+          "width": 388,
+          "height": 311
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "replaying": {
+        "heroClasses": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "stage": {
+          "width": 388,
+          "height": 311
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "replay_settled": {
+        "heroClasses": "hero is-drawn is-resolved",
+        "traceNodes": 0,
+        "stage": {
+          "width": 388,
+          "height": 311
+        },
+        "beforeLoaded": true,
+        "afterLoaded": true,
+        "replayVisible": false,
+        "replayLabel": null,
+        "stampCount": 0,
+        "overflow": false
+      },
+      "clicked_app_link": "https://plotvisionai-preview.pplx.app/",
+      "errors": []
+    }
+  },
+  "pricing": {
+    "desktop": {
+      "prices": [
+        "$299 /month",
+        "$499 /month",
+        "$699 /month",
+        "$999 /month",
+        "Custom",
+        "$299 one-time",
+        "$249 one-time",
+        "$999 one-time"
+      ],
+      "activationNotes": [
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Tell us the seat count and we will come back with a written quote. Nothing is charged here.",
+        "Card details are entered on Stripe\u2019s own page, never on this site. We set the seats up after payment and email you when the workspace is ready \u2014 it is not instant."
+      ],
+      "qrCaption": "Scan for the mobile app Opens the PlotVisionAI app page on your phone",
+      "overflow": false,
+      "errors": []
+    },
+    "mobile-320": {
+      "prices": [
+        "$299 /month",
+        "$499 /month",
+        "$699 /month",
+        "$999 /month",
+        "Custom",
+        "$299 one-time",
+        "$249 one-time",
+        "$999 one-time"
+      ],
+      "activationNotes": [
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Tell us the seat count and we will come back with a written quote. Nothing is charged here.",
+        "Card details are entered on Stripe\u2019s own page, never on this site. We set the seats up after payment and email you when the workspace is ready \u2014 it is not instant."
+      ],
+      "qrCaption": "Scan for the mobile app Opens the PlotVisionAI app page on your phone",
+      "overflow": false,
+      "errors": []
+    },
+    "mobile-360": {
+      "prices": [
+        "$299 /month",
+        "$499 /month",
+        "$699 /month",
+        "$999 /month",
+        "Custom",
+        "$299 one-time",
+        "$249 one-time",
+        "$999 one-time"
+      ],
+      "activationNotes": [
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Tell us the seat count and we will come back with a written quote. Nothing is charged here.",
+        "Card details are entered on Stripe\u2019s own page, never on this site. We set the seats up after payment and email you when the workspace is ready \u2014 it is not instant."
+      ],
+      "qrCaption": "Scan for the mobile app Opens the PlotVisionAI app page on your phone",
+      "overflow": false,
+      "errors": []
+    },
+    "mobile-430": {
+      "prices": [
+        "$299 /month",
+        "$499 /month",
+        "$699 /month",
+        "$999 /month",
+        "Custom",
+        "$299 one-time",
+        "$249 one-time",
+        "$999 one-time"
+      ],
+      "activationNotes": [
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Opens a pre-filled message, not a payment page. Nothing is charged here.",
+        "ACTIVATION REQUEST Tell us the seat count and we will come back with a written quote. Nothing is charged here.",
+        "Card details are entered on Stripe\u2019s own page, never on this site. We set the seats up after payment and email you when the workspace is ready \u2014 it is not instant."
+      ],
+      "qrCaption": "Scan for the mobile app Opens the PlotVisionAI app page on your phone",
+      "overflow": false,
+      "errors": []
+    }
+  }
+}

@@ -6892,3 +6892,635 @@ html:not(.js) .billtoggle__state {
     transition: none;
   }
 }
+
+/* ==========================================================================
+   40. LANDING HEADER + HERO REBUILD
+   Replaces the stacked two-row phone header (wordmark/Menu over a full-width
+   "Share This Page" + "Try Free" pair) and the oversized on-image reveal
+   controls. One compact header line at every width, one dominant hero CTA,
+   and a photograph with no labels or playback chrome on it at all.
+   Appended last so it wins on source order over sections 5, 18, 24 and 34.
+   ========================================================================== */
+
+/* ---- 40.1 Compact single-line header (phone through small laptop) -------- */
+@media (max-width: 74.999rem) {
+  .site-header__inner {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    row-gap: 0;
+    padding-block: 0.4rem;
+    padding-bottom: 0.4rem;
+    min-height: 60px;
+  }
+
+  .brand {
+    min-width: 0;
+    flex: 1 1 auto;
+    gap: 0.55rem;
+  }
+
+  .site-header__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex: none;
+  }
+
+  .hshare-wrap {
+    flex: none;
+    display: block;
+    order: 1;
+  }
+
+  /* Share becomes a quiet icon control: same action, no conversion weight. */
+  .hshare {
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    min-height: 48px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+    border-color: var(--line-strong);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--fg-soft);
+    font-size: 0.8125rem;
+  }
+
+  .hshare__ico {
+    width: 20px;
+    height: 20px;
+  }
+
+  .hshare__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .hshare__flash {
+    left: auto;
+    right: 0;
+    max-width: min(20rem, calc(100vw - 2rem));
+  }
+}
+
+@media (max-width: 55.999rem) {
+  /* Menu: a real 48px target, but a restrained rounded control instead of the
+     oversized pill that was competing with the wordmark. */
+  .mnav {
+    order: 2;
+  }
+
+  .mnav__btn {
+    min-height: 48px;
+    height: 48px;
+    gap: 0.5rem;
+    padding: 0 0.85rem;
+    border-radius: 12px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .mnav__bars {
+    width: 17px;
+    gap: 3.5px;
+  }
+
+  .mnav__bars span {
+    height: 2px;
+  }
+
+  .brand__mark {
+    width: 42px;
+    height: 42px;
+  }
+
+  .brand__word {
+    font-size: 1.125rem;
+    letter-spacing: -0.005em;
+  }
+
+  /* No filled app CTA in the header while the hero CTA owns the viewport. The
+     JS handoff (html.home-hero-primary-away) reveals this compact one after the
+     hero action has scrolled away, so there is still one app CTA per viewport. */
+  .site-header__controls > .btn--primary {
+    order: 3;
+    width: auto;
+    min-height: 48px;
+    padding: 0 0.9rem;
+    border-radius: 12px;
+    font-size: 0.9375rem;
+    font-weight: 650;
+    letter-spacing: 0;
+    box-shadow: none;
+    --btn-bg: rgba(63, 224, 193, 0.1);
+    --btn-fg: var(--fg);
+    --btn-bd: rgba(63, 224, 193, 0.45);
+  }
+}
+
+@media (max-width: 47.999rem) {
+  /* Overrides the section 34 grid-areas handoff: the row is flex now, so the
+     handoff only has to swap which of the two right-hand controls is present. */
+  html.js body[data-home-hero-cta] .site-header__controls > .btn--primary {
+    display: none;
+  }
+
+  html.js.home-hero-primary-away body[data-home-hero-cta] .site-header__controls > .btn--primary {
+    display: inline-flex;
+  }
+
+  html.js.home-hero-primary-away body[data-home-hero-cta] .hshare-wrap {
+    display: none;
+  }
+
+  .site-header.is-stuck .hshare-wrap {
+    display: block;
+  }
+
+  html.js.home-hero-primary-away body[data-home-hero-cta] .site-header.is-stuck .hshare-wrap {
+    display: none;
+  }
+}
+
+@media (max-width: 22.5rem) {
+  .site-header__inner {
+    gap: 0.5rem;
+  }
+
+  .brand__mark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand__word {
+    font-size: 1rem;
+  }
+
+  .brand .tm {
+    display: none;
+  }
+
+  .mnav__btn {
+    padding: 0 0.7rem;
+    font-size: 0.875rem;
+  }
+
+  .hshare {
+    width: 48px;
+    min-width: 48px;
+  }
+}
+
+/* ---- 40.2 A photograph, not a control panel ----------------------------- */
+/* Before/After wording, the hint pill and the replay control are gone from the
+   markup; these rules make sure no stylesheet remnant can reintroduce them. */
+.hero__labels,
+.hero__hint,
+.hero__reveal,
+.hero__replay,
+.hero .stamp {
+  display: none !important;
+}
+
+/* ---- 40.3 Tightened hero so the statement and headline land first ------- */
+.hero__actions--single {
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 22rem;
+  margin-top: 0.25rem;
+}
+
+.hero__actions--single .btn--primary {
+  width: 100%;
+  min-height: 54px;
+}
+
+.hero__links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--fg-mute);
+}
+
+.hero__links a {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 47.999rem) {
+  .hero__stage {
+    aspect-ratio: 5 / 4;
+    max-height: 42svh;
+  }
+
+  .hero__copy {
+    padding: 1.15rem 0 1.6rem;
+  }
+
+  .hero__copy .shell {
+    gap: 0.7rem;
+  }
+
+  .hero__kicker {
+    font-size: 0.625rem;
+    letter-spacing: 0.16em;
+    line-height: 1.5;
+    max-width: 26ch;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 12vw, 3.4rem);
+    line-height: 0.96;
+  }
+
+  .hero__tagline {
+    font-size: 1.25rem;
+    line-height: 1.25;
+    max-width: 26ch;
+  }
+
+  .hero__lede {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    max-width: 40ch;
+  }
+
+  .hero__reassure {
+    margin-top: 0.1rem;
+    font-size: 0.8125rem;
+  }
+
+  .hero__trust {
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+}
+
+/* Desktop keeps the composed split: full logo, roomier type, CTA on the left
+   column beside the photograph rather than a stretched phone stack. */
+@media (min-width: 62rem) {
+  .hero__actions--single {
+    justify-items: center;
+    max-width: 26rem;
+  }
+
+  .hero__actions--single .btn--primary {
+    width: auto;
+    min-width: 18rem;
+  }
+}
+
+/* ---- 40.4 Desktop header + single-CTA parity ----------------------------- */
+/* Desktop kept 40/44px header controls; the whole site now holds one 48px
+   minimum for every primary control, phone and desktop alike. */
+@media (min-width: 75rem) {
+  .hshare {
+    min-height: 48px;
+    padding-inline: 0.9rem;
+  }
+}
+
+.site-header .btn--sm {
+  min-height: 48px;
+}
+
+.hero__links a {
+  min-width: 48px;
+  justify-content: center;
+  padding-inline: 0.25rem;
+}
+
+/* The desktop app card is a second filled app CTA, so on the landing page it
+   waits until the hero's own CTA has left the viewport — the same handoff the
+   phone header uses. One app CTA per viewport at every width. */
+@media (min-width: 48rem) {
+  html.js body[data-home-hero-cta] .appbar,
+  html.js body[data-home-hero-cta] .appbar__btn {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  html.js.home-hero-primary-away body[data-home-hero-cta] .appbar,
+  html.js.home-hero-primary-away body[data-home-hero-cta] .appbar__btn {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  html.js.home-hero-primary-away.concept-demo-in-view body[data-home-hero-cta] .appbar,
+  html.js.home-hero-primary-away.concept-demo-in-view body[data-home-hero-cta] .appbar__btn {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* ---- 40.5 Header order + a photograph that reads as daylight ------------- */
+@media (max-width: 74.999rem) {
+  /* Share sits between the wordmark and Menu: quiet, reachable, clearly not a
+     conversion button. */
+  .hshare-wrap {
+    order: 0;
+  }
+
+  .site-header__controls {
+    order: 1;
+  }
+}
+
+/* With no Before/After wording left, the comparison has to be carried by the
+   picture: the untouched side stays legibly daylit instead of being crushed to
+   near-night, so the illuminated concept side is the obvious change. */
+.hero .hero__half--before img {
+  filter: saturate(0.9) contrast(1.02) brightness(0.95);
+}
+
+.hero .hero__half--before::after {
+  background: linear-gradient(200deg, rgba(6, 26, 34, 0.16), rgba(2, 12, 16, 0.3));
+}
+
+@media (max-width: 47.999rem) {
+  .hero__kicker {
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    max-width: 34ch;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.1rem, 10.5vw, 3rem);
+  }
+
+  .hero__tagline {
+    font-size: 1.1875rem;
+    max-width: 30ch;
+  }
+}
+
+/* ---- 40.6 360px-and-under header fit ------------------------------------- */
+/* At 320-359px the wordmark, a share icon and Menu cannot all sit on one line
+   without the wordmark being clipped. Share is already in the menu sheet
+   ("Share PlotVisionAI"), so the header keeps the wordmark and Menu only. */
+@media (max-width: 22.5rem) {
+  .hshare-wrap {
+    display: none;
+  }
+}
+
+@media (max-width: 26rem) {
+  .brand {
+    overflow: hidden;
+  }
+
+  .brand__word {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 23.5rem) {
+  .brand__mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand__word {
+    font-size: 1rem;
+  }
+}
+
+/* ---- 40.7 Desktop hero: composed split, not a centred overlay ------------ */
+/* The old desktop treatment floated the whole copy block over the middle of the
+   photograph, which is exactly where the transformation happens. Wide screens
+   now get a real two-panel composition: brand statement in a dark teal panel on
+   the left, the yard running full-bleed to the right edge. */
+@media (min-width: 62rem) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: stretch;
+  }
+
+  .hero__stage {
+    grid-column: 2;
+    grid-row: 1;
+    height: clamp(34rem, 82svh, 48rem);
+  }
+
+  .hero__copy {
+    position: relative;
+    grid-column: 1;
+    grid-row: 1;
+    inset: auto;
+    align-content: center;
+    padding: clamp(2.5rem, 4vw, 4rem) 0;
+    pointer-events: auto;
+    text-align: left;
+    background:
+      radial-gradient(120% 120% at 0% 30%, rgba(20, 69, 63, 0.6), transparent 68%),
+      var(--ink-000);
+  }
+
+  .hero__copy::before {
+    background: none;
+  }
+
+  .hero__copy::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -1px;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(63, 224, 193, 0.35), transparent);
+  }
+
+  .hero__copy .shell {
+    justify-items: start;
+    gap: var(--sp-3);
+    padding-inline: clamp(1.75rem, 3.4vw, 3.25rem);
+    margin-inline: 0;
+    width: 100%;
+    max-width: 34rem;
+    margin-left: auto;
+  }
+
+  .hero__copy .shell,
+  .hero__copy .shell > * {
+    text-align: left;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 1rem + 3.6vw, 4.5rem);
+  }
+
+  .hero__tagline {
+    max-width: 22ch;
+  }
+
+  .hero__lede {
+    max-width: 38ch;
+  }
+
+  .vision-mark {
+    width: clamp(112px, 8vw, 148px);
+  }
+
+  .hero__actions--single {
+    justify-items: start;
+    margin-top: var(--sp-2);
+  }
+
+  .hero__links {
+    justify-content: flex-start;
+  }
+
+  .hero__reassure,
+  .hero__trust {
+    max-width: 40ch;
+  }
+}
+
+@media (min-width: 90rem) {
+  .hero__copy .shell {
+    max-width: 38rem;
+  }
+}
+
+/* Both hero panels share one row height, so the photograph never stops short of
+   the copy panel on tall desktop viewports. */
+@media (min-width: 62rem) {
+  .hero__stage {
+    height: auto;
+    min-height: clamp(34rem, 82svh, 48rem);
+    align-self: stretch;
+  }
+
+  /* Soft hand-off from the copy panel into the photograph. */
+  .hero__stage::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: clamp(2rem, 5vw, 5rem);
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(3, 16, 15, 0.72), transparent);
+  }
+}
+
+/* ---- 40.8 One app CTA per viewport, every width -------------------------- */
+/* The landing hero's CTA is the only app link in the first viewport. The header
+   action (and, above 48rem, the app card) return once the hero CTA scrolls away.
+   Interior pages are unaffected: the rule is scoped to [data-home-hero-cta]. */
+html.js body[data-home-hero-cta] .site-header__controls > .btn--primary {
+  display: none;
+}
+
+html.js.home-hero-primary-away body[data-home-hero-cta] .site-header__controls > .btn--primary {
+  display: inline-flex;
+}
+
+/* ---- 40.9 Scrolled phone header: wordmark keeps its space ---------------- */
+/* Once the hero CTA has scrolled away the compact "Try Free" action joins the
+   row, so the brand steps down a size rather than being clipped. Below 26rem the
+   Menu control drops to its icon (still a 48px target, still labelled for
+   assistive tech) so all three items fit at 320px. */
+@media (max-width: 47.999rem) {
+  html.js.home-hero-primary-away body[data-home-hero-cta] .brand__mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  html.js.home-hero-primary-away body[data-home-hero-cta] .brand__word {
+    font-size: 0.9375rem;
+  }
+
+  html.js.home-hero-primary-away body[data-home-hero-cta] .brand .tm {
+    display: none;
+  }
+}
+
+@media (max-width: 26rem) {
+  html.js.home-hero-primary-away body[data-home-hero-cta] .mnav__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  html.js.home-hero-primary-away body[data-home-hero-cta] .mnav__btn {
+    width: 48px;
+    padding: 0;
+    justify-content: center;
+    gap: 0;
+  }
+
+  html.js.home-hero-primary-away body[data-home-hero-cta] .site-header__controls > .btn--primary {
+    padding: 0 0.7rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* ---- 40.10 Interior pages: same compact phone header -------------------- */
+/* Interior pages always show the header app CTA, so they get the compacted
+   brand + icon-only Menu treatment unconditionally, and the share icon defers
+   to the menu sheet on narrow phones. */
+@media (max-width: 47.999rem) {
+  body:not([data-home-hero-cta]) .brand__mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  body:not([data-home-hero-cta]) .brand__word {
+    font-size: 0.9375rem;
+  }
+
+  body:not([data-home-hero-cta]) .brand .tm {
+    display: none;
+  }
+}
+
+@media (max-width: 26rem) {
+  body:not([data-home-hero-cta]) .hshare {
+    display: none;
+  }
+
+  body:not([data-home-hero-cta]) .mnav__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  body:not([data-home-hero-cta]) .mnav__btn {
+    width: 48px;
+    padding: 0;
+    justify-content: center;
+    gap: 0;
+  }
+
+  body:not([data-home-hero-cta]) .site-header__controls > .btn--primary {
+    padding: 0 0.75rem;
+    font-size: 0.875rem;
+  }
+}

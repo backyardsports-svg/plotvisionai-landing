@@ -1,0 +1,94 @@
+{
+  "320px": {
+    "errors": [],
+    "billing_state_annual": "Showing annual prices \u2014 twelve months for the price of ten.",
+    "pilotHref": "https://buy.stripe.com/eVqeVd4V3awi2tU3G2cMM09",
+    "pilotTarget": "_blank",
+    "pilotState": "live",
+    "pilotH": 56,
+    "entHref": "contact.html?plan=Enterprise&billing=custom&ref=corporate-pricing",
+    "entState": "request",
+    "entText": "Request Corporate Pricing",
+    "entH": 81,
+    "toggle_heights": [
+      56,
+      56
+    ],
+    "h_overflow": false,
+    "appbar": {
+      "href": "https://plotvisionai-preview.pplx.app",
+      "label": "Try the New Mobile App"
+    }
+  },
+  "360px": {
+    "errors": [],
+    "billing_state_annual": "Showing annual prices \u2014 twelve months for the price of ten.",
+    "pilotHref": "https://buy.stripe.com/eVqeVd4V3awi2tU3G2cMM09",
+    "pilotTarget": "_blank",
+    "pilotState": "live",
+    "pilotH": 56,
+    "entHref": "contact.html?plan=Enterprise&billing=custom&ref=corporate-pricing",
+    "entState": "request",
+    "entText": "Request Corporate Pricing",
+    "entH": 56,
+    "toggle_heights": [
+      56,
+      56
+    ],
+    "h_overflow": false,
+    "appbar": {
+      "href": "https://plotvisionai-preview.pplx.app",
+      "label": "Try the New Mobile App"
+    }
+  },
+  "430px": {
+    "errors": [],
+    "billing_state_annual": "Showing annual prices \u2014 twelve months for the price of ten.",
+    "pilotHref": "https://buy.stripe.com/eVqeVd4V3awi2tU3G2cMM09",
+    "pilotTarget": "_blank",
+    "pilotState": "live",
+    "pilotH": 56,
+    "entHref": "contact.html?plan=Enterprise&billing=custom&ref=corporate-pricing",
+    "entState": "request",
+    "entText": "Request Corporate Pricing",
+    "entH": 56,
+    "toggle_heights": [
+      56,
+      56
+    ],
+    "h_overflow": false,
+    "appbar": {
+      "href": "https://plotvisionai-preview.pplx.app",
+      "label": "Try the New Mobile App"
+    }
+  },
+  "1440px": {
+    "errors": [],
+    "billing_state_annual": "Showing annual prices \u2014 twelve months for the price of ten.",
+    "pilotHref": "https://buy.stripe.com/eVqeVd4V3awi2tU3G2cMM09",
+    "pilotTarget": "_blank",
+    "pilotState": "live",
+    "pilotH": 55,
+    "entHref": "contact.html?plan=Enterprise&billing=custom&ref=corporate-pricing",
+    "entState": "request",
+    "entText": "Request Corporate Pricing",
+    "entH": 55,
+    "toggle_heights": [
+      48,
+      48
+    ],
+    "h_overflow": false,
+    "appbar": {
+      "href": "https://plotvisionai-preview.pplx.app",
+      "label": "Try the New Mobile App"
+    }
+  },
+  "contact_fallback": {
+    "hidden": false,
+    "text": "You are asking us to activate Team 10, billed annually. Send this form and we will reply with the next step. Nothing has been charged and no seats exist yet.",
+    "message": "Please activate Team 10, billed annually for us.\n\nHow many people will need a seat:\nCompany:\n",
+    "role": "Landscape professional"
+  }
+}
+
+PASS: prices, targets, tap targets and the contact fallback all hold.

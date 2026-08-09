@@ -1,0 +1,138 @@
+{
+  "viewports": {
+    "desktop": {
+      "initial_animation": {
+        "classes": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "replayText": "Revealing\u2026",
+        "stage": {
+          "x": 0,
+          "y": 65,
+          "width": 1440,
+          "height": 792
+        },
+        "overflow": false
+      },
+      "replay_animation": {
+        "classes": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "replayText": "Revealing\u2026",
+        "stage": {
+          "x": 0,
+          "y": 65,
+          "width": 1440,
+          "height": 792
+        },
+        "overflow": false
+      },
+      "errors": []
+    },
+    "mobile-320": {
+      "initial_animation": {
+        "classes": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "replayText": "Revealing\u2026",
+        "stage": {
+          "x": 0,
+          "y": 133,
+          "width": 320,
+          "height": 320
+        },
+        "overflow": false
+      },
+      "replay_animation": {
+        "classes": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "replayText": "Revealing\u2026",
+        "stage": {
+          "x": 0,
+          "y": 133,
+          "width": 320,
+          "height": 320
+        },
+        "overflow": false
+      },
+      "errors": []
+    },
+    "mobile-360": {
+      "initial_animation": {
+        "classes": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "replayText": "Revealing\u2026",
+        "stage": {
+          "x": 0,
+          "y": 133,
+          "width": 340,
+          "height": 340
+        },
+        "overflow": false
+      },
+      "replay_animation": {
+        "classes": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "replayText": "Revealing\u2026",
+        "stage": {
+          "x": 0,
+          "y": 133,
+          "width": 340,
+          "height": 340
+        },
+        "overflow": false
+      },
+      "errors": []
+    },
+    "mobile-430": {
+      "initial_animation": {
+        "classes": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "replayText": "Revealing\u2026",
+        "stage": {
+          "x": 0,
+          "y": 133,
+          "width": 340,
+          "height": 340
+        },
+        "overflow": false
+      },
+      "replay_animation": {
+        "classes": "hero is-drawn is-drawing",
+        "traceNodes": 0,
+        "replayText": "Revealing\u2026",
+        "stage": {
+          "x": 0,
+          "y": 133,
+          "width": 340,
+          "height": 340
+        },
+        "overflow": false
+      },
+      "errors": []
+    }
+  },
+  "navigation": {
+    "desktop_header_link": {
+      "url": "http://127.0.0.1:4321/how-it-works.html",
+      "header": 1
+    },
+    "mobile_320_menu_link": {
+      "url": "http://127.0.0.1:4321/how-it-works.html",
+      "header": 1,
+      "overflow": false,
+      "errors": []
+    },
+    "mobile_360_menu_link": {
+      "url": "http://127.0.0.1:4321/how-it-works.html",
+      "header": 1,
+      "overflow": false,
+      "errors": []
+    },
+    "mobile_430_menu_link": {
+      "url": "http://127.0.0.1:4321/how-it-works.html",
+      "header": 1,
+      "overflow": false,
+      "errors": []
+    }
+  }
+}
+
+PASS: trace-free initial/replay visual states and desktop/mobile navigation passed.
