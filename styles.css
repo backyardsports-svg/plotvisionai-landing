@@ -4986,14 +4986,14 @@ select.field__input {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  min-height: 44px;
+  min-height: 52px;
   padding: 0.4rem 0.85rem;
   cursor: pointer;
   border-radius: 999px;
   border: 1px solid var(--line-strong);
   background: color-mix(in srgb, var(--ink-200) 70%, transparent);
   color: var(--fg);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: 600;
 }
 
@@ -5536,8 +5536,9 @@ select.field__input {
   /* Controls: bigger tap targets, none of them over the image. */
   .cmp__replay,
   .xfade__toggle {
-    min-height: 44px;
+    min-height: 52px;
     padding-inline: 0.95rem;
+    font-size: var(--text-base);
   }
 
   .cmp__reveal,
@@ -5550,15 +5551,15 @@ select.field__input {
     margin-top: 0.55rem;
   }
 
-  /* Hero: hint copy off the picture, compact replay chip in the corner. */
+  /* Hero: hint copy off the picture; the replay remains a full finger target. */
   .hero__hint {
     display: none;
   }
 
   .hero__replay {
-    min-height: 44px;
+    min-height: 52px;
     padding-inline: 0.8rem;
-    font-size: 0.62rem;
+    font-size: var(--text-base);
   }
 
   /* Phones keep only the word Before / After: the descriptive line is a text
@@ -6116,21 +6117,18 @@ html[data-view="desktop"] .mnav {
   }
 }
 
-/* ---- Phone header: stacked actions, full-width primary CTA (overrides the
-   two-row tablet rules above; must stay after them to win on source order) ----
-   Three tiny pills in one row put Menu at 44px and Share at 34px, both under
-   the 48px floor, and pushed the h1 past the fold. On phones the bar becomes
-   three full-width rows instead. Because that is too tall to sit sticky over
-   the page, it collapses back to two rows once scrolled — .is-stuck is already
-   toggled by script.js at scrollY > 12, so this needs no JS. */
+/* ---- Phone header: two clear action rows (overrides the two-row tablet rules
+   above; must stay after them to win on source order) -----------------------
+   Menu stays beside the wordmark. Share and the header preview link then share
+   a second row as equal 52px controls. The persistent bottom app bar remains
+   the only large, filled app CTA in a phone viewport. */
 @media (max-width: 47.999rem) {
   .site-header__inner {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
       "brand menu"
-      "cta   cta"
-      "share share";
+      "share cta";
     align-items: center;
     row-gap: 0.5rem;
     column-gap: 0.5rem;
@@ -6156,7 +6154,7 @@ html[data-view="desktop"] .mnav {
     min-height: 56px;
     gap: 0.55rem;
     padding: 0 1.05rem;
-    font-size: 0.9375rem;
+    font-size: var(--text-base);
     font-weight: 600;
   }
 
@@ -6183,11 +6181,15 @@ html[data-view="desktop"] .mnav {
   .site-header__controls > .btn--primary {
     grid-area: cta;
     width: 100%;
-    min-height: 62px;
-    padding: 0.75rem 1.25rem;
-    font-size: 1.0625rem;
-    font-weight: 700;
-    letter-spacing: 0.005em;
+    min-height: 52px;
+    padding: 0.35rem 0.5rem;
+    --btn-bg: rgba(63, 224, 193, 0.07);
+    --btn-fg: var(--fg);
+    --btn-bd: rgba(63, 224, 193, 0.42);
+    box-shadow: none;
+    font-size: var(--text-base);
+    font-weight: 650;
+    letter-spacing: 0;
   }
 
   .hshare-wrap {
@@ -6198,13 +6200,18 @@ html[data-view="desktop"] .mnav {
   .hshare {
     width: 100%;
     justify-content: center;
-    min-height: 56px;
-    gap: 0.55rem;
-    padding: 0 1rem;
-    font-size: 0.9375rem;
+    min-height: 52px;
+    gap: 0.4rem;
+    padding: 0.35rem 0.5rem;
+    font-size: var(--text-base);
     color: var(--fg);
     border-color: rgba(63, 224, 193, 0.42);
     background: rgba(63, 224, 193, 0.06);
+  }
+
+  .toolbtn {
+    min-height: 52px;
+    font-size: var(--text-base);
   }
 
   .hshare__ico {
@@ -6218,8 +6225,8 @@ html[data-view="desktop"] .mnav {
     max-width: none;
   }
 
-  /* Scrolled: drop the share row and trim the CTA so the sticky bar stays out
-     of the way of the content it is floating over. */
+  /* Scrolled: the persistent app bar remains available, so retain the compact
+     header preview link but remove Share to keep the sticky header unobtrusive. */
   .site-header.is-stuck .site-header__inner {
     grid-template-areas:
       "brand menu"
@@ -6232,7 +6239,7 @@ html[data-view="desktop"] .mnav {
   }
 
   .site-header.is-stuck .site-header__controls > .btn--primary {
-    min-height: 54px;
+    min-height: 52px;
     font-size: 1rem;
   }
 
@@ -6667,7 +6674,7 @@ body {
 
 .reqtag {
   display: inline-block;
-  margin-right: 0.35rem;
+  margin-right: 0;
   padding: 0.1rem 0.45rem;
   border: 1px solid var(--lume-soft);
   border-radius: 999px;
@@ -6775,6 +6782,7 @@ html:not(.js) .billtoggle__state {
     justify-content: center;
     min-height: 56px;
     padding: 0 0.75rem;
+    font-size: var(--text-base);
   }
 
   .billtoggle__save {

@@ -24,10 +24,9 @@
   /* --------------- drawn-into-reality before/after reveal ---------------
    * Replaces the old draggable seam and the plain wipe. Each featured pair
    * plays one restrained sequence when it scrolls into view:
-   *   1. trace  — organic topographic contours, bed/patio/court edges, tree
-   *               canopies and lighting cones draw themselves over the before
-   *               photo in the brand's circuit-eye line language;
-   *   2. resolve — colour blooms outward from those traced zones until the
+   *   1. trace  — featured comparisons may draw their design geometry over the
+   *               before photo in the brand's circuit-eye line language;
+   *   2. resolve — colour blooms outward from those zones until the
    *               photorealistic concept has fully replaced the before photo;
    *   3. settle  — the lines fade out, leaving the concept and a faint glow.
    * It never loops, it pauses off-screen, and it can be replayed on demand.
@@ -361,6 +360,9 @@
       ? fig.querySelector(".hero__stage")
       : fig.querySelector(".cmp__stage") || fig.querySelector(".xfade__stage");
     if (!stage) return;
+    // The landing-page hero keeps the same before/after and light-bloom reveal,
+    // but intentionally never mounts the decorative or photo-traced line SVG.
+    var noTrace = fig.hasAttribute("data-reveal-no-trace");
 
     var btn = fig.querySelector("[data-reveal-replay]") || fig.querySelector("[data-xfade-toggle]");
     var label = fig.querySelector("[data-reveal-label]") || fig.querySelector("[data-xfade-toggle-label]");
@@ -395,6 +397,12 @@
     }
 
     function ensureOverlay(wantDetail) {
+      if (noTrace) {
+        if (overlay && overlay.svg.parentNode) overlay.svg.parentNode.removeChild(overlay.svg);
+        overlay = null;
+        overlayIsDetail = false;
+        return null;
+      }
       var useDetail = !!(wantDetail && detailKey);
       if (overlay && overlayIsDetail === useDetail) return overlay;
       if (overlay && overlay.svg.parentNode) overlay.svg.parentNode.removeChild(overlay.svg);
@@ -453,17 +461,21 @@
     function play(fromStart, traced) {
       if (reduceMotion) return;
       stop();
-      ensureOverlay(traced);
-      primeStrokes(overlay);
+      if (!noTrace) {
+        ensureOverlay(traced);
+        primeStrokes(overlay);
+      }
       if (fromStart) { elapsed = 0; paint(0); }
       startedAt = 0;
       played = true;
       fig.classList.add("is-drawn", "is-drawing");
       fig.classList.remove("is-resolved");
-      say(overlayIsDetail
-        ? "Tracing the property lines \u2014 roof, wall, patio and court edges \u2014 then resolving them into the concept visualization."
-        : "Drawing the design lines over the before photo, then resolving them into the concept visualization.");
-      if (label) label.textContent = "Drawing\u2026";
+      say(noTrace
+        ? "Revealing the concept visualization over the before photo."
+        : overlayIsDetail
+          ? "Tracing the property lines \u2014 roof, wall, patio and court edges \u2014 then resolving them into the concept visualization."
+          : "Drawing the design lines over the before photo, then resolving them into the concept visualization.");
+      if (label) label.textContent = noTrace ? "Revealing\u2026" : "Drawing\u2026";
       raf = window.requestAnimationFrame(frame);
     }
 
