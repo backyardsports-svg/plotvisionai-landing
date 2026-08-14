@@ -388,6 +388,15 @@
               Enter an email address so we can reply to you.
             </p>
 
+            <label class="field" for="c-address">
+              <span class="field__label">Property address</span>
+              <input class="field__input" type="text" id="c-address" name="address" autocomplete="street-address"
+                required placeholder="Street, city, state, and ZIP/postal code" aria-describedby="c-address-error" />
+            </label>
+            <p class="field__error" id="c-address-error" role="alert" hidden>
+              Add the property address so we can understand the site and local conditions.
+            </p>
+
             <fieldset class="field field--set" aria-describedby="c-role-error">
               <legend class="field__label">I am a</legend>
               <div class="choices">
@@ -421,6 +430,20 @@
                 placeholder="Anything about the property, timing, or budget that would help."></textarea>
             </label>
 
+            <label class="field" for="c-photos">
+              <span class="field__label">Property photos <span class="field__opt">(optional, up to 3)</span></span>
+              <input class="field__input field__file" type="file" id="c-photos" name="photos"
+                accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple
+                aria-describedby="c-photos-help c-photos-error" />
+            </label>
+            <p class="microcopy" id="c-photos-help">
+              Photos help us give you a more useful reply. Send one wide view and up to two additional angles; JPG,
+              PNG, WebP, HEIC, or HEIF files up to 10 MB each work best.
+            </p>
+            <p class="field__error" id="c-photos-error" role="alert" hidden>
+              Choose no more than three supported photos, each 10 MB or smaller.
+            </p>
+
             <details class="story-fields">
               <summary>I want to share a project story or before/after</summary>
               <div class="story-fields__body">
@@ -452,25 +475,21 @@
                 </label>
 
                 <p class="microcopy">
-                  <strong>Photos cannot be uploaded here.</strong> This page has no server and no file storage, so there
-                  is no upload button &mdash; attach your photos to the email this form drafts, or send them separately
-                  to backyardsports@gmail.com. Every submission is reviewed by a person before anything is published,
-                  nothing goes live without the box above ticked, and you can withdraw permission at any time by
-                  replying to the same thread.
+                  You can add up to three photos above or paste a shared folder link here. Every submission is reviewed
+                  by a person before anything is published, nothing goes live without the permission box above ticked,
+                  and you can withdraw permission at any time by replying to the same thread.
                 </p>
               </div>
             </details>
 
-            <button class="btn btn--primary btn--full" type="submit">
-              Open email to send
+            <button class="btn btn--primary btn--full" type="submit" id="contact-submit">
+              <span data-contact-submit-label>Send project request</span>
               <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right" /></svg>
             </button>
 
             <p class="microcopy" id="contact-note">
-              <strong>Opens your email app.</strong> This page has no server, so the button drafts a message in your own
-              email app addressed to backyardsports@gmail.com. Nothing is sent until you press send there, and nothing
-              you type here is stored or transmitted by this page. If your device has no mail app set up, email us
-              directly at
+              <strong>Sent securely to PlotVisionAI.</strong> Your project details and optional photos are used only to
+              respond to this request. If the form does not work on your device, email us directly at
               <a href="mailto:backyardsports@gmail.com?subject=PlotVisionAI%20enquiry">backyardsports@gmail.com</a>.
             </p>
           </form>
@@ -504,7 +523,7 @@
       <section class="appcta" aria-labelledby="app-title">
         <div class="shell appcta__inner">
           <div class="appcta__body">
-            <span class="appcta__status">iPhone &amp; Android app &mdash; coming soon</span>
+            <span class="appcta__status">Web app available now &middot; native apps coming later</span>
             <h2 id="app-title">Design anywhere. PlotVisionAI&trade; for iPhone and Android.</h2>
             <p class="appcta__lede">
               The same workflow as the web tool, in your pocket on site: photograph the yard where you are standing,
@@ -512,7 +531,7 @@
               professionals worldwide.
             </p>
             <p class="cta-row appcta__actions">
-            <a class="btn btn--primary" href="download.html">Get the app</a>
+            <a class="btn btn--primary" href="https://getplotvisionai.com" target="_blank" rel="noopener">Open the web app</a>
             <a class="btn btn--ghost" href="contact.html">Join mobile early access</a>
             </p>
             <p class="appcta__note">The apps are in development. There is no store listing yet, nothing to download today, and no release date is being promised &mdash; joining early access simply means you hear first.</p>
@@ -711,6 +730,7 @@
       </a>
     </aside>
 
+    <script src="config.js" defer></script>
     <script src="script.js" defer></script>
   </body>
 </html>

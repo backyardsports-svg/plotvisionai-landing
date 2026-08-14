@@ -14,6 +14,7 @@
 window.PV_CONFIG = {
   PREVIEW_URL: "https://getplotvisionai.com",
   SIGNUP_ENDPOINT: "https://dtryhdykdbncxxwgqmta.supabase.co/functions/v1/register-preview-signup",
+  CONTACT_ENDPOINT: "https://dtryhdykdbncxxwgqmta.supabase.co/functions/v1/submit-contact-intake",
   SIGNUP_ANON_KEY: "sb_publishable_oNlZDcyFna0_ZIfCSFzk0g_FYO6ALAd",
   SIGNUP_SOURCE: "free-preview",
   CONSENT_VERSION: "2026-07-31"

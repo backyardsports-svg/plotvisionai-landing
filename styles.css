@@ -6614,92 +6614,11 @@ html[data-view="desktop"] .mnav {
   }
 }
 
-/* ========================================================================== */
-/* Persistent app bar                                                         */
-/* Sits on every route. On phones it is a sticky bottom bar, which is the one
-   place a large-finger target can live permanently without fighting the header
-   or covering the content being read; body padding-bottom reserves its height
-   so it never overlaps the footer. On desktop it drops to a bottom-right card
-   so it stays visible without spanning the page. */
+/* The former floating mobile-app promotion is intentionally retired. The
+   live web app is linked from normal page CTAs; native apps are described only
+   on the download page so no fixed element obscures content. */
 .appbar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 45;
-  padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
-  background: linear-gradient(180deg, rgba(3, 16, 15, 0) 0%, rgba(3, 16, 15, 0.86) 38%, var(--ink-000) 100%);
-  pointer-events: none;
-}
-
-.appbar__btn {
-  pointer-events: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.1rem;
-  width: 100%;
-  min-height: 64px;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--teal);
-  border-radius: var(--radius);
-  background: var(--teal);
-  color: #032420;
-  text-decoration: none;
-  text-align: center;
-  box-shadow: 0 12px 38px -14px var(--teal-glow);
-  transition: background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
-}
-
-.appbar__label {
-  font-size: 1.0625rem;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: 0.005em;
-}
-
-.appbar__sub {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  line-height: 1.2;
-  opacity: 0.78;
-}
-
-.appbar__btn:hover {
-  background: #58f0d3;
-  transform: translateY(-1px);
-  box-shadow: 0 18px 44px -14px var(--teal-glow);
-}
-
-.appbar__btn:focus-visible {
-  outline: none;
-  box-shadow: var(--focus);
-}
-
-body {
-  padding-bottom: 96px;
-}
-
-/* Desktop: a compact card in the bottom-right rather than a full-width bar. */
-@media (min-width: 48rem) {
-  .appbar {
-    left: auto;
-    right: 1.25rem;
-    bottom: 1.25rem;
-    width: min(21rem, calc(100vw - 2.5rem));
-    padding: 0;
-    background: none;
-  }
-
-  .appbar__btn {
-    min-height: 60px;
-    border-radius: var(--radius-lg);
-  }
-
-  body {
-    padding-bottom: 0;
-  }
+  display: none !important;
 }
 
 /* The sticky bar and the collapsed header both float over the page; keep the
@@ -6724,40 +6643,6 @@ body {
   .gate__open .btn {
     width: auto;
     min-width: 18rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .appbar__btn {
-    transition: none;
-  }
-
-  .appbar__btn:hover {
-    transform: none;
-  }
-}
-
-/* Context-aware app-bar safety. Hiding the card while the desktop concept
-   editor is in view removes its click surface entirely, rather than merely
-   lowering its z-index and risking it intercepting Remove or Undo. */
-@media (min-width: 48rem) {
-  html.concept-demo-in-view .appbar {
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(1rem);
-    pointer-events: none;
-  }
-
-  html.concept-demo-in-view .appbar__btn {
-    pointer-events: none;
-  }
-}
-
-@media (max-width: 47.999rem) {
-  html.js body[data-home-hero-cta] .appbar,
-  html.js body[data-home-hero-cta] .appbar__btn {
-    visibility: hidden;
-    pointer-events: none;
   }
 }
 

@@ -1423,25 +1423,33 @@
   }
 
   /* --------------------------- contact form --------------------------- */
-  /* No server and no third-party processor: the submit builds a structured
-     message in the visitor's own mail client. It never claims to have sent. */
+  /* Project requests are sent to a Supabase Edge Function. The function
+     validates the fields, stores the private intake record, and uploads no more
+     than three private photos. Nothing is stored in browser-side storage. */
   var cForm = document.getElementById("contact-form");
   var cDone = document.getElementById("contact-done");
   var cDoneText = document.getElementById("contact-done-text");
-  var MAILTO = "backyardsports@gmail.com";
 
   if (cForm && cDone && cDoneText) {
+    var contactCfg = window.PV_CONFIG || {};
+    var cSubmit = document.getElementById("contact-submit");
+    var cSubmitLabel = cSubmit ? cSubmit.querySelector("[data-contact-submit-label]") : null;
+    var cSending = false;
     var f = {
       name: document.getElementById("c-name"),
       email: document.getElementById("c-email"),
+      address: document.getElementById("c-address"),
       interest: document.getElementById("c-interest"),
-      message: document.getElementById("c-message")
+      message: document.getElementById("c-message"),
+      photos: document.getElementById("c-photos")
     };
     var err = {
       name: document.getElementById("c-name-error"),
       email: document.getElementById("c-email-error"),
+      address: document.getElementById("c-address-error"),
       role: document.getElementById("c-role-error"),
-      interest: document.getElementById("c-interest-error")
+      interest: document.getElementById("c-interest-error"),
+      photos: document.getElementById("c-photos-error")
     };
 
     function role() {
@@ -1470,27 +1478,48 @@
       });
     });
 
+    function validPhotos(files) {
+      if (files.length > 3) return false;
+      var accepted = /^(image\/jpeg|image\/png|image\/webp|image\/heic|image\/heif)$/i;
+      for (var i = 0; i < files.length; i += 1) {
+        if (!accepted.test(files[i].type) || files[i].size > 10 * 1024 * 1024) return false;
+      }
+      return true;
+    }
+
     cForm.addEventListener("submit", function (event) {
       event.preventDefault();
+      if (cSending) return;
 
       var name = f.name.value.trim();
       var email = f.email.value.trim();
+      var address = f.address.value.trim();
       var who = role();
       var interest = f.interest.value;
       var message = f.message.value.trim();
+      var photos = f.photos && f.photos.files ? Array.prototype.slice.call(f.photos.files) : [];
 
       var ok = true;
       var first = null;
       if (!flag(f.name, err.name, name.length < 2)) { ok = false; first = first || f.name; }
       if (!flag(f.email, err.email, !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))) { ok = false; first = first || f.email; }
+      if (!flag(f.address, err.address, address.length < 8)) { ok = false; first = first || f.address; }
       if (err.role) {
         err.role.hidden = !!who;
         if (!who) { ok = false; first = first || cForm.querySelector('input[name="role"]'); }
       }
       if (!flag(f.interest, err.interest, !interest)) { ok = false; first = first || f.interest; }
+      if (!flag(f.photos, err.photos, !validPhotos(photos))) { ok = false; first = first || f.photos; }
 
       if (!ok) {
         if (first && first.focus) first.focus();
+        return;
+      }
+
+      if (!contactCfg.CONTACT_ENDPOINT) {
+        cDoneText.textContent = "The secure form connection is temporarily unavailable. Please email backyardsports@gmail.com directly.";
+        cDone.hidden = false;
+        if (cDone.focus) cDone.focus();
         return;
       }
 
@@ -1498,50 +1527,69 @@
       var story = cForm.querySelector("#c-story");
       var testimonial = cForm.querySelector("#c-testimonial");
       var permission = cForm.querySelector("#c-permission");
+      var body = new FormData();
+      body.append("name", name);
+      body.append("email", email);
+      body.append("address", address);
+      body.append("role", who);
+      body.append("interest", interest);
+      body.append("message", message);
+      body.append("plan", wantedPlan || "");
+      body.append("billing", planParams.get("billing") || "");
+      body.append("projectLink", link ? link.value.trim() : "");
+      body.append("story", story ? story.value.trim() : "");
+      body.append("testimonial", testimonial ? testimonial.value.trim() : "");
+      body.append("permission", permission && permission.checked ? "true" : "false");
+      body.append("page", window.location.pathname);
+      photos.forEach(function (photo) { body.append("photos", photo, photo.name); });
 
-      var lines = [
-        "Name: " + name,
-        "Email: " + email,
-        "I am a: " + who,
-        "Project interest: " + interest
-      ];
-
-      if (wantedPlan) {
-        lines.push("Plan requested: " + wantedPlan +
-          (planParams.get("billing") ? " (" + planParams.get("billing") + ")" : ""));
+      var headers = {};
+      if (contactCfg.SIGNUP_ANON_KEY) {
+        headers.apikey = contactCfg.SIGNUP_ANON_KEY;
+        headers.Authorization = "Bearer " + contactCfg.SIGNUP_ANON_KEY;
       }
 
-      lines.push("", "Message:", message || "(none)");
-
-      var linkVal = link && link.value.trim();
-      var storyVal = story && story.value.trim();
-      var quoteVal = testimonial && testimonial.value.trim();
-      if (linkVal || storyVal || quoteVal || (permission && permission.checked)) {
-        lines.push("", "— Project story —");
-        if (linkVal) lines.push("Before / after link: " + linkVal);
-        if (storyVal) lines.push("", "What happened:", storyVal);
-        if (quoteVal) lines.push("", "Testimonial in their words:", quoteVal);
-        lines.push(
-          "",
-          "Permission to publish: " + (permission && permission.checked ? "yes, with name and photos as supplied" : "not given"),
-          "Photos: attach them to this email before sending — the form cannot upload files."
-        );
+      cSending = true;
+      if (cSubmit) {
+        cSubmit.disabled = true;
+        cSubmit.setAttribute("aria-busy", "true");
+        if (cSubmitLabel) cSubmitLabel.textContent = "Sending request";
       }
+      cDone.hidden = true;
 
-      lines.push("", "— Sent from the PlotVisionAI page");
-      var href =
-        "mailto:" + MAILTO +
-        "?subject=" + encodeURIComponent("PlotVisionAI enquiry — " + name + " (" + who + ")") +
-        "&body=" + encodeURIComponent(lines.join("\n"));
-
-      cDoneText.textContent =
-        "Your email app should now be opening with this message drafted to " + MAILTO +
-        ". Nothing has been sent yet — press send in your email app to finish. If nothing opened, email " +
-        MAILTO + " directly.";
-      cDone.hidden = false;
-      if (cDone.focus) cDone.focus();
-
-      window.location.href = href;
+      fetch(contactCfg.CONTACT_ENDPOINT, { method: "POST", headers: headers, body: body })
+        .then(function (response) {
+          return response.json().catch(function () { return {}; }).then(function (data) {
+            if (!response.ok) {
+              throw new Error(
+                data && data.error && data.error.message
+                  ? data.error.message
+                  : "The request could not be sent."
+              );
+            }
+            return data;
+          });
+        })
+        .then(function () {
+          cForm.reset();
+          cDoneText.textContent = "Your project request was sent. Darin will review it and reply personally.";
+          cDone.hidden = false;
+          if (cDone.focus) cDone.focus();
+        })
+        .catch(function (sendError) {
+          cDoneText.textContent = (sendError && sendError.message ? sendError.message : "The request could not be sent.") +
+            " Please try again or email backyardsports@gmail.com.";
+          cDone.hidden = false;
+          if (cDone.focus) cDone.focus();
+        })
+        .then(function () {
+          cSending = false;
+          if (cSubmit) {
+            cSubmit.disabled = false;
+            cSubmit.setAttribute("aria-busy", "false");
+            if (cSubmitLabel) cSubmitLabel.textContent = "Send project request";
+          }
+        });
     });
   }
 
