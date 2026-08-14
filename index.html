@@ -113,13 +113,13 @@
             "applicationSubCategory": "AI landscape visualization tool",
             "operatingSystem": "Web browser",
             "url": "https://www.landscapedesignsonline.com/",
-            "releaseNotes": "Early access. Concept generation, editing model and pricing logic are in development.",
-            "description": "An AI landscape visualization tool that turns one property photo into an editable landscape concept covering patios, pools and spas, backyard sports courts, fencing, retaining walls, lighting and planting.",
+            "releaseNotes": "Early access web app with Google sign-in, saved projects, photo markup, design controls and credit-based AI concept generation.",
+            "description": "An AI landscape visualization tool that turns one property photo into a targeted or full landscape concept covering full backyards, patios, surfaces, backyard sports courts, fencing, retaining walls, lighting and planting.",
             "featureList": [
               "Before-and-after landscape visualization from one property photo",
-              "Editable landscape concepts rather than static renders",
+              "Photo markup and targeted landscape concepts",
               "Patio design visualizer",
-              "Pool design visualization",
+              "Surface and hardscape visualization",
               "Backyard sports court design",
               "Fence visualization and privacy screening",
               "Retaining wall design",
@@ -203,7 +203,7 @@
                 "name": "How do credits work?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Every plan includes a set number of credits rather than unlimited use. Credits are spent when the tool runs an AI generation or a revision, and the exact credit cost of an action is shown before you confirm it. Starter includes 20 credits once, the Homeowner Project Pass includes 150 credits once, Professional includes 400 credits each month, and the add-on Credit Pack adds 100 credits at any time. Credit metering is still being built, so nothing is metered on this page yet and no rollover of unused monthly credits is promised."
+                  "text": "Every plan includes a set number of credits rather than unlimited use. A targeted concept uses 1 credit, a full redesign in one specialist category uses 2 credits, and a Full Backyard redesign uses 3 credits. The exact cost is shown before confirmation. Starter includes 20 credits once, the Homeowner Project Pass includes 150 credits once, Professional includes 400 credits each month, and the add-on Credit Pack adds 100 credits at any time."
                 }
               },
               {
@@ -211,7 +211,7 @@
                 "name": "What is actually working right now?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "The page is a working prototype of the interface. Concept generation, the editing model, pricing logic and the account system are in development, which is why pricing is labelled early access."
+                  "text": "The self-serve web app is live with Google sign-in, saved projects, photo markup, design-element choices, location guidance and credit-based concept generation. Native iPhone and Android store apps remain in development."
                 }
               },
               {
@@ -219,7 +219,7 @@
                 "name": "Which visualization categories are covered?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Patios and outdoor living, pools and spas, courts through Backyard Sports Center\u2122, fencing and privacy screening, retaining walls, landscape lighting, and planting and lawn design - all inside one concept of one property."
+                  "text": "Full backyards, patios and outdoor living, surfaces, courts through Backyard Sports Center\u2122, fencing and privacy screening, retaining walls, landscape lighting, and planting and lawn design. Choose one project type for each generation."
                 }
               }
             ]
@@ -553,8 +553,8 @@
               </div>
               <p class="hero__reassure">Three concept credits free. No card required.</p>
               <p class="hero__trust">
-                Early access, in development &mdash; concepts are produced with the Landforms team while the self-serve
-                tool is finished. One property, one camera position: the concept is rendered onto the same photograph.
+                The self-serve web app is live. Mark the area to change, choose the design settings and review the credit
+                cost before generating. One property, one camera position: the concept is rendered onto the same photograph.
               </p>
             </div>
           </div>
@@ -850,12 +850,12 @@
         <div class="shell">
           <div class="section-head section-head--split reveal">
             <div>
-              <p class="eyebrow">Inside the editor</p>
+            <p class="eyebrow">Product vision</p>
               <h2 id="editor-title">Landscape design software for contractors — a working file, not a slide deck</h2>
             </div>
             <p>
-              Interactive preview with sample project data. Pick a stage to walk the workflow, or flip between the site
-              photo and the generated concept.
+              This sample editor illustrates the broader collaboration and estimating direction. For the current live
+              generation sequence, see the <a href="how-it-works.html">five-step design process</a>.
             </p>
           </div>
 
@@ -1061,7 +1061,7 @@
                       <tr><th scope="row">Court pad</th><td>34 × 64 ft</td></tr>
                     </tbody>
                   </table>
-                  <p class="panel-hint">Quantities are illustrative — pricing logic is still being built.</p>
+                  <p class="panel-hint">Quantities are illustrative. Confirm final scope and pricing with a qualified contractor.</p>
                 </div>
 
                 <div id="panel-share" role="tabpanel" aria-labelledby="tab-share" tabindex="0" hidden>
@@ -1512,30 +1512,27 @@
             <details class="qa">
               <summary>How do credits work?</summary>
               <p>
-                Every plan includes a set number of credits rather than unlimited use. A credit is spent when the tool
-                runs an AI generation or a revision, and the exact credit cost of an action is shown before you confirm
-                it, so nothing is ever charged without you seeing the number first. Starter includes 20 credits once, the
-                Homeowner Project Pass includes 150 credits once, Professional includes 400 credits each month, and the
-                add-on Credit Pack adds another 100 credits at any time. Credit metering is still being built &mdash; nothing on this page is metered today,
-                and individual plans do not promise rollover of unused monthly credits. Contracted corporate team plans
-                have separate written allowance and rollover terms.
+                A targeted concept uses 1 credit, a full redesign in one specialist category uses 2 credits, and a Full
+                Backyard redesign uses 3 credits. The exact cost is shown before confirmation. Starter includes 20
+                credits once, the Homeowner Project Pass includes 150 credits once, Professional includes 400 credits
+                each month, and the add-on Credit Pack adds another 100 credits at any time. Individual plans do not
+                currently promise rollover; contracted corporate team plans have separate written terms.
               </p>
             </details>
             <details class="qa">
               <summary>What is actually working right now?</summary>
               <p>
-                The <a href="free-preview.html">interactive preview</a> is open and free until launch, and the site you
-                are reading is live. Concept generation, the editing model, pricing logic and the account system are
-                still in development, which is why pricing is labelled early access and why the contact form drafts a
-                real email straight to the team.
+                The self-serve web app is live with Google sign-in, saved projects, photo markup, design-element choices,
+                location guidance and credit-based concept generation. Native iPhone and Android store apps remain in
+                development.
               </p>
             </details>
             <details class="qa">
               <summary>Which categories can it handle?</summary>
               <p>
-                Patios and outdoor living, pools and spas, courts through Backyard Sports Center&trade;, fencing and privacy
-                screening, retaining walls, landscape lighting, and planting and lawn design. They are not separate
-                products &mdash; they all happen inside one concept of one property. There is more on each of these in
+                Full backyards, patios and outdoor living, surfaces, courts through Backyard Sports Center&trade;, fencing
+                and privacy screening, retaining walls, landscape lighting, and planting and lawn design. Choose one
+                project type for each generation. There is more on each of these in
                 the <a href="blog.html">PlotVisionAI blog</a>.
               </p>
             </details>
@@ -1670,9 +1667,9 @@
           <p class="pricing__note">
             Checkout is securely hosted by Stripe &mdash; card details are entered on Stripe&rsquo;s own page, never on
             this site. Early-access prices, subject to change; anyone who buys during early access will be told before
-            anything changes. Credit metering is still in development, so nothing is metered on this page yet and we are
-            not promising rollover of unused monthly credits on individual plans. Contracted corporate team plans have
-            separate written rollover terms. Not sure yet? <a href="#contact">Get in touch</a> first.
+            anything changes. Individual plans do not currently promise rollover of unused monthly credits. Contracted
+            corporate team plans have separate written rollover terms. Not sure yet?
+            <a href="#contact">Get in touch</a> first.
           </p>
 
           <!-- Shown only when the page is running inside an embedded preview frame,
@@ -2023,8 +2020,7 @@
           <p class="sf__legal">
             PlotVisionAI&trade; is a working name, pending trademark clearance. PlotVisionAI&trade; and Backyard Sports
             Center&trade; are unregistered trademarks used by Landforms Design Inc; no claim is made to federal
-            registration and no priority of use is asserted. Early access: accounts and self-serve generation are still in
-            development and pricing is subject to change. Photography and concept renders courtesy of Landforms Design
+            registration and no priority of use is asserted. Early-access pricing is subject to change. The self-serve web app is live; native iPhone and Android store apps remain in development. Photography and concept renders courtesy of Landforms Design
             Inc; sample project data is shown for layout only and is not a quote.
           </p>
         </div>
