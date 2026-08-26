@@ -4,6 +4,16 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/app",
+      "destination": "https://plotvisionai-mobile.vercel.app/",
+      "permanent": false
+    },
+    {
+      "source": "/app/:path*",
+      "destination": "https://plotvisionai-mobile.vercel.app/:path*",
+      "permanent": false
+    },
+    {
       "source": "/courts.html",
       "destination": "/backyard-sports-center.html",
       "permanent": true
