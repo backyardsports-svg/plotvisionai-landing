@@ -2,15 +2,37 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": false,
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/_expo/:path*",
+      "destination": "https://plotvisionai-app-current.vercel.app/_expo/:path*"
+    },
+    {
+      "source": "/onboarding/:path*",
+      "destination": "https://plotvisionai-app-current.vercel.app/onboarding/:path*"
+    },
+    {
+      "source": "/new-project/:path*",
+      "destination": "https://plotvisionai-app-current.vercel.app/new-project/:path*"
+    },
+    {
+      "source": "/client/:path*",
+      "destination": "https://plotvisionai-app-current.vercel.app/client/:path*"
+    },
+    {
+      "source": "/(auth-callback|account|app|client-project|client-share|corporate-pricing|credits|new|pricing|projects)",
+      "destination": "https://plotvisionai-app-current.vercel.app/$1"
+    }
+  ],
   "redirects": [
     {
       "source": "/app",
-      "destination": "https://plotvisionai-mobile.vercel.app/",
+      "destination": "/onboarding/sign-in",
       "permanent": false
     },
     {
       "source": "/app/:path*",
-      "destination": "https://plotvisionai-mobile.vercel.app/:path*",
+      "destination": "/onboarding/:path*",
       "permanent": false
     },
     {
