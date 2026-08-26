@@ -68,6 +68,194 @@
   --focus: 0 0 0 2px var(--ink-000), 0 0 0 4px var(--teal);
 }
 
+/* -------------------------- EARLY FOUNDER TRUST ------------------------- */
+.founder-trust {
+  border-block: 1px solid var(--line);
+  background: var(--ink-100);
+}
+
+.founder-trust__inner {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) auto;
+  gap: var(--sp-4);
+  align-items: center;
+  min-height: 6rem;
+  padding-block: var(--sp-3);
+}
+
+.founder-trust__portrait {
+  display: block;
+  width: 4rem;
+  height: 4rem;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--ink-300);
+}
+
+.founder-trust__portrait picture,
+.founder-trust__portrait img {
+  width: 100%;
+  height: 100%;
+}
+
+.founder-trust__portrait img {
+  object-fit: cover;
+}
+
+.founder-trust__portrait:hover {
+  border-color: var(--teal);
+}
+
+.founder-trust__copy {
+  min-width: 0;
+}
+
+.founder-trust__copy p {
+  margin: 0;
+}
+
+.founder-trust__eyebrow {
+  margin-bottom: var(--sp-1) !important;
+  color: var(--teal);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.founder-trust__copy p:last-child {
+  max-width: 67ch;
+  color: var(--fg-soft);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.founder-trust__copy strong {
+  color: var(--fg-warm);
+}
+
+.founder-trust__links {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: center;
+}
+
+.founder-trust__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--fg-warm);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.founder-trust__links a:hover {
+  color: var(--teal);
+}
+
+@media (max-width: 47.999rem) {
+  .founder-trust__inner {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: var(--sp-3);
+  }
+
+  .founder-trust__portrait {
+    grid-row: 1 / span 2;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .founder-trust__links {
+    grid-column: 2;
+    gap: var(--sp-4);
+  }
+}
+
+/* ------------------------- PRESENTATION BOARD -------------------------- */
+.presentation-board {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(244, 201, 135, 0.08), transparent 32rem),
+    var(--ink-100);
+}
+
+.presentation-board__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(18rem, 0.65fr);
+  gap: clamp(var(--sp-5), 4vw, var(--sp-8));
+  align-items: center;
+}
+
+.presentation-board__figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--ink-300);
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.28);
+}
+
+.presentation-board__figure img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
+}
+
+.presentation-board__figure figcaption {
+  padding: var(--sp-3) var(--sp-4);
+  border-top: 1px solid var(--line);
+  color: var(--fg-mute);
+  font-size: var(--text-sm);
+}
+
+.presentation-board__copy {
+  max-width: 32rem;
+}
+
+.presentation-board__copy h3 {
+  margin-bottom: var(--sp-4);
+  font-family: var(--serif);
+  font-size: var(--text-2xl);
+  font-weight: 500;
+}
+
+.presentation-board__copy > p:not(.eyebrow) {
+  color: var(--fg-soft);
+}
+
+.presentation-board__list {
+  display: grid;
+  gap: var(--sp-3);
+  margin: var(--sp-5) 0 var(--sp-6);
+}
+
+.presentation-board__list li {
+  position: relative;
+  padding-left: 1.7rem;
+  color: var(--fg-soft);
+}
+
+.presentation-board__list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+  font-weight: 700;
+}
+
+@media (max-width: 820px) {
+  .presentation-board__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .presentation-board__copy {
+    max-width: 42rem;
+  }
+}
+
 /* -------------------------------- 2. BASE -------------------------------- */
 *,
 *::before,
@@ -4532,6 +4720,21 @@ select.field__input {
   }
 }
 
+/* Final desktop sizing for the full-frame sequence. The fixed width prevents
+   the 16:9 media ratio from expanding the grid beyond the viewport. */
+@media (min-width: 62rem) {
+  .hero--home-sequence .hero__stage {
+    width: 100%;
+    min-width: 0;
+    height: clamp(32rem, 70svh, 42rem);
+    aspect-ratio: auto;
+  }
+
+  .hero--home-sequence .hero__copy::after {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .phone--lead .phone__frame {
     transform: translateY(-0.8rem);
@@ -7064,14 +7267,58 @@ html:not(.js) .billtoggle__state {
   .hero__stage {
     aspect-ratio: 5 / 4;
     max-height: 42svh;
+    overflow: hidden;
+    background: var(--ink-000);
+  }
+
+  /* A quiet crossfade replaces the clipped wipe on phones. The old moving
+     seam could leave a bright vertical line and made the handoff feel stuck. */
+  .hero .hero__half--before,
+  .hero .hero__half--after {
+    clip-path: none !important;
+  }
+
+  .hero .hero__half--before {
+    opacity: 1 !important;
+  }
+
+  .hero .hero__half--after {
+    opacity: 0 !important;
+    transition: opacity 1200ms var(--ease) !important;
+  }
+
+  .hero.is-drawn .hero__half--after {
+    opacity: 1 !important;
+  }
+
+  .hero .hero__seam {
+    display: none !important;
+  }
+
+  .hero__stage::after {
+    content: "";
+    position: absolute;
+    z-index: 5;
+    inset: auto 0 0;
+    height: 3.5rem;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, var(--ink-000));
   }
 
   .hero__copy {
-    padding: 1.15rem 0 1.6rem;
+    margin-top: -1px;
+    padding: 0.35rem 0 1.6rem;
+    background:
+      radial-gradient(80% 58% at 50% 0%, rgba(20, 69, 63, 0.5), transparent 72%),
+      var(--ink-000);
   }
 
   .hero__copy .shell {
     gap: 0.7rem;
+  }
+
+  .vision-brand-current {
+    width: min(82vw, 19rem);
   }
 
   .hero__kicker {
@@ -7217,6 +7464,145 @@ html:not(.js) .billtoggle__state {
 @media (max-width: 22.5rem) {
   .hshare-wrap {
     display: none;
+  }
+}
+
+/* ---- 41. Homeowner transformation sequence ------------------------------ */
+/* Four complete before/concept pairs replace the split comparison. Each image
+   owns the full frame, so the transition cannot leave a divider or partial
+   reveal behind. */
+.hero--home-sequence .hero__stage {
+  aspect-ratio: 16 / 9;
+  max-height: none;
+  background: #020908;
+}
+
+.hero--home-sequence .hero__stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(2, 9, 8, 0.08), transparent 48%, rgba(2, 9, 8, 0.54)),
+    radial-gradient(80% 100% at 50% 50%, transparent 58%, rgba(2, 9, 8, 0.24));
+  box-shadow: inset 0 0 0 1px rgba(127, 240, 211, 0.18);
+}
+
+.hero-pair {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 850ms var(--ease);
+}
+
+.hero-pair.is-active {
+  z-index: 2;
+  opacity: 1;
+}
+
+.hero-pair.is-leaving {
+  z-index: 1;
+  opacity: 1;
+}
+
+.hero-pair__frame {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-pair__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.hero-pair__frame--before {
+  z-index: 1;
+}
+
+.hero-pair__frame--after {
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 1100ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-pair.is-concept .hero-pair__frame--after {
+  opacity: 1;
+}
+
+.hero__project-status {
+  position: absolute;
+  left: clamp(0.75rem, 2.5vw, 1.5rem);
+  bottom: clamp(0.75rem, 2.5vw, 1.5rem);
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 38px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(150, 245, 222, 0.32);
+  border-radius: 999px;
+  color: #f4fbf9;
+  background: rgba(2, 14, 13, 0.76);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(10px);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.035em;
+}
+
+.hero__state-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #7ff0d3;
+  box-shadow: 0 0 12px rgba(127, 240, 211, 0.7);
+}
+
+.hero__project-count {
+  padding-left: 0.55rem;
+  border-left: 1px solid rgba(244, 251, 249, 0.28);
+  color: rgba(244, 251, 249, 0.7);
+  font-weight: 600;
+}
+
+@media (max-width: 47.999rem) {
+  .hero--home-sequence .hero__stage {
+    aspect-ratio: 16 / 9;
+    max-height: none;
+  }
+
+  .hero--home-sequence .hero__stage::after {
+    height: auto;
+    background:
+      linear-gradient(180deg, rgba(2, 9, 8, 0.05), transparent 42%, rgba(2, 9, 8, 0.5)),
+      radial-gradient(90% 120% at 50% 50%, transparent 55%, rgba(2, 9, 8, 0.2));
+  }
+
+  .hero__project-status {
+    right: 0.75rem;
+    left: 0.75rem;
+    bottom: 0.65rem;
+    justify-content: center;
+    width: fit-content;
+    max-width: calc(100% - 1.5rem);
+    margin-inline: auto;
+    min-height: 34px;
+    padding: 0.45rem 0.65rem;
+    font-size: 0.6875rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-pair,
+  .hero-pair__frame--after {
+    transition: none;
   }
 }
 
@@ -7454,8 +7840,95 @@ html.js.home-hero-primary-away body[data-home-hero-cta] .site-header__controls >
     gap: 0;
   }
 
-  body:not([data-home-hero-cta]) .site-header__controls > .btn--primary {
+body:not([data-home-hero-cta]) .site-header__controls > .btn--primary {
     padding: 0 0.75rem;
     font-size: 0.875rem;
+  }
+}
+
+/* ---- 41. Finished project reel ----------------------------------------- */
+.project-reel {
+  background:
+    radial-gradient(circle at 78% 18%, rgba(100, 190, 184, 0.14), transparent 38%),
+    #0f2e31;
+  color: #f7fbfa;
+}
+
+.project-reel__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 27rem);
+  gap: clamp(2rem, 6vw, 5.5rem);
+  align-items: center;
+}
+
+.project-reel__copy {
+  max-width: 42rem;
+}
+
+.project-reel__copy .eyebrow {
+  color: #a8e2dd;
+}
+
+.project-reel__copy h2,
+.project-reel__copy p {
+  color: inherit;
+}
+
+.project-reel__copy > p {
+  color: rgba(247, 251, 250, 0.78);
+  max-width: 38rem;
+}
+
+.project-reel__proof {
+  display: grid;
+  gap: 0.7rem;
+  margin: 1.5rem 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.project-reel__proof li {
+  position: relative;
+  padding-left: 1.55rem;
+  color: rgba(247, 251, 250, 0.9);
+}
+
+.project-reel__proof li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.52rem;
+  height: 0.52rem;
+  border-radius: 50%;
+  background: #82cbc5;
+}
+
+.project-reel__media {
+  justify-self: center;
+  width: min(100%, 25rem);
+  padding: 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 1.35rem;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.34);
+}
+
+.project-reel__media video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 0.9rem;
+  background: #07191b;
+  object-fit: cover;
+}
+
+@media (max-width: 47.999rem) {
+  .project-reel__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-reel__media {
+    width: min(100%, 22rem);
   }
 }

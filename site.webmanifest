@@ -10,11 +10,16 @@
   "background_color": "#03100f",
   "theme_color": "#03100f",
   "icons": [
-    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/assets/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "/assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
-    { "src": "/assets/icon-1024.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" },
-    { "src": "/assets/icon-master.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+    { "src": "/assets/plotvisionai-gift-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/plotvisionai-gift-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/plotvisionai-gift-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/plotvisionai-gift-thumbnail.jpg",
+      "sizes": "967x909",
+      "type": "image/jpeg",
+      "label": "PlotVisionAI"
+    }
   ]
 }

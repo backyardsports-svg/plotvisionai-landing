@@ -1403,23 +1403,37 @@
   if (planSlot && wantedPlan) {
     var wantedBilling = planParams.get("billing") || "";
     var billingWord = { monthly: "billed monthly", annual: "billed annually", custom: "custom terms",
-      "one-time": "a one-time payment" }[wantedBilling] || "";
+      "one-time": "a one-time payment", paid: "payment received" }[wantedBilling] || "";
     var planLine = wantedPlan + (billingWord ? ", " + billingWord : "");
+    var isExpertDesign = wantedPlan === "Expert Design Service";
+    var isPaidExpertDesign = isExpertDesign && wantedBilling === "paid";
 
     planSlot.innerHTML = "";
     var strong = document.createElement("strong");
-    strong.textContent = "You are asking us to activate " + planLine + ".";
+    strong.textContent = isPaidExpertDesign
+      ? "Payment received for your $350 Expert Design Service."
+      : isExpertDesign
+      ? "You are requesting our Expert Design Service at $350 per design."
+      : "You are asking us to activate " + planLine + ".";
     planSlot.appendChild(strong);
     planSlot.appendChild(document.createTextNode(
-      " Send this form and we will reply with the next step. Nothing has been charged and no seats exist yet."));
+      isPaidExpertDesign
+        ? " Complete this intake form with your property details, photos, and design direction so our experts can begin."
+        : isExpertDesign
+        ? " Send the form with your property details. We will reply with instructions for sending your photos and description; nothing is charged by this request."
+        : " Send this form and we will reply with the next step. Nothing has been charged and no seats exist yet."));
     planSlot.hidden = false;
 
     var msgField = document.getElementById("c-message");
     if (msgField && !msgField.value) {
-      msgField.value = "Please activate " + planLine + " for us.\n\nHow many people will need a seat:\nCompany:\n";
+      msgField.value = isPaidExpertDesign
+        ? "Payment completed for the $350 Expert Design Service.\n\nProperty address:\nWhat I want to change:\nPreferred style or features:\nPhoto or shared-album link:\n"
+        : isExpertDesign
+        ? "I would like the $350 Expert Design Service.\n\nProperty address:\nWhat I want to change:\nPreferred style or features:\nPhoto or shared-album link:\n"
+        : "Please activate " + planLine + " for us.\n\nHow many people will need a seat:\nCompany:\n";
     }
     var proRole = document.querySelector('input[name="role"][value="Landscape professional"]');
-    if (proRole && !document.querySelector('input[name="role"]:checked')) proRole.checked = true;
+    if (!isExpertDesign && proRole && !document.querySelector('input[name="role"]:checked')) proRole.checked = true;
   }
 
   /* --------------------------- contact form --------------------------- */
@@ -1761,6 +1775,108 @@
     });
   })();
 
+})();
+
+/* Home page hero: full-frame homeowner before/concept sequence. */
+(function () {
+  var stage = document.querySelector("[data-homeowner-hero]");
+  if (!stage) return;
+
+  var pairs = Array.prototype.slice.call(stage.querySelectorAll("[data-hero-pair]"));
+  var state = stage.querySelector("[data-hero-state]");
+  var count = stage.querySelector("[data-hero-count]");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var current = 0;
+  var conceptTimer = null;
+  var advanceTimer = null;
+  var cleanupTimer = null;
+  var visible = true;
+
+  function clearTimers() {
+    if (conceptTimer) window.clearTimeout(conceptTimer);
+    if (advanceTimer) window.clearTimeout(advanceTimer);
+    conceptTimer = advanceTimer = null;
+  }
+
+  function updateStatus(isConcept) {
+    if (state) state.textContent = isConcept ? "PlotVisionAI concept" : "Existing property";
+    if (count) count.textContent = "Project " + (current + 1) + " of " + pairs.length;
+  }
+
+  function setAccessiblePair() {
+    pairs.forEach(function (pair, index) {
+      pair.setAttribute("aria-hidden", index === current ? "false" : "true");
+    });
+  }
+
+  function scheduleCurrent() {
+    clearTimers();
+    if (!visible || reduceMotion) return;
+    updateStatus(false);
+
+    conceptTimer = window.setTimeout(function () {
+      pairs[current].classList.add("is-concept");
+      updateStatus(true);
+    }, 1900);
+
+    advanceTimer = window.setTimeout(advance, 5000);
+  }
+
+  function advance() {
+    var outgoing = pairs[current];
+    var next = (current + 1) % pairs.length;
+    var incoming = pairs[next];
+
+    outgoing.classList.remove("is-active");
+    outgoing.classList.add("is-leaving");
+    incoming.classList.remove("is-concept", "is-leaving");
+    current = next;
+    setAccessiblePair();
+    updateStatus(false);
+
+    /* Force the incoming frame's zero-opacity state to render before fading. */
+    void incoming.offsetWidth;
+    incoming.classList.add("is-active");
+
+    cleanupTimer = window.setTimeout(function () {
+      outgoing.classList.remove("is-leaving", "is-concept");
+      cleanupTimer = null;
+    }, 900);
+
+    scheduleCurrent();
+  }
+
+  if (reduceMotion) {
+    pairs[0].classList.add("is-active", "is-concept");
+    updateStatus(true);
+    setAccessiblePair();
+    return;
+  }
+
+  if ("IntersectionObserver" in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        visible = entry.isIntersecting && !document.hidden;
+        if (visible) {
+          pairs[current].classList.remove("is-concept");
+          scheduleCurrent();
+        } else {
+          clearTimers();
+        }
+      });
+    }, { threshold: 0.08 });
+    observer.observe(stage);
+  }
+
+  document.addEventListener("visibilitychange", function () {
+    visible = !document.hidden;
+    if (visible) scheduleCurrent();
+    else clearTimers();
+  });
+
+  updateStatus(false);
+  setAccessiblePair();
+  scheduleCurrent();
 })();
 
 /* ------------------------------------------------------------------------- */
