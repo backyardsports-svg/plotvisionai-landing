@@ -7932,3 +7932,60 @@ body:not([data-home-hero-cta]) .site-header__controls > .btn--primary {
     width: min(100%, 22rem);
   }
 }
+
+/* ───────────────────────────── Contractor promo banner ───────────────────────────── */
+.contractor-promo {
+  position: relative;
+  z-index: 30;
+  background: linear-gradient(90deg, var(--ink-300), var(--ink-400));
+  border-bottom: 1px solid var(--line);
+}
+
+.contractor-promo__inner {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 0.55rem var(--sp-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--fg-soft);
+}
+
+.contractor-promo__label {
+  font-weight: 600;
+  color: var(--fg-warm);
+}
+
+.contractor-promo__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--teal);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.contractor-promo__link:hover,
+.contractor-promo__link:focus-visible {
+  color: var(--lume);
+  border-bottom-color: currentColor;
+}
+
+.contractor-promo__link svg {
+  width: 0.9em;
+  height: 0.9em;
+  flex-shrink: 0;
+}
+
+@media (max-width: 560px) {
+  .contractor-promo__inner {
+    font-size: var(--text-xs);
+    padding: 0.5rem var(--sp-3);
+  }
+}
