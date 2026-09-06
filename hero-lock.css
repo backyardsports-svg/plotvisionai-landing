@@ -1,0 +1,13 @@
+/* Lock marketing homepage on the lit patio. Linked from index when restored. */
+.hero-pair { display: none !important; }
+.hero-pair.is-active { display: block !important; }
+.hero-pair.is-active .hero-pair__frame--before {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+.hero-pair.is-active .hero-pair__frame--after {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.hero__project-status { display: none !important; }
