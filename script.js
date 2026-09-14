@@ -1437,12 +1437,15 @@
   }
 
   /* --------------------------- contact form --------------------------- */
-  /* Project requests are sent to a Supabase Edge Function. The function
-     validates the fields, stores the private intake record, and uploads no more
-     than three private photos. Nothing is stored in browser-side storage. */
+  /* contact.html loads config.js and posts a private intake record to a
+     Supabase Edge Function (address + optional photos). The homepage form
+     has no #c-address, no photos, and no config.js; it drafts a mailto to
+     darin@getplotvisionai.com instead. Missing optional fields are skipped
+     rather than throwing. */
   var cForm = document.getElementById("contact-form");
   var cDone = document.getElementById("contact-done");
   var cDoneText = document.getElementById("contact-done-text");
+  var CONTACT_MAILTO = "darin@getplotvisionai.com";
 
   if (cForm && cDone && cDoneText) {
     var contactCfg = window.PV_CONFIG || {};
@@ -1469,6 +1472,10 @@
     function role() {
       var picked = cForm.querySelector('input[name="role"]:checked');
       return picked ? picked.value : "";
+    }
+
+    function fieldValue(field) {
+      return field && typeof field.value === "string" ? field.value.trim() : "";
     }
 
     function flag(field, node, bad) {
@@ -1501,29 +1508,77 @@
       return true;
     }
 
+    function openMailtoDraft(name, email, who, interest, message, address) {
+      var link = cForm.querySelector("#c-link");
+      var story = cForm.querySelector("#c-story");
+      var testimonial = cForm.querySelector("#c-testimonial");
+      var permission = cForm.querySelector("#c-permission");
+      var lines = [
+        "Name: " + name,
+        "Email: " + email,
+        "I am a: " + who,
+        "Project interest: " + interest
+      ];
+      if (address) lines.push("Property address: " + address);
+      lines.push("", "Message:", message || "(none)");
+
+      var linkVal = link ? fieldValue(link) : "";
+      var storyVal = story ? fieldValue(story) : "";
+      var quoteVal = testimonial ? fieldValue(testimonial) : "";
+      if (linkVal || storyVal || quoteVal || (permission && permission.checked)) {
+        lines.push("", "— Project story —");
+        if (linkVal) lines.push("Before / after link: " + linkVal);
+        if (storyVal) lines.push("", "What happened:", storyVal);
+        if (quoteVal) lines.push("", "Testimonial in their words:", quoteVal);
+        lines.push(
+          "",
+          "Permission to publish: " + (permission && permission.checked ? "yes, with name and photos as supplied" : "not given"),
+          "Photos: attach them to this email before sending — the form cannot upload files."
+        );
+      }
+
+      lines.push("", "— Sent from the PlotVisionAI page");
+      var href =
+        "mailto:" + CONTACT_MAILTO +
+        "?subject=" + encodeURIComponent("PlotVisionAI enquiry — " + name + " (" + who + ")") +
+        "&body=" + encodeURIComponent(lines.join("\n"));
+
+      cDoneText.textContent =
+        "Your email app should now be opening with this message drafted to " + CONTACT_MAILTO +
+        ". Nothing has been sent yet — press send in your email app to finish. If nothing opened, email " +
+        CONTACT_MAILTO + " directly.";
+      cDone.hidden = false;
+      if (cDone.focus) cDone.focus();
+      window.location.href = href;
+    }
+
     cForm.addEventListener("submit", function (event) {
       event.preventDefault();
       if (cSending) return;
 
-      var name = f.name.value.trim();
-      var email = f.email.value.trim();
-      var address = f.address.value.trim();
+      var name = fieldValue(f.name);
+      var email = fieldValue(f.email);
+      var address = fieldValue(f.address);
       var who = role();
-      var interest = f.interest.value;
-      var message = f.message.value.trim();
+      var interest = f.interest ? f.interest.value : "";
+      var message = fieldValue(f.message);
       var photos = f.photos && f.photos.files ? Array.prototype.slice.call(f.photos.files) : [];
 
       var ok = true;
       var first = null;
       if (!flag(f.name, err.name, name.length < 2)) { ok = false; first = first || f.name; }
       if (!flag(f.email, err.email, !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))) { ok = false; first = first || f.email; }
-      if (!flag(f.address, err.address, address.length < 8)) { ok = false; first = first || f.address; }
+      if (f.address) {
+        if (!flag(f.address, err.address, address.length < 8)) { ok = false; first = first || f.address; }
+      }
       if (err.role) {
         err.role.hidden = !!who;
         if (!who) { ok = false; first = first || cForm.querySelector('input[name="role"]'); }
       }
       if (!flag(f.interest, err.interest, !interest)) { ok = false; first = first || f.interest; }
-      if (!flag(f.photos, err.photos, !validPhotos(photos))) { ok = false; first = first || f.photos; }
+      if (f.photos) {
+        if (!flag(f.photos, err.photos, !validPhotos(photos))) { ok = false; first = first || f.photos; }
+      }
 
       if (!ok) {
         if (first && first.focus) first.focus();
@@ -1531,9 +1586,7 @@
       }
 
       if (!contactCfg.CONTACT_ENDPOINT) {
-        cDoneText.textContent = "The secure form connection is temporarily unavailable. Please email backyardsports@gmail.com directly.";
-        cDone.hidden = false;
-        if (cDone.focus) cDone.focus();
+        openMailtoDraft(name, email, who, interest, message, address);
         return;
       }
 
@@ -1550,9 +1603,9 @@
       body.append("message", message);
       body.append("plan", wantedPlan || "");
       body.append("billing", planParams.get("billing") || "");
-      body.append("projectLink", link ? link.value.trim() : "");
-      body.append("story", story ? story.value.trim() : "");
-      body.append("testimonial", testimonial ? testimonial.value.trim() : "");
+      body.append("projectLink", link ? fieldValue(link) : "");
+      body.append("story", story ? fieldValue(story) : "");
+      body.append("testimonial", testimonial ? fieldValue(testimonial) : "");
       body.append("permission", permission && permission.checked ? "true" : "false");
       body.append("page", window.location.pathname);
       photos.forEach(function (photo) { body.append("photos", photo, photo.name); });
@@ -1592,7 +1645,7 @@
         })
         .catch(function (sendError) {
           cDoneText.textContent = (sendError && sendError.message ? sendError.message : "The request could not be sent.") +
-            " Please try again or email backyardsports@gmail.com.";
+            " Please try again or email " + CONTACT_MAILTO + ".";
           cDone.hidden = false;
           if (cDone.focus) cDone.focus();
         })
