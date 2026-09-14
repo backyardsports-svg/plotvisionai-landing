@@ -1,0 +1,29 @@
+{
+  "strictness": 2,
+  "commentTypes": ["logic", "syntax"],
+  "triggerOnUpdates": true,
+  "ignorePatterns": "node_modules/**\npackage-lock.json\n**/*.png\n**/*.jpg\n**/*.webp\n**/*.svg\ndist/**\n.vercel/**",
+  "instructions": "This is a static marketing site for landscapedesignsonline.com / PlotVisionAI (Darin's Plot Vision). Prioritize SEO: canonicals to https://www.landscapedesignsonline.com, robots/noindex on vercel.app hosts, sitemap.xml, and GA4 G-GVT2M7WT6J. Flag broken links and accidental indexing of preview hosts.",
+  "rules": [
+    {
+      "id": "www-must-stay-indexable",
+      "rule": "www.landscapedesignsonline.com must stay indexable. Do not add noindex/nofollow X-Robots-Tag headers or robots meta that would block the production www host. Do not apply vercel.app noindex rules to www. login.html is the only intentional noindex page on www.",
+      "severity": "high"
+    },
+    {
+      "id": "vercel-app-hosts-noindex",
+      "rule": ".vercel.app hosts must stay noindex. Keep X-Robots-Tag noindex (currently noindex, nofollow) on plotvisionai.vercel.app, plotvisionai-vercel.vercel.app, and other *.vercel.app preview/alias hosts. Do not remove those headers or make preview hosts indexable.",
+      "severity": "high"
+    },
+    {
+      "id": "keep-ga4",
+      "rule": "Do not remove Google Analytics 4. Keep the gtag.js snippet and measurement ID G-GVT2M7WT6J on marketing pages.",
+      "severity": "high"
+    },
+    {
+      "id": "visualizer-page-titles",
+      "rule": "Do not break visualizer page titles. Keep the PlotVisionAI visualizer <title> (and matching og:title) wording on patio, fence, retaining-wall, and backyard sports pages (Patio Visualizer, Fence Visualizer, Retaining Wall Visualizer, Court Visualizer).",
+      "severity": "medium"
+    }
+  ]
+}
