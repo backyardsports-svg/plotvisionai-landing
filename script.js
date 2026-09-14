@@ -1782,6 +1782,12 @@
   var stage = document.querySelector("[data-homeowner-hero]");
   if (!stage) return;
 
+  if (stage.hasAttribute("data-hero-lock")) {
+    var locked = stage.querySelector("[data-hero-pair].is-active") || stage.querySelector("[data-hero-pair]");
+    if (locked) locked.classList.add("is-active", "is-concept");
+    return;
+  }
+
   var pairs = Array.prototype.slice.call(stage.querySelectorAll("[data-hero-pair]"));
   var state = stage.querySelector("[data-hero-state]");
   var count = stage.querySelector("[data-hero-count]");
