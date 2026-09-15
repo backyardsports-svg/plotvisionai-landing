@@ -1437,11 +1437,12 @@
   }
 
   /* --------------------------- contact form --------------------------- */
-  /* contact.html loads config.js and posts a private intake record to a
-     Supabase Edge Function (address + optional photos). The homepage form
-     has no #c-address, no photos, and no config.js; it drafts a mailto to
-     darin@getplotvisionai.com instead. Missing optional fields are skipped
-     rather than throwing. */
+  /* contact.html and the homepage contact form load config.js, mount the
+     existing Turnstile widget, and post a private intake record to a Supabase
+     Edge Function. contact.html also sends optional photos. Both use the same
+     off-screen company honeypot as free-preview. Missing optional fields are
+     skipped rather than throwing. Mailto is only a fallback if the endpoint
+     is not configured. */
   var cForm = document.getElementById("contact-form");
   var cDone = document.getElementById("contact-done");
   var cDoneText = document.getElementById("contact-done-text");
@@ -1452,6 +1453,9 @@
     var cSubmit = document.getElementById("contact-submit");
     var cSubmitLabel = cSubmit ? cSubmit.querySelector("[data-contact-submit-label]") : null;
     var cSending = false;
+    var cTurnstileId = null;
+    var cTurnstileWaiter = null;
+    var cHoneypot = cForm.querySelector("#c-company");
     /* Contact is Expert Design, Corporate, Landforms construction, or the
        native-app list. DIY patio/pool/fence/trial options are rejected here
        even if someone edits the markup and posts them. */
@@ -1523,6 +1527,111 @@
         if (!accepted.test(files[i].type) || files[i].size > 10 * 1024 * 1024) return false;
       }
       return true;
+    }
+
+    function contactTurnstileKey() {
+      var host = document.getElementById("c-turnstile");
+      var key = contactCfg.TURNSTILE_SITE_KEY;
+      if (typeof key !== "string" || !key.trim()) {
+        key = host && host.getAttribute("data-sitekey") ? host.getAttribute("data-sitekey") : "";
+      }
+      return (key || "").trim();
+    }
+
+    function contactTurnstileAction() {
+      var host = document.getElementById("c-turnstile");
+      var action = host && host.getAttribute("data-action");
+      return action || "contact";
+    }
+
+    function mountContactTurnstile() {
+      var host = document.getElementById("c-turnstile");
+      var key = contactTurnstileKey();
+      if (!host || !key || !window.turnstile || cTurnstileId !== null) return;
+      cTurnstileId = window.turnstile.render(host, {
+        sitekey: key,
+        theme: "dark",
+        size: "flexible",
+        appearance: "interaction-only",
+        execution: "execute",
+        action: contactTurnstileAction(),
+        callback: function (token) {
+          if (!cTurnstileWaiter) return;
+          var done = cTurnstileWaiter;
+          cTurnstileWaiter = null;
+          done(null, token);
+        },
+        "error-callback": function () {
+          if (!cTurnstileWaiter) return;
+          var done = cTurnstileWaiter;
+          cTurnstileWaiter = null;
+          done(new Error("The bot check could not run. Refresh and try again."));
+        },
+        "expired-callback": function () {
+          if (cTurnstileId !== null && window.turnstile) window.turnstile.reset(cTurnstileId);
+        }
+      });
+    }
+
+    window.pvMountTurnstile = mountContactTurnstile;
+    if (window.turnstile || window.pvTurnstileReady) mountContactTurnstile();
+
+    function requestTurnstileToken() {
+      return new Promise(function (resolve, reject) {
+        if (!window.turnstile || cTurnstileId === null) {
+          reject(new Error("The bot check did not load. Refresh the page and try again."));
+          return;
+        }
+        var existing = window.turnstile.getResponse(cTurnstileId);
+        if (existing) {
+          resolve(existing);
+          return;
+        }
+        var settled = false;
+        var timer = setTimeout(function () {
+          if (settled) return;
+          settled = true;
+          cTurnstileWaiter = null;
+          reject(new Error("Please complete the bot check and try again."));
+        }, 20000);
+        cTurnstileWaiter = function (err, token) {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          if (err) reject(err);
+          else if (!token) reject(new Error("Please complete the bot check and try again."));
+          else resolve(token);
+        };
+        try {
+          window.turnstile.reset(cTurnstileId);
+          window.turnstile.execute(cTurnstileId);
+        } catch (executeErr) {
+          settled = true;
+          clearTimeout(timer);
+          cTurnstileWaiter = null;
+          reject(executeErr);
+        }
+      });
+    }
+
+    function resetTurnstile() {
+      if (cTurnstileId !== null && window.turnstile) {
+        try { window.turnstile.reset(cTurnstileId); } catch (err) { /* ignore */ }
+      }
+    }
+
+    function showContactStatus(message) {
+      cDoneText.textContent = message;
+      cDone.hidden = false;
+      if (cDone.focus) cDone.focus();
+    }
+
+    function setContactBusy(on) {
+      cSending = on;
+      if (!cSubmit) return;
+      cSubmit.disabled = on;
+      cSubmit.setAttribute("aria-busy", on ? "true" : "false");
+      if (cSubmitLabel) cSubmitLabel.textContent = on ? "Sending request" : "Send project request";
     }
 
     function openMailtoDraft(name, email, who, interest, message, address) {
@@ -1605,6 +1714,13 @@
         return;
       }
 
+      /* Honeypot: a real person never fills a field that is off screen and out of
+         tab order, so stop without a request and without a false success. */
+      if (cHoneypot && cHoneypot.value.trim() !== "") {
+        showContactStatus("That submission could not go through. If you are a real person, email " + CONTACT_MAILTO + ".");
+        return;
+      }
+
       if (!contactCfg.CONTACT_ENDPOINT) {
         openMailtoDraft(name, email, who, interest, message, address);
         return;
@@ -1614,38 +1730,42 @@
       var story = cForm.querySelector("#c-story");
       var testimonial = cForm.querySelector("#c-testimonial");
       var permission = cForm.querySelector("#c-permission");
-      var body = new FormData();
-      body.append("name", name);
-      body.append("email", email);
-      body.append("address", address);
-      body.append("role", who);
-      body.append("interest", interest);
-      body.append("message", message);
-      body.append("plan", wantedPlan || "");
-      body.append("billing", planParams.get("billing") || "");
-      body.append("projectLink", link ? fieldValue(link) : "");
-      body.append("story", story ? fieldValue(story) : "");
-      body.append("testimonial", testimonial ? fieldValue(testimonial) : "");
-      body.append("permission", permission && permission.checked ? "true" : "false");
-      body.append("page", window.location.pathname);
-      photos.forEach(function (photo) { body.append("photos", photo, photo.name); });
-
       var headers = {};
       if (contactCfg.SIGNUP_ANON_KEY) {
         headers.apikey = contactCfg.SIGNUP_ANON_KEY;
         headers.Authorization = "Bearer " + contactCfg.SIGNUP_ANON_KEY;
       }
 
-      cSending = true;
-      if (cSubmit) {
-        cSubmit.disabled = true;
-        cSubmit.setAttribute("aria-busy", "true");
-        if (cSubmitLabel) cSubmitLabel.textContent = "Sending request";
-      }
+      setContactBusy(true);
       cDone.hidden = true;
 
-      fetch(contactCfg.CONTACT_ENDPOINT, { method: "POST", headers: headers, body: body })
+      requestTurnstileToken()
+        .then(function (token) {
+          if (!token) {
+            throw new Error("Please complete the bot check and try again.");
+          }
+          var body = new FormData();
+          body.append("name", name);
+          body.append("email", email);
+          body.append("address", address);
+          body.append("role", who);
+          body.append("interest", interest);
+          body.append("message", message);
+          body.append("plan", wantedPlan || "");
+          body.append("billing", planParams.get("billing") || "");
+          body.append("projectLink", link ? fieldValue(link) : "");
+          body.append("story", story ? fieldValue(story) : "");
+          body.append("testimonial", testimonial ? fieldValue(testimonial) : "");
+          body.append("permission", permission && permission.checked ? "true" : "false");
+          body.append("page", window.location.pathname);
+          body.append("company", cHoneypot && cHoneypot.value ? cHoneypot.value : "");
+          body.append("cf-turnstile-response", token || "");
+          body.append("turnstileToken", token || "");
+          photos.forEach(function (photo) { body.append("photos", photo, photo.name); });
+          return fetch(contactCfg.CONTACT_ENDPOINT, { method: "POST", headers: headers, body: body });
+        })
         .then(function (response) {
+          if (!response) return {};
           return response.json().catch(function () { return {}; }).then(function (data) {
             if (!response.ok) {
               throw new Error(
@@ -1659,23 +1779,18 @@
         })
         .then(function () {
           cForm.reset();
-          cDoneText.textContent = "Your message was sent. We will reply to the address you used.";
-          cDone.hidden = false;
-          if (cDone.focus) cDone.focus();
+          resetTurnstile();
+          showContactStatus("Your message was sent. We will reply to the address you used.");
         })
         .catch(function (sendError) {
-          cDoneText.textContent = (sendError && sendError.message ? sendError.message : "The request could not be sent.") +
-            " Please try again or email " + CONTACT_MAILTO + ".";
-          cDone.hidden = false;
-          if (cDone.focus) cDone.focus();
+          resetTurnstile();
+          showContactStatus(
+            (sendError && sendError.message ? sendError.message : "The request could not be sent.") +
+            " Please try again or email " + CONTACT_MAILTO + "."
+          );
         })
         .then(function () {
-          cSending = false;
-          if (cSubmit) {
-            cSubmit.disabled = false;
-            cSubmit.setAttribute("aria-busy", "false");
-            if (cSubmitLabel) cSubmitLabel.textContent = "Send project request";
-          }
+          setContactBusy(false);
         });
     });
   }

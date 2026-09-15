@@ -119,7 +119,7 @@
       ]
     },
     {
-      "source": "/(styles.css|script.js)",
+      "source": "/(styles.css|script.js|config.js)",
       "headers": [
         {
           "key": "Cache-Control",
