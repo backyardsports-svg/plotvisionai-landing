@@ -16,10 +16,12 @@ window.PV_CHECKOUT = {
   CONTACT_ROUTE: "contact.html",
 
   links: {
-    /* Consumer plans — live */
-    homeownerPass: "https://buy.stripe.com/7sY3cvcnv8oa2tU2BYcMM06",
-    professional: "https://buy.stripe.com/4gM00j9bjawi2tUb8ucMM07",
-    creditPack100: "https://buy.stripe.com/7sY00j9bjbAm4C2a4qcMM08",
+    /* Consumer packs are chosen in the app while Stripe products for the new
+       prices are created. Do not point marketing CTAs at the old $89 / $139
+       Payment Links — those prices are no longer what we sell. */
+    homeownerPass: null,
+    professional: null,
+    creditPack100: null,
 
     /* Corporate — only the pilot has a Payment Link so far */
     corporatePilot: "https://buy.stripe.com/eVqeVd4V3awi2tU3G2cMM09",

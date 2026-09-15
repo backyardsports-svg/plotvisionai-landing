@@ -138,37 +138,48 @@
             "offers": [
               {
                 "@type": "Offer",
-                "name": "Free",
-                "price": "0",
+                "name": "Learn",
+                "price": "19",
                 "priceCurrency": "USD",
-                "description": "5 starting credits on one property, with watermarked exports. Credits are spent on AI generations and revisions.",
+                "description": "Guided one-time Learn pack: 15 concepts on the way to a Presentation Board and a projected budget / price list by zip. Light help from the designer if you get stuck.",
                 "availability": "https://schema.org/InStock",
-                "url": "https://getplotvisionai.com/app"
+                "url": "https://getplotvisionai.com/credits"
               },
               {
                 "@type": "Offer",
                 "name": "Starter",
-                "price": "19",
+                "price": "29",
                 "priceCurrency": "USD",
-                "description": "One-time purchase with 20 credits for AI generations and revisions.",
+                "description": "One-time purchase with 30 design credits to finish the yard, with an optional Presentation Board refresh.",
                 "availability": "https://schema.org/InStock",
                 "url": "https://getplotvisionai.com/credits"
               },
               {
                 "@type": "Offer",
                 "name": "Homeowner Project Pass",
-                "price": "89",
+                "price": "99",
                 "priceCurrency": "USD",
-                "description": "One-time, per property, includes 150 credits for AI generations and revisions.",
-                "availability": "https://schema.org/InStock"
+                "description": "One-time, per property, includes 60 credits for AI generations and revisions.",
+                "availability": "https://schema.org/InStock",
+                "url": "https://getplotvisionai.com/credits"
               },
               {
                 "@type": "Offer",
                 "name": "Professional",
-                "price": "139",
+                "price": "149",
                 "priceCurrency": "USD",
-                "description": "Per month, for contractors and designers, includes 400 credits each month for AI generations and revisions.",
-                "availability": "https://schema.org/InStock"
+                "description": "Per month, for contractors and designers, includes 80 credits each month for AI generations and revisions.",
+                "availability": "https://schema.org/InStock",
+                "url": "https://getplotvisionai.com/credits"
+              },
+              {
+                "@type": "Offer",
+                "name": "Expert Design",
+                "price": "350",
+                "priceCurrency": "USD",
+                "description": "Have Landforms design the concept for you. Per design, delivered within 48 hours.",
+                "availability": "https://schema.org/InStock",
+                "url": "https://book.stripe.com/dRm6oH87f47U0lM5OacMM0l"
               },
               {
                 "@type": "Offer",
@@ -222,7 +233,7 @@
                 "name": "How do credits work?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Every plan includes a set number of credits rather than unlimited use. A targeted concept uses 1 credit, a full redesign in one specialist category uses 2 credits, and a Full Backyard redesign uses 3 credits. The exact cost is shown before confirmation. Starter includes 20 credits once, the Homeowner Project Pass includes 150 credits once, Professional includes 400 credits each month, and the add-on Credit Pack adds 100 credits at any time."
+                  "text": "Every plan includes a set number of credits rather than unlimited use. A targeted concept uses 1 credit, a full redesign in one specialist category uses 2 credits, a Full Backyard redesign uses 3 credits, and a Presentation Board uses 5 credits. The exact cost is shown before confirmation. Learn is $19 once: a guided path of 15 concepts that finishes with a Presentation Board and a zip-code projected budget, with a few minutes of designer help if you get stuck. Starter is $29 once for 30 design credits. The Homeowner Project Pass is $99 once with 60 credits. Professional is $149 a month with 80 credits."
                 }
               },
               {
@@ -479,7 +490,7 @@
                 <a href="login.html">Early access</a>
                 </nav>
 
-                <a class="btn btn--primary mnav__cta" href="https://getplotvisionai.com/app" target="_blank" rel="noopener">Try PlotVisionAI Free</a>
+                <a class="btn btn--primary mnav__cta" href="https://getplotvisionai.com/app" target="_blank" rel="noopener">Start with Learn — $19</a>
                 <a class="btn btn--sm mnav__signin" href="https://getplotvisionai.com/onboarding/welcome">Sign in</a>
                 <div class="mnav__tools">
                   <button class="toolbtn" type="button" data-share data-testid="share-site">
@@ -496,12 +507,12 @@
                     <input id="share-link-mnav" type="text" readonly value="" data-testid="share-link" />
                   </div>
                 </div>
-                <p class="mnav__foot">Preview first. No payment required.</p>
+                <p class="mnav__foot">Start with the $19 Learn pack in the app.</p>
               </div>
             </div>
           </details>
 
-          <a class="btn btn--primary btn--sm" href="https://getplotvisionai.com/app" target="_blank" rel="noopener">Try Free</a>
+          <a class="btn btn--primary btn--sm" href="https://getplotvisionai.com/app" target="_blank" rel="noopener">Learn — $19</a>
         </div>
       </div>
     </header>
@@ -633,7 +644,7 @@
               </p>
               <div class="hero__actions hero__actions--single">
                 <a class="btn btn--primary btn--lg" href="https://getplotvisionai.com/app" target="_blank" rel="noopener">
-                  Try PlotVisionAI Free
+                  Start with Learn — $19
                   <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right" /></svg>
                 </a>
                 <p class="hero__links">
@@ -642,7 +653,7 @@
                   <a class="hero__plain" href="#concept">See the edit demo</a>
                 </p>
               </div>
-              <p class="hero__reassure">Five starting credits free. No card required.</p>
+              <p class="hero__reassure">Finish with a board and zip budget for $19. Stuck? Quick designer help. Vs $350 Expert Design.</p>
               <p class="hero__trust">
                 The self-serve web app is live. Mark the area to change, choose the design settings and review the credit
                 cost before generating. One property, one camera position: the concept is rendered onto the same photograph.
@@ -1354,7 +1365,7 @@
               <section class="ce__block ce__block--preview reveal" aria-labelledby="ce-credits-title">
                 <p class="ce__tag">Product preview &middot; planned</p>
                 <h3 class="ce__blocktitle" id="ce-credits-title">Credits remaining</h3>
-                <div class="gauge" role="img" aria-label="Mockup of the planned credit gauge, showing 108 of 150 credits remaining">
+                <div class="gauge" role="img" aria-label="Mockup of the planned credit gauge, showing credits remaining">
                   <div class="gauge__track"><span class="gauge__fill"></span></div>
                   <p class="gauge__read"><strong>72</strong> of 100 credits</p>
                 </div>
@@ -1685,11 +1696,13 @@
             <details class="qa">
               <summary>How do credits work?</summary>
               <p>
-                A targeted concept uses 1 credit, a full redesign in one specialist category uses 2 credits, and a Full
-                Backyard redesign uses 3 credits. The exact cost is shown before confirmation. Starter includes 20
-                credits once, the Homeowner Project Pass includes 150 credits once, Professional includes 400 credits
-                each month, and the add-on Credit Pack adds another 100 credits at any time. Individual plans do not
-                currently promise rollover; contracted corporate team plans have separate written terms.
+                A targeted concept uses 1 credit, a full redesign in one specialist category uses 2 credits, a Full
+                Backyard redesign uses 3 credits, and a Presentation Board uses 5 credits. The exact cost is shown
+                before confirmation. Learn is $19 once: a guided path of 15 concepts that finishes with a Presentation
+                Board and a zip-code projected budget, plus a few minutes of designer help if you get stuck.
+                Starter is $29 once for 30 design credits. The Homeowner Project Pass is $99 once with 60
+                credits. Professional is $149 a month with 80 credits. Individual plans do not currently promise
+                rollover; contracted corporate team plans have separate written terms.
               </p>
             </details>
             <details class="qa">
@@ -1793,72 +1806,74 @@
         <div class="shell">
           <div class="section-head reveal">
             <p class="eyebrow">Live pricing</p>
-            <h2 id="pricing-title">Choose the plan that fits your project.</h2>
+            <h2 id="pricing-title">Finish with a board and a zip budget &mdash; not leftover credits.</h2>
             <p>
-              Every plan includes a set number of credits. Credits are used for AI designs, revisions, estimates, and
-              project-file exports, and the exact cost is shown before you confirm an action.
+              Learn is $19 for a guided path: 15 concepts while you figure out what you want, then a Presentation Board
+              and a projected budget by zip. Stuck? Quick help from the designer behind Plot Vision. Still about
+              18&times; less than our $350 Expert Design.
             </p>
           </div>
 
           <ul class="tiers reveal" role="list">
-            <li class="tier">
-              <p class="tier__name">Free</p>
-              <p class="tier__price"><span class="tier__amount">$0</span></p>
-              <p class="tier__meta">5 starting credits</p>
+            <li class="tier tier--lead">
+              <p class="tier__name">Learn</p>
+              <p class="tier__price"><span class="tier__amount">$19</span></p>
+              <p class="tier__meta">One-time &middot; guided path to a finished board</p>
               <ul class="tier__list" role="list">
-                <li>5 starting credits to begin your first project</li>
-                <li>One property</li>
-                <li>Watermarked exports</li>
+                <li>15 concepts while you figure out what you want</li>
+                <li>Finish with a Presentation Board + projected budget by zip</li>
+                <li>Stuck? Quick help from the designer behind Plot Vision (a few minutes)</li>
+                <li>Still about 18&times; less than our $350 Expert Design</li>
               </ul>
               <p class="tier__cta">
-                <a class="btn btn--ghost btn--full" href="https://getplotvisionai.com/app">Start free in the app</a>
+                <a class="btn btn--primary btn--full" href="https://getplotvisionai.com/credits">Choose Learn in the app</a>
               </p>
             </li>
 
             <li class="tier">
               <p class="tier__name">Starter</p>
-              <p class="tier__price"><span class="tier__amount">$19</span></p>
-              <p class="tier__meta">One-time &middot; 20 credits</p>
+              <p class="tier__price"><span class="tier__amount">$29</span></p>
+              <p class="tier__meta">One-time &middot; 30 design credits</p>
               <ul class="tier__list" role="list">
-                <li>20 credits for designs, revisions, and project files</li>
-                <li>One property</li>
-                <li>Full-resolution export of the concept you keep</li>
+                <li>30 credits for a second round &mdash; finish the yard</li>
+                <li>Optional 1 Presentation Board refresh</li>
+                <li>One property, full-resolution export</li>
               </ul>
               <p class="tier__cta">
                 <a class="btn btn--ghost btn--full" href="https://getplotvisionai.com/credits">Choose Starter in the app</a>
               </p>
             </li>
 
-            <li class="tier tier--lead">
+            <li class="tier">
               <p class="tier__name">Homeowner Project Pass</p>
-              <p class="tier__price"><span class="tier__amount">$89</span></p>
-              <p class="tier__meta">One-time, per property &middot; 150 credits</p>
+              <p class="tier__price"><span class="tier__amount">$99</span></p>
+              <p class="tier__meta">One-time, per property &middot; 60 credits</p>
               <ul class="tier__list" role="list">
-                <li>150 credits for generations and revisions on that property</li>
+                <li>60 credits for generations and revisions on that property</li>
                 <li>Every visualization category</li>
                 <li>Full-resolution exports, no watermark</li>
                 <li>A share link for the contractors you are bidding</li>
               </ul>
               <p class="tier__cta">
-                <a class="btn btn--primary btn--full" href="https://buy.stripe.com/7sY3cvcnv8oa2tU2BYcMM06" target="_blank" rel="noopener noreferrer">
-                  Buy the Project Pass &mdash; $89 once, 150 credits
+                <a class="btn btn--ghost btn--full" href="https://getplotvisionai.com/credits">
+                  Choose the Project Pass in the app
                 </a>
               </p>
             </li>
 
             <li class="tier">
               <p class="tier__name">Professional</p>
-              <p class="tier__price"><span class="tier__amount">$139</span><span class="tier__per">/month</span></p>
-              <p class="tier__meta">For contractors and designers &middot; 400 credits a month</p>
+              <p class="tier__price"><span class="tier__amount">$149</span><span class="tier__per">/month</span></p>
+              <p class="tier__meta">For contractors and designers &middot; 80 credits a month</p>
               <ul class="tier__list" role="list">
-                <li>400 credits each month, spendable across your properties and client concepts</li>
+                <li>80 credits each month, spendable across your properties and client concepts</li>
                 <li>Client edit sessions and pinned notes</li>
                 <li>Material and quantity takeoffs attached to the picture</li>
                 <li>Your own logo on shared concepts</li>
               </ul>
               <p class="tier__cta">
-                <a class="btn btn--primary btn--full" href="https://buy.stripe.com/4gM00j9bjawi2tUb8ucMM07" target="_blank" rel="noopener noreferrer">
-                  Subscribe &mdash; $139 a month, 400 credits
+                <a class="btn btn--ghost btn--full" href="https://getplotvisionai.com/credits">
+                  Choose Professional in the app
                 </a>
               </p>
             </li>
@@ -1868,10 +1883,10 @@
               <p class="tier__price"><span class="tier__amount">$350</span></p>
               <p class="tier__meta">Per design &middot; DC Approved expert service</p>
               <ul class="tier__list" role="list">
-                <li>Send your property photos and a description of what you want</li>
-                <li>A PlotVisionAI expert creates the concept for you</li>
-                <li>Beautiful, presentation-ready design delivered within 48 hours</li>
-                <li>No DIY workflow or subscription required</li>
+                <li>Skip DIY &mdash; send photos and what you want changed</li>
+                <li>A Landforms expert creates the concept for you</li>
+                <li>Presentation-ready design delivered within 48 hours</li>
+                <li>No Learn pack or subscription required</li>
               </ul>
               <p class="tier__cta">
                 <a class="btn btn--primary btn--full"
@@ -1902,9 +1917,9 @@
           </ul>
 
           <p class="pricing__note">
-            Checkout is securely hosted by Stripe &mdash; card details are entered on Stripe&rsquo;s own page, never on
-            this site. Early-access prices, subject to change; anyone who buys during early access will be told before
-            anything changes. Individual plans do not currently promise rollover of unused monthly credits. Contracted
+            Credit packs are chosen in the app at getplotvisionai.com. Card details are entered on Stripe&rsquo;s own
+            page, never on this site. Stripe products for the new pack prices will be updated separately. Individual
+            plans do not currently promise rollover of unused monthly credits. Contracted
             corporate team plans have separate written rollover terms. Not sure yet?
             <a href="#contact">Get in touch</a> first.
           </p>
@@ -1913,11 +1928,10 @@
                where Stripe Checkout refuses to render. Hidden by default and for
                ordinary top-level visits. -->
           <p class="pricing__embed" id="pricing-embed-note" hidden>
-            <span id="pricing-embed-lead">Stripe checkout cannot run inside an embedded preview, so these buttons open it
-            in a new tab. Checkout not opening? Open Stripe checkout directly:</span>
-            <a href="https://buy.stripe.com/7sY3cvcnv8oa2tU2BYcMM06" target="_blank" rel="noopener noreferrer">Project Pass</a>,
-            <a href="https://buy.stripe.com/4gM00j9bjawi2tUb8ucMM07" target="_blank" rel="noopener noreferrer">Professional (monthly)</a>,
-            <a href="https://buy.stripe.com/7sY00j9bjbAm4C2a4qcMM08" target="_blank" rel="noopener noreferrer">Credit Pack</a>.
+            <span id="pricing-embed-lead">Stripe checkout cannot run inside an embedded preview, so Expert Design opens
+            in a new tab. Credit packs are chosen in the app:</span>
+            <a href="https://getplotvisionai.com/credits" target="_blank" rel="noopener noreferrer">Learn, Starter, Project Pass, and Professional</a>,
+            <a href="https://book.stripe.com/dRm6oH87f47U0lM5OacMM0l" target="_blank" rel="noopener noreferrer">Expert Design ($350)</a>.
             <span class="pricing__embed-url" id="pricing-embed-url" hidden></span>
           </p>
         </div>
@@ -2109,7 +2123,7 @@
             <h2 id="buy-title">Ready to visualize your property?</h2>
             <p>The self-serve app is live. Pick the plan that matches the work, or read the full plan comparison first.</p>
             <p class="prefooter__note">
-              Checkout is hosted by Stripe and opens in a new tab. Card details are entered on Stripe&rsquo;s own page,
+              Choose credit packs in the app. Card details are entered on Stripe&rsquo;s own page,
               never on this site. Accounts, self-serve generation, saved projects, and credit metering are live. Full
               detail is on the <a href="pricing.html">pricing page</a>.
             </p>
@@ -2117,23 +2131,30 @@
           <ul class="prefooter__plans" role="list">
             <li>
               <a class="plan" href="https://getplotvisionai.com/credits">
-                <span class="plan__name">Starter</span>
+                <span class="plan__name">Learn</span>
                 <span class="plan__price">$19 once</span>
-                <span class="plan__meta">20 credits &middot; choose in the app</span>
+                <span class="plan__meta">guided path &middot; board + zip budget</span>
               </a>
             </li>
             <li>
-              <a class="plan" href="https://buy.stripe.com/7sY3cvcnv8oa2tU2BYcMM06" target="_blank" rel="noopener noreferrer">
-                <span class="plan__name">Homeowner Project Pass<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-external" /></svg></span>
-                <span class="plan__price">$89 once</span>
-                <span class="plan__meta">150 credits, one property</span>
+              <a class="plan" href="https://getplotvisionai.com/credits">
+                <span class="plan__name">Starter</span>
+                <span class="plan__price">$29 once</span>
+                <span class="plan__meta">30 credits &middot; finish the yard</span>
               </a>
             </li>
             <li>
-              <a class="plan" href="https://buy.stripe.com/4gM00j9bjawi2tUb8ucMM07" target="_blank" rel="noopener noreferrer">
-                <span class="plan__name">Professional<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-external" /></svg></span>
-                <span class="plan__price">$139 a month</span>
-                <span class="plan__meta">400 credits monthly, client work</span>
+              <a class="plan" href="https://getplotvisionai.com/credits">
+                <span class="plan__name">Homeowner Project Pass</span>
+                <span class="plan__price">$99 once</span>
+                <span class="plan__meta">60 credits, one property &middot; choose in the app</span>
+              </a>
+            </li>
+            <li>
+              <a class="plan" href="https://getplotvisionai.com/credits">
+                <span class="plan__name">Professional</span>
+                <span class="plan__price">$149 a month</span>
+                <span class="plan__meta">80 credits monthly, client work &middot; choose in the app</span>
               </a>
             </li>
             <li>
@@ -2180,7 +2201,7 @@
               <li><a href="professionals.html">For professionals</a></li>
               <li><a href="gallery.html">Gallery</a></li>
               <li><a href="community-showcase.html">Community Showcase</a></li>
-              <li><a href="free-preview.html">Free preview</a></li>
+              <li><a href="free-preview.html">Learn pack — $19</a></li>
               <li><a href="pricing.html">Pricing and credits</a></li>
               <li><a href="corporate-pricing.html">Corporate and teams</a></li>
             </ul>
