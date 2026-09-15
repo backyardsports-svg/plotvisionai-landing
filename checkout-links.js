@@ -16,9 +16,9 @@ window.PV_CHECKOUT = {
   CONTACT_ROUTE: "contact.html",
 
   links: {
-    /* Consumer packs are chosen in the app while Stripe products for the new
-       prices are created. Do not point marketing CTAs at the old $89 / $139
-       Payment Links — those prices are no longer what we sell. */
+    /* Consumer trials and credits are chosen in the app while Stripe products
+       for the new $29 / $59 / $99 trial prices are created. Do not point
+       marketing CTAs at the old $89 / $139 Payment Links. */
     homeownerPass: null,
     professional: null,
     creditPack100: null,
