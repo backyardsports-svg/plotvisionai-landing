@@ -1452,6 +1452,16 @@
     var cSubmit = document.getElementById("contact-submit");
     var cSubmitLabel = cSubmit ? cSubmit.querySelector("[data-contact-submit-label]") : null;
     var cSending = false;
+    /* Contact is Expert Design, Corporate, Landforms construction, or the
+       native-app list. DIY patio/pool/fence/trial options are rejected here
+       even if someone edits the markup and posts them. */
+    var ALLOWED_INTERESTS = {
+      "Expert Design ($350)": true,
+      "Corporate / team seats": true,
+      "Landforms construction / outdoor build work": true,
+      "Native iPhone / Android app list": true
+    };
+
     var f = {
       name: document.getElementById("c-name"),
       email: document.getElementById("c-email"),
@@ -1460,6 +1470,13 @@
       message: document.getElementById("c-message"),
       photos: document.getElementById("c-photos")
     };
+
+    if (f.interest && wantedPlan && !f.interest.value) {
+      var planInterest = wantedPlan === "Expert Design Service"
+        ? "Expert Design ($350)"
+        : "Corporate / team seats";
+      if (ALLOWED_INTERESTS[planInterest]) f.interest.value = planInterest;
+    }
     var err = {
       name: document.getElementById("c-name-error"),
       email: document.getElementById("c-email-error"),
@@ -1575,7 +1592,10 @@
         err.role.hidden = !!who;
         if (!who) { ok = false; first = first || cForm.querySelector('input[name="role"]'); }
       }
-      if (!flag(f.interest, err.interest, !interest)) { ok = false; first = first || f.interest; }
+      if (!flag(f.interest, err.interest, !interest || !ALLOWED_INTERESTS[interest])) {
+        ok = false;
+        first = first || f.interest;
+      }
       if (f.photos) {
         if (!flag(f.photos, err.photos, !validPhotos(photos))) { ok = false; first = first || f.photos; }
       }
