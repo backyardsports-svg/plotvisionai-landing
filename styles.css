@@ -2150,6 +2150,19 @@ button {
   background: linear-gradient(180deg, rgba(63, 224, 193, 0.13), rgba(3, 16, 15, 0.2));
 }
 
+.tier__badge {
+  justify-self: start;
+  margin: 0;
+  padding: 0.22rem 0.58rem;
+  border-radius: 999px;
+  background: rgba(63, 224, 193, 0.18);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .tier__name {
   font-size: var(--text-sm);
   font-weight: 600;
@@ -2182,6 +2195,7 @@ button {
 .tier__meta {
   font-size: var(--text-sm);
   color: var(--teal);
+  line-height: 1.45;
 }
 
 .tier__list {
@@ -2225,6 +2239,36 @@ button {
 
 .pricing__note a {
   color: var(--teal);
+}
+
+.pullquote {
+  margin: var(--sp-5) 0 0;
+  max-width: 58ch;
+  padding-left: var(--sp-4);
+  border-left: 2px solid var(--teal);
+}
+
+.pullquote blockquote {
+  margin: 0;
+}
+
+.pullquote p {
+  margin: 0;
+  color: var(--fg-warm);
+  font-family: var(--serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.pullquote figcaption {
+  margin-top: var(--sp-2);
+  color: var(--fg-mute);
+  font-size: var(--text-xs);
+}
+
+.about__body .pullquote {
+  margin-top: var(--sp-5);
 }
 
 /* form additions */

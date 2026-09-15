@@ -1639,7 +1639,7 @@
         })
         .then(function () {
           cForm.reset();
-          cDoneText.textContent = "Your project request was sent. Darin will review it and reply personally.";
+          cDoneText.textContent = "Your message was sent. We will reply to the address you used.";
           cDone.hidden = false;
           if (cDone.focus) cDone.focus();
         })
