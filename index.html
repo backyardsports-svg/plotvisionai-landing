@@ -2300,10 +2300,14 @@
     <script>
       window.pvOnTurnstileLoad = function () {
         window.pvTurnstileReady = true;
-        if (typeof window.pvMountTurnstile === "function") window.pvMountTurnstile();
+        window.pvTurnstileLoadError = false;
+        if (window.pvTurnstile && typeof window.pvTurnstile.mountAll === "function") window.pvTurnstile.mountAll();
+      };
+      window.pvOnTurnstileError = function () {
+        window.pvTurnstileLoadError = true;
       };
     </script>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&amp;onload=pvOnTurnstileLoad" async defer></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&amp;onload=pvOnTurnstileLoad" async defer onerror="window.pvOnTurnstileError&&window.pvOnTurnstileError()"></script>
     <script src="config.js" defer></script>
     <script src="script.js" defer></script>
   </body>

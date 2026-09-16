@@ -2074,6 +2074,10 @@ button {
   text-align: left;
 }
 
+.signup__turnstile {
+  min-height: 0;
+}
+
 .signup__turnstile:empty {
   display: none;
 }
