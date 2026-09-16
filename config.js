@@ -9,10 +9,13 @@
    SIGNUP_ANON_KEY       public publishable/anon key, sent as apikey + Bearer if present
    CONSENT_VERSION       version stamp for the consent copy shown next to the form
    TURNSTILE_SITE_KEY    public Cloudflare Turnstile site key for the existing
-                         widget. Widget data-action values are `contact` and
-                         `preview-signup`. The matching secret TURNSTILE_SECRET
-                         belongs only in Supabase Edge Function env (parent sets
-                         it on submit-contact-intake / register-preview-signup).
+                         widget. Widget data-action values must match Edge
+                         expectedAction: `contact` and `preview_signup`
+                         (underscore; TURNSTILE_ACTION_CONTACT /
+                         TURNSTILE_ACTION_PREVIEW_SIGNUP). Not `preview-signup`.
+                         The matching secret TURNSTILE_SECRET belongs only in
+                         Supabase Edge Function env (parent sets it on
+                         submit-contact-intake / register-preview-signup).
                          Never put the secret in this file.
    States: with both set the address is posted to the endpoint and the preview
    opens on success. With PREVIEW_URL set but no endpoint the form still demands a
