@@ -3,12 +3,14 @@
    Everything on this page is readable and usable with JS disabled.
    ========================================================================== */
 
-/* Cloudflare Turnstile for marketing contact + preview-signup.
+/* Cloudflare Turnstile for marketing contact + preview signup.
    Tokens are sent as both `cf-turnstile-response` and `turnstileToken` so Edge
-   turnstileTokenFromRecord can read either. Widget `data-action` values match
-   the Greptile/Edge expectedAction strings: `contact` and `preview-signup`.
-   The matching secret TURNSTILE_SECRET is never in this file. If the Cloudflare
-   script fails to load, forms stay usable and a later submit retries the load. */
+   turnstileTokenFromRecord can read either. Widget `data-action` values must
+   match Edge expectedAction exactly: `contact` and `preview_signup` (underscore;
+   TURNSTILE_ACTION_CONTACT / TURNSTILE_ACTION_PREVIEW_SIGNUP). Do not use the
+   hyphenated function name `preview-signup`. The matching secret TURNSTILE_SECRET
+   is never in this file. If the Cloudflare script fails to load, forms stay
+   usable and a later submit retries the load. */
 (function () {
   "use strict";
 
@@ -128,7 +130,7 @@
     var slot = slotFor(host);
     var key = hostKey(host);
     if (!slot || !key || !window.turnstile || slot.id !== null) return slot;
-    var fallback = host.id === "gate-turnstile" ? "preview-signup" : "contact";
+    var fallback = host.id === "gate-turnstile" ? "preview_signup" : "contact";
     try {
       slot.id = window.turnstile.render(host, {
         sitekey: key,
