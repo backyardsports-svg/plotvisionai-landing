@@ -2,6 +2,278 @@
    PlotVisionAI launch page — progressive enhancement only.
    Everything on this page is readable and usable with JS disabled.
    ========================================================================== */
+
+/* Cloudflare Turnstile for marketing contact + preview-signup.
+   Tokens are sent as both `cf-turnstile-response` and `turnstileToken` so Edge
+   turnstileTokenFromRecord can read either. Widget `data-action` values match
+   the Greptile/Edge expectedAction strings: `contact` and `preview-signup`.
+   The matching secret TURNSTILE_SECRET is never in this file. If the Cloudflare
+   script fails to load, forms stay usable and a later submit retries the load. */
+(function () {
+  "use strict";
+
+  var SCRIPT_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+  var widgets = {};
+  var loadPromise = null;
+
+  function cfgKey() {
+    var cfg = window.PV_CONFIG || {};
+    var key = cfg.TURNSTILE_SITE_KEY;
+    return typeof key === "string" ? key.trim() : "";
+  }
+
+  function hostKey(host) {
+    var key = cfgKey();
+    if (key) return key;
+    return (host && host.getAttribute("data-sitekey") ? host.getAttribute("data-sitekey") : "").trim();
+  }
+
+  function hostAction(host, fallback) {
+    var action = host && host.getAttribute("data-action");
+    return action || fallback || "";
+  }
+
+  function markFailed(el) {
+    if (el) el.setAttribute("data-pv-turnstile-failed", "1");
+    window.pvTurnstileLoadError = true;
+  }
+
+  function findScript() {
+    return document.querySelector("script[data-pv-turnstile], script[src*=\"challenges.cloudflare.com/turnstile\"]");
+  }
+
+  function loadApi(forceReload) {
+    if (window.turnstile && !forceReload) return Promise.resolve();
+    if (loadPromise && !forceReload) return loadPromise;
+
+    loadPromise = new Promise(function (resolve, reject) {
+      var settled = false;
+      var timer = window.setTimeout(function () {
+        finish(new Error("The bot check did not load. Try again."));
+      }, 12000);
+
+      function finish(err) {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timer);
+        if (err) {
+          loadPromise = null;
+          window.pvTurnstileLoadError = true;
+          reject(err);
+        } else {
+          window.pvTurnstileLoadError = false;
+          resolve();
+        }
+      }
+
+      if (window.turnstile && !forceReload) {
+        finish(null);
+        return;
+      }
+
+      var existing = findScript();
+      if (forceReload && existing) {
+        try { existing.parentNode.removeChild(existing); } catch (removeErr) { /* ignore */ }
+        existing = null;
+        try { window.turnstile = undefined; } catch (clearErr) { /* ignore */ }
+        Object.keys(widgets).forEach(function (id) {
+          widgets[id].id = null;
+          widgets[id].waiter = null;
+        });
+      }
+
+      function watch(el) {
+        el.addEventListener("load", function () {
+          if (window.turnstile) finish(null);
+          else {
+            markFailed(el);
+            finish(new Error("The bot check did not load. Try again."));
+          }
+        });
+        el.addEventListener("error", function () {
+          markFailed(el);
+          finish(new Error("The bot check could not load. Check your connection and try again."));
+        });
+      }
+
+      if (existing && !existing.getAttribute("data-pv-turnstile-failed")) {
+        if (window.turnstile) {
+          finish(null);
+          return;
+        }
+        watch(existing);
+        return;
+      }
+
+      var script = document.createElement("script");
+      script.src = SCRIPT_SRC;
+      script.async = true;
+      script.defer = true;
+      script.setAttribute("data-pv-turnstile", "1");
+      watch(script);
+      document.head.appendChild(script);
+    });
+
+    return loadPromise;
+  }
+
+  function slotFor(host) {
+    if (!host || !host.id) return null;
+    if (!widgets[host.id]) widgets[host.id] = { host: host, id: null, waiter: null };
+    widgets[host.id].host = host;
+    return widgets[host.id];
+  }
+
+  function mountHost(host) {
+    var slot = slotFor(host);
+    var key = hostKey(host);
+    if (!slot || !key || !window.turnstile || slot.id !== null) return slot;
+    var fallback = host.id === "gate-turnstile" ? "preview-signup" : "contact";
+    try {
+      slot.id = window.turnstile.render(host, {
+        sitekey: key,
+        theme: "dark",
+        size: "flexible",
+        appearance: "interaction-only",
+        execution: "execute",
+        action: hostAction(host, fallback),
+        callback: function (token) {
+          if (!slot.waiter) return;
+          var done = slot.waiter;
+          slot.waiter = null;
+          done(null, token);
+        },
+        "error-callback": function () {
+          if (!slot.waiter) return;
+          var done = slot.waiter;
+          slot.waiter = null;
+          done(new Error("The bot check could not run. Try again."));
+        },
+        "expired-callback": function () {
+          resetSlot(slot);
+        }
+      });
+      if (slot.id === undefined || slot.id === null) slot.id = null;
+    } catch (renderErr) {
+      slot.id = null;
+    }
+    return slot;
+  }
+
+  function mountAll() {
+    Array.prototype.forEach.call(document.querySelectorAll(".signup__turnstile"), mountHost);
+  }
+
+  function resetSlot(slot) {
+    if (!slot || slot.id === null || !window.turnstile) return;
+    try { window.turnstile.reset(slot.id); } catch (err) { /* ignore */ }
+  }
+
+  function executeSlot(slot) {
+    return new Promise(function (resolve, reject) {
+      if (!window.turnstile || !slot || slot.id === null) {
+        reject(new Error("The bot check did not load. Try again."));
+        return;
+      }
+      var existing = "";
+      try { existing = window.turnstile.getResponse(slot.id) || ""; } catch (getErr) { existing = ""; }
+      if (existing) {
+        resolve(existing);
+        return;
+      }
+      var settled = false;
+      var timer = window.setTimeout(function () {
+        if (settled) return;
+        settled = true;
+        slot.waiter = null;
+        reject(new Error("Please complete the bot check and try again."));
+      }, 20000);
+      slot.waiter = function (err, token) {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timer);
+        if (err) reject(err);
+        else if (!token) reject(new Error("Please complete the bot check and try again."));
+        else resolve(token);
+      };
+      try {
+        window.turnstile.execute(slot.id);
+      } catch (executeErr) {
+        settled = true;
+        window.clearTimeout(timer);
+        slot.waiter = null;
+        reject(executeErr && executeErr.message
+          ? executeErr
+          : new Error("The bot check could not run. Try again."));
+      }
+    });
+  }
+
+  function requestToken(hostId) {
+    var host = typeof hostId === "string" ? document.getElementById(hostId) : hostId;
+    if (!host) {
+      return Promise.reject(new Error("The bot check is missing from this page. Refresh and try again."));
+    }
+
+    function once(forceReload) {
+      return loadApi(forceReload).then(function () {
+        mountAll();
+        var slot = slotFor(host) || mountHost(host);
+        if (!slot || slot.id === null) {
+          throw new Error("The bot check did not load. Try again.");
+        }
+        return executeSlot(slot);
+      });
+    }
+
+    return once(!!window.pvTurnstileLoadError).catch(function (err) {
+      var msg = err && err.message ? String(err.message) : "";
+      var loadFail = !!window.pvTurnstileLoadError || /did not load|could not load/i.test(msg);
+      if (!loadFail) throw err;
+      return once(true);
+    });
+  }
+
+  function reset(hostId) {
+    var host = typeof hostId === "string" ? document.getElementById(hostId) : hostId;
+    if (!host) return;
+    resetSlot(slotFor(host));
+  }
+
+  function attachToken(target, token) {
+    if (!target || !token) return target;
+    if (typeof target.append === "function") {
+      target.append("cf-turnstile-response", token);
+      target.append("turnstileToken", token);
+      return target;
+    }
+    target["cf-turnstile-response"] = token;
+    target.turnstileToken = token;
+    return target;
+  }
+
+  window.pvTurnstile = {
+    mountAll: mountAll,
+    requestToken: requestToken,
+    reset: reset,
+    attachToken: attachToken
+  };
+
+  window.pvMountTurnstile = mountAll;
+  var previousLoad = window.pvOnTurnstileLoad;
+  window.pvOnTurnstileLoad = function () {
+    window.pvTurnstileReady = true;
+    window.pvTurnstileLoadError = false;
+    if (typeof previousLoad === "function") previousLoad();
+    mountAll();
+  };
+
+  if (window.turnstile || window.pvTurnstileReady) mountAll();
+  else if (document.querySelector(".signup__turnstile")) {
+    loadApi(false).then(mountAll).catch(function () { /* submit retries */ });
+  }
+})();
+
 (function () {
   "use strict";
 
@@ -1437,11 +1709,12 @@
   }
 
   /* --------------------------- contact form --------------------------- */
-  /* contact.html loads config.js and posts a private intake record to a
-     Supabase Edge Function (address + optional photos). The homepage form
-     has no #c-address, no photos, and no config.js; it drafts a mailto to
-     darin@getplotvisionai.com instead. Missing optional fields are skipped
-     rather than throwing. */
+  /* contact.html and the homepage contact form load config.js, mount the
+     existing Turnstile widget, and post a private intake record to a Supabase
+     Edge Function. contact.html also sends optional photos. Both use the same
+     off-screen company honeypot as free-preview. Missing optional fields are
+     skipped rather than throwing. Mailto is only a fallback if the endpoint
+     is not configured. */
   var cForm = document.getElementById("contact-form");
   var cDone = document.getElementById("contact-done");
   var cDoneText = document.getElementById("contact-done-text");
@@ -1452,6 +1725,7 @@
     var cSubmit = document.getElementById("contact-submit");
     var cSubmitLabel = cSubmit ? cSubmit.querySelector("[data-contact-submit-label]") : null;
     var cSending = false;
+    var cHoneypot = cForm.querySelector("#c-company");
     /* Contact is Expert Design, Corporate, Landforms construction, or the
        native-app list. DIY patio/pool/fence/trial options are rejected here
        even if someone edits the markup and posts them. */
@@ -1523,6 +1797,20 @@
         if (!accepted.test(files[i].type) || files[i].size > 10 * 1024 * 1024) return false;
       }
       return true;
+    }
+
+    function showContactStatus(message) {
+      cDoneText.textContent = message;
+      cDone.hidden = false;
+      if (cDone.focus) cDone.focus();
+    }
+
+    function setContactBusy(on) {
+      cSending = on;
+      if (!cSubmit) return;
+      cSubmit.disabled = on;
+      cSubmit.setAttribute("aria-busy", on ? "true" : "false");
+      if (cSubmitLabel) cSubmitLabel.textContent = on ? "Sending request" : "Send project request";
     }
 
     function openMailtoDraft(name, email, who, interest, message, address) {
@@ -1605,6 +1893,13 @@
         return;
       }
 
+      /* Honeypot: a real person never fills a field that is off screen and out of
+         tab order, so stop without a request and without a false success. */
+      if (cHoneypot && cHoneypot.value.trim() !== "") {
+        showContactStatus("That submission could not go through. If you are a real person, email " + CONTACT_MAILTO + ".");
+        return;
+      }
+
       if (!contactCfg.CONTACT_ENDPOINT) {
         openMailtoDraft(name, email, who, interest, message, address);
         return;
@@ -1614,38 +1909,41 @@
       var story = cForm.querySelector("#c-story");
       var testimonial = cForm.querySelector("#c-testimonial");
       var permission = cForm.querySelector("#c-permission");
-      var body = new FormData();
-      body.append("name", name);
-      body.append("email", email);
-      body.append("address", address);
-      body.append("role", who);
-      body.append("interest", interest);
-      body.append("message", message);
-      body.append("plan", wantedPlan || "");
-      body.append("billing", planParams.get("billing") || "");
-      body.append("projectLink", link ? fieldValue(link) : "");
-      body.append("story", story ? fieldValue(story) : "");
-      body.append("testimonial", testimonial ? fieldValue(testimonial) : "");
-      body.append("permission", permission && permission.checked ? "true" : "false");
-      body.append("page", window.location.pathname);
-      photos.forEach(function (photo) { body.append("photos", photo, photo.name); });
-
       var headers = {};
       if (contactCfg.SIGNUP_ANON_KEY) {
         headers.apikey = contactCfg.SIGNUP_ANON_KEY;
         headers.Authorization = "Bearer " + contactCfg.SIGNUP_ANON_KEY;
       }
 
-      cSending = true;
-      if (cSubmit) {
-        cSubmit.disabled = true;
-        cSubmit.setAttribute("aria-busy", "true");
-        if (cSubmitLabel) cSubmitLabel.textContent = "Sending request";
-      }
+      setContactBusy(true);
       cDone.hidden = true;
 
-      fetch(contactCfg.CONTACT_ENDPOINT, { method: "POST", headers: headers, body: body })
+      window.pvTurnstile.requestToken("c-turnstile")
+        .then(function (token) {
+          if (!token) {
+            throw new Error("Please complete the bot check and try again.");
+          }
+          var body = new FormData();
+          body.append("name", name);
+          body.append("email", email);
+          body.append("address", address);
+          body.append("role", who);
+          body.append("interest", interest);
+          body.append("message", message);
+          body.append("plan", wantedPlan || "");
+          body.append("billing", planParams.get("billing") || "");
+          body.append("projectLink", link ? fieldValue(link) : "");
+          body.append("story", story ? fieldValue(story) : "");
+          body.append("testimonial", testimonial ? fieldValue(testimonial) : "");
+          body.append("permission", permission && permission.checked ? "true" : "false");
+          body.append("page", window.location.pathname);
+          body.append("company", cHoneypot && cHoneypot.value ? cHoneypot.value : "");
+          window.pvTurnstile.attachToken(body, token);
+          photos.forEach(function (photo) { body.append("photos", photo, photo.name); });
+          return fetch(contactCfg.CONTACT_ENDPOINT, { method: "POST", headers: headers, body: body });
+        })
         .then(function (response) {
+          if (!response) return {};
           return response.json().catch(function () { return {}; }).then(function (data) {
             if (!response.ok) {
               throw new Error(
@@ -1659,23 +1957,18 @@
         })
         .then(function () {
           cForm.reset();
-          cDoneText.textContent = "Your message was sent. We will reply to the address you used.";
-          cDone.hidden = false;
-          if (cDone.focus) cDone.focus();
+          window.pvTurnstile.reset("c-turnstile");
+          showContactStatus("Your message was sent. We will reply to the address you used.");
         })
         .catch(function (sendError) {
-          cDoneText.textContent = (sendError && sendError.message ? sendError.message : "The request could not be sent.") +
-            " Please try again or email " + CONTACT_MAILTO + ".";
-          cDone.hidden = false;
-          if (cDone.focus) cDone.focus();
+          window.pvTurnstile.reset("c-turnstile");
+          showContactStatus(
+            (sendError && sendError.message ? sendError.message : "The request could not be sent.") +
+            " Please try again or email " + CONTACT_MAILTO + "."
+          );
         })
         .then(function () {
-          cSending = false;
-          if (cSubmit) {
-            cSubmit.disabled = false;
-            cSubmit.setAttribute("aria-busy", "false");
-            if (cSubmitLabel) cSubmitLabel.textContent = "Send project request";
-          }
+          setContactBusy(false);
         });
     });
   }
@@ -1980,6 +2273,7 @@
   var alertBox = form.querySelector("[data-gate-alert]");
   var nocapture = form.querySelector("[data-gate-nocapture]");
   var sending = false;
+  var idleLabel = label ? label.textContent : "Notify me about the native apps";
 
   function say(node, msg) {
     if (!node) return;
@@ -1999,7 +2293,7 @@
     if (!submit) return;
     submit.setAttribute("aria-busy", on ? "true" : "false");
     submit.disabled = on;
-    if (label) label.textContent = on ? "Adding you\u2026" : "Notify me at launch";
+    if (label) label.textContent = on ? "Adding you\u2026" : idleLabel;
   }
 
   /* No endpoint: do not pretend to save the address. Switch the form off and say
@@ -2030,11 +2324,12 @@
 
   /* Payload for the signup function. Both naming conventions are sent because the
      function accepts either; company is the honeypot and is always empty for a
-     real person, so the server can reject bots as well. */
-  function payload(value) {
+     real person, so the server can reject bots as well. Turnstile tokens use the
+     same field names Edge turnstileTokenFromRecord reads. */
+  function payload(value, token) {
     var optedIn = !!(optin && optin.checked);
     var consent = cfg.CONSENT_VERSION || "";
-    return {
+    var body = {
       email: value,
       source: cfg.SIGNUP_SOURCE || "free-preview",
       page: window.location.pathname,
@@ -2045,6 +2340,7 @@
       consent_version: consent,
       company: pot && pot.value ? pot.value : ""
     };
+    return window.pvTurnstile.attachToken(body, token);
   }
 
   form.addEventListener("submit", function (e) {
@@ -2076,11 +2372,15 @@
       headers.Authorization = "Bearer " + cfg.SIGNUP_ANON_KEY;
     }
 
-    fetch(cfg.SIGNUP_ENDPOINT, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(payload(value))
-    })
+    window.pvTurnstile.requestToken("gate-turnstile")
+      .then(function (token) {
+        if (!token) throw new Error("Please complete the bot check and try again.");
+        return fetch(cfg.SIGNUP_ENDPOINT, {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(payload(value, token))
+        });
+      })
       .then(function (res) {
         return res.json().catch(function () { return {}; }).then(function (data) {
           return { ok: res.ok, statusCode: res.status, data: data || {} };
@@ -2088,6 +2388,7 @@
       })
       .then(function (r) {
         busy(false);
+        window.pvTurnstile.reset("gate-turnstile");
         /* Duplicate-safe: an address already on the list is a success, not an error. */
         var duplicate = r.statusCode === 409 || r.data.duplicate === true || r.data.status === "duplicate" ||
           r.data.status === "existing" || r.data.status === "already_registered";
@@ -2102,10 +2403,15 @@
         var srvMsg = (r.data.error && r.data.error.message) || r.data.message || "";
         say(alertBox, srvMsg || "We could not save that address just now. Try again in a moment, or use the contact form. The preview link above is unaffected.");
       })
-      .catch(function () {
+      .catch(function (err) {
         busy(false);
+        window.pvTurnstile.reset("gate-turnstile");
         say(status, "");
-        say(alertBox, "That did not reach our server \u2014 check your connection and try again, or use the contact form. The preview link above is unaffected.");
+        if (err && err.name === "TypeError") {
+          say(alertBox, "That did not reach our server \u2014 check your connection and try again, or use the contact form. The preview link above is unaffected.");
+          return;
+        }
+        say(alertBox, (err && err.message ? err.message : "We could not save that address just now.") + " Try again, or use the contact form. The preview link above is unaffected.");
       });
   });
 

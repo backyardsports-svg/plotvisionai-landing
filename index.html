@@ -1975,6 +1975,11 @@
               Enter an email address so we can reply to you.
             </p>
 
+            <div class="gate__hp" aria-hidden="true">
+              <label for="c-company">Company website</label>
+              <input type="text" id="c-company" name="company" tabindex="-1" autocomplete="off" />
+            </div>
+
             <fieldset class="field field--set" aria-describedby="c-role-error">
               <legend class="field__label">I am a</legend>
               <div class="choices">
@@ -2046,16 +2051,22 @@
               </div>
             </details>
 
-            <button class="btn btn--primary btn--full" type="submit">
-              Open email to send
+            <div
+              class="signup__turnstile"
+              id="c-turnstile"
+              data-sitekey="0x4AAAAAAEQfodnVEiOkzONK"
+              data-action="contact"
+            ></div>
+
+            <button class="btn btn--primary btn--full" type="submit" id="contact-submit">
+              <span data-contact-submit-label>Send project request</span>
               <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right" /></svg>
             </button>
 
             <p class="microcopy" id="contact-note">
-              <strong>Opens your email app.</strong> This page has no server, so the button drafts a message in your own
-              email app addressed to darin@getplotvisionai.com. Nothing is sent until you press send there, and nothing
-              you type here is stored or transmitted by this page. If your device has no mail app set up, email us
-              directly at
+              <strong>Sent securely to PlotVisionAI.</strong> Your details are used only to respond to this request.
+              Photos cannot be uploaded from this page &mdash; attach them in a follow-up email if needed. If the form
+              does not work on your device, email us directly at
               <a href="mailto:darin@getplotvisionai.com?subject=PlotVisionAI%20enquiry">darin@getplotvisionai.com</a>.
             </p>
           </form>
@@ -2286,6 +2297,18 @@
       </a>
     </aside>
 
+    <script>
+      window.pvOnTurnstileLoad = function () {
+        window.pvTurnstileReady = true;
+        window.pvTurnstileLoadError = false;
+        if (window.pvTurnstile && typeof window.pvTurnstile.mountAll === "function") window.pvTurnstile.mountAll();
+      };
+      window.pvOnTurnstileError = function () {
+        window.pvTurnstileLoadError = true;
+      };
+    </script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&amp;onload=pvOnTurnstileLoad" async defer onerror="window.pvOnTurnstileError&&window.pvOnTurnstileError()"></script>
+    <script src="config.js" defer></script>
     <script src="script.js" defer></script>
   </body>
 </html>

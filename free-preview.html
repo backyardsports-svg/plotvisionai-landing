@@ -477,6 +477,13 @@
               at any time. See the <a href="privacy.html">privacy policy</a> for what we store and for how long.
             </p>
 
+            <div
+              class="signup__turnstile"
+              id="gate-turnstile"
+              data-sitekey="0x4AAAAAAEQfodnVEiOkzONK"
+              data-action="preview-signup"
+            ></div>
+
             <button class="btn btn--ghost gate__signup" type="submit" data-gate-submit data-testid="gate-signup">
               <span class="gate__spin" aria-hidden="true"></span><span data-gate-label>Notify me about the native apps</span>
             </button>
@@ -642,6 +649,17 @@
       </a>
     </aside>
 
+    <script>
+      window.pvOnTurnstileLoad = function () {
+        window.pvTurnstileReady = true;
+        window.pvTurnstileLoadError = false;
+        if (window.pvTurnstile && typeof window.pvTurnstile.mountAll === "function") window.pvTurnstile.mountAll();
+      };
+      window.pvOnTurnstileError = function () {
+        window.pvTurnstileLoadError = true;
+      };
+    </script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&amp;onload=pvOnTurnstileLoad" async defer onerror="window.pvOnTurnstileError&&window.pvOnTurnstileError()"></script>
     <script src="script.js" defer></script>
   </body>
 </html>

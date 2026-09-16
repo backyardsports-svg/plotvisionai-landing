@@ -2066,11 +2066,20 @@ button {
 }
 
 .signup {
+  position: relative;
   width: 100%;
   max-width: 30rem;
   display: grid;
   gap: var(--sp-3);
   text-align: left;
+}
+
+.signup__turnstile {
+  min-height: 0;
+}
+
+.signup__turnstile:empty {
+  display: none;
 }
 
 .field {
@@ -6666,7 +6675,8 @@ html[data-view="desktop"] .mnav {
 }
 
 /* Honeypot: off-screen rather than display:none so bots still fill it, and
-   hidden from assistive tech and from tab order. */
+   hidden from assistive tech and from tab order. Used on free-preview signup
+   and on the marketing contact forms. */
 .gate__hp {
   position: absolute;
   left: -9999px;

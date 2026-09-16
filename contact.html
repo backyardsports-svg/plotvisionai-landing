@@ -407,6 +407,11 @@
               Enter an email address so we can reply to you.
             </p>
 
+            <div class="gate__hp" aria-hidden="true">
+              <label for="c-company">Company website</label>
+              <input type="text" id="c-company" name="company" tabindex="-1" autocomplete="off" />
+            </div>
+
             <label class="field" for="c-address">
               <span class="field__label">Property address</span>
               <input class="field__input" type="text" id="c-address" name="address" autocomplete="street-address"
@@ -498,6 +503,13 @@
                 </p>
               </div>
             </details>
+
+            <div
+              class="signup__turnstile"
+              id="c-turnstile"
+              data-sitekey="0x4AAAAAAEQfodnVEiOkzONK"
+              data-action="contact"
+            ></div>
 
             <button class="btn btn--primary btn--full" type="submit" id="contact-submit">
               <span data-contact-submit-label>Send project request</span>
@@ -757,6 +769,17 @@
       </a>
     </aside>
 
+    <script>
+      window.pvOnTurnstileLoad = function () {
+        window.pvTurnstileReady = true;
+        window.pvTurnstileLoadError = false;
+        if (window.pvTurnstile && typeof window.pvTurnstile.mountAll === "function") window.pvTurnstile.mountAll();
+      };
+      window.pvOnTurnstileError = function () {
+        window.pvTurnstileLoadError = true;
+      };
+    </script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&amp;onload=pvOnTurnstileLoad" async defer onerror="window.pvOnTurnstileError&&window.pvOnTurnstileError()"></script>
     <script src="config.js" defer></script>
     <script src="script.js" defer></script>
   </body>
