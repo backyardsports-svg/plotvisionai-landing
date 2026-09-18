@@ -36,6 +36,11 @@
       "permanent": false
     },
     {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/courts.html",
       "destination": "/backyard-sports-center.html",
       "permanent": true
