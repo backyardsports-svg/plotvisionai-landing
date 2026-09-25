@@ -2413,7 +2413,11 @@
           say(alertBox, "That did not reach our server \u2014 check your connection and try again, or use the contact form. The preview link above is unaffected.");
           return;
         }
-        say(alertBox, (err && err.message ? err.message : "We could not save that address just now.") + " Try again, or use the contact form. The preview link above is unaffected.");
+        var msg = err && err.message ? err.message : "We could not save that address just now.";
+        if (!/contact form/i.test(msg)) {
+          msg += " You can try again, or use the contact form. The preview link above is unaffected.";
+        }
+        say(alertBox, msg);
       });
   });
 
