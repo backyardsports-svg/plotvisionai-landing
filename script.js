@@ -1725,14 +1725,17 @@
     var cSubmitLabel = cSubmit ? cSubmit.querySelector("[data-contact-submit-label]") : null;
     var cSending = false;
     var cHoneypot = cForm.querySelector("#c-company");
-    /* Contact is Expert Design, Corporate, Landforms construction, or the
-       native-app list. DIY patio/pool/fence/trial options are rejected here
-       even if someone edits the markup and posts them. */
+    /* Contact is Expert Design, Corporate, Landforms construction, the
+       native-app list, or a privacy / data request. DIY patio/pool/fence/trial
+       options are rejected here even if someone edits the markup and posts them. */
+    var PRIVACY_INTEREST = "Privacy / data request";
+    var HELP_URL = "https://getplotvisionai.com";
     var ALLOWED_INTERESTS = {
       "Expert Design ($350)": true,
       "Corporate / team seats": true,
       "Landforms construction / outdoor build work": true,
-      "Native iPhone / Android app list": true
+      "Native iPhone / Android app list": true,
+      "Privacy / data request": true
     };
 
     var f = {
@@ -1749,6 +1752,23 @@
         ? "Expert Design ($350)"
         : "Corporate / team seats";
       if (ALLOWED_INTERESTS[planInterest]) f.interest.value = planInterest;
+    }
+    if (f.interest && !f.interest.value && planParams.get("interest") === "privacy") {
+      f.interest.value = PRIVACY_INTEREST;
+    }
+
+    function privacyRequestSelected() {
+      return !!(f.interest && f.interest.value === PRIVACY_INTEREST);
+    }
+
+    function syncAddressRequirement() {
+      if (!f.address) return;
+      var optional = privacyRequestSelected();
+      if (optional) f.address.removeAttribute("required");
+      else f.address.setAttribute("required", "");
+      var opt = document.getElementById("c-address-opt");
+      if (opt) opt.hidden = !optional;
+      if (optional && err.address) flag(f.address, err.address, false);
     }
     var err = {
       name: document.getElementById("c-name-error"),
@@ -1789,6 +1809,9 @@
       });
     });
 
+    if (f.interest) f.interest.addEventListener("change", syncAddressRequirement);
+    syncAddressRequirement();
+
     function validPhotos(files) {
       if (files.length > 3) return false;
       var accepted = /^(image\/jpeg|image\/png|image\/webp|image\/heic|image\/heif)$/i;
@@ -1800,6 +1823,25 @@
 
     function showContactStatus(message) {
       cDoneText.textContent = message;
+      cDone.hidden = false;
+      if (cDone.focus) cDone.focus();
+    }
+
+    /* Failure keeps every field so the visitor can resubmit. Help is the
+       in-app chat, not a personal phone number or email. */
+    function showContactFailure(detail) {
+      var lead = detail && String(detail).trim() ? String(detail).trim() : "The request could not be sent.";
+      if (!/[.!?]$/.test(lead)) lead += ".";
+      cDoneText.textContent = "";
+      cDoneText.appendChild(document.createTextNode(lead + " Your entries are still in the form. Try again, or open "));
+      var help = document.createElement("a");
+      help.href = HELP_URL;
+      help.target = "_blank";
+      help.rel = "noopener noreferrer";
+      help.textContent = "Help";
+      help.title = "In-app Help and help chat";
+      cDoneText.appendChild(help);
+      cDoneText.appendChild(document.createTextNode(" in the app."));
       cDone.hidden = false;
       if (cDone.focus) cDone.focus();
     }
@@ -1828,8 +1870,10 @@
       var first = null;
       if (!flag(f.name, err.name, name.length < 2)) { ok = false; first = first || f.name; }
       if (!flag(f.email, err.email, !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))) { ok = false; first = first || f.email; }
-      if (f.address) {
+      if (f.address && !privacyRequestSelected()) {
         if (!flag(f.address, err.address, address.length < 8)) { ok = false; first = first || f.address; }
+      } else if (f.address) {
+        flag(f.address, err.address, false);
       }
       if (err.role) {
         err.role.hidden = !!who;
@@ -1856,7 +1900,7 @@
       }
 
       if (!contactCfg.CONTACT_ENDPOINT) {
-        showContactStatus("The form could not be sent from this page. Please try again in a moment.");
+        showContactFailure("The form could not be sent from this page.");
         return;
       }
 
@@ -1917,10 +1961,9 @@
         })
         .catch(function (sendError) {
           window.pvTurnstile.reset("c-turnstile");
-          showContactStatus(
-            (sendError && sendError.message ? sendError.message : "The request could not be sent.") +
-            " Please try again."
-          );
+          var detail = sendError && sendError.message ? sendError.message : "The request could not be sent.";
+          if (/failed to fetch|networkerror|load failed/i.test(detail)) detail = "The request could not be sent.";
+          showContactFailure(detail);
         })
         .then(function () {
           setContactBusy(false);

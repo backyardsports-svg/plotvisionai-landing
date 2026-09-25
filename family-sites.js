@@ -1,6 +1,8 @@
 /*
  * Partner sites for the site-wide footer.
  * Add a business here and it shows on every page except the site itself.
+ * The same line is also written into each page's HTML so it works with
+ * JavaScript off. Update that markup when this list changes.
  * The line wraps; keep names short so phones stay tidy.
  */
 var FAMILY_SITES = [
@@ -115,21 +117,24 @@ var FAMILY_SITES = [
 
   function render(root) {
     var sites = visibleSites();
-    root.textContent = "";
     if (!sites.length) return;
 
+    var frag = document.createDocumentFragment();
     var lead = document.createElement("span");
     lead.textContent = LEAD;
-    root.appendChild(lead);
+    frag.appendChild(lead);
 
     sites.forEach(function (site, index) {
-      if (index > 0) root.appendChild(document.createTextNode(SEPARATOR));
+      if (index > 0) frag.appendChild(document.createTextNode(SEPARATOR));
       var link = document.createElement("a");
       link.href = site.href;
       link.title = site.title;
       link.textContent = site.name;
-      root.appendChild(link);
+      frag.appendChild(link);
     });
+
+    root.textContent = "";
+    root.appendChild(frag);
   }
 
   function mount() {
