@@ -4169,7 +4169,7 @@ select.field__input {
   border-top: 1px solid var(--line);
   font-size: var(--text-xs);
   color: var(--fg-mute);
-  line-height: 1.55;
+  line-height: 1.7;
 }
 
 .sf__family:empty {
@@ -4180,6 +4180,7 @@ select.field__input {
   color: var(--fg-soft);
   text-decoration: underline;
   text-underline-offset: 0.15em;
+  white-space: nowrap;
 }
 
 .sf__family a:hover,
@@ -4234,12 +4235,6 @@ select.field__input {
 @media (max-width: 47.99rem) {
   .sf__list a {
     min-height: 42px;
-  }
-
-  .sf__family a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
   }
 
   .sf__base {

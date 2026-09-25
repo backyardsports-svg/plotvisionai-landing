@@ -1715,13 +1715,10 @@
      existing Turnstile widget, and post a private intake record to a Supabase
      Edge Function. contact.html also sends optional photos. Both use the same
      off-screen company honeypot as free-preview. Missing optional fields are
-     skipped rather than throwing. Mailto is only a fallback if the endpoint
-     is not configured. */
+     skipped rather than throwing. */
   var cForm = document.getElementById("contact-form");
   var cDone = document.getElementById("contact-done");
   var cDoneText = document.getElementById("contact-done-text");
-  var CONTACT_MAILTO = "darin@getplotvisionai.com";
-
   if (cForm && cDone && cDoneText) {
     var contactCfg = window.PV_CONFIG || {};
     var cSubmit = document.getElementById("contact-submit");
@@ -1815,50 +1812,6 @@
       if (cSubmitLabel) cSubmitLabel.textContent = on ? "Sending request" : "Send project request";
     }
 
-    function openMailtoDraft(name, email, who, interest, message, address) {
-      var link = cForm.querySelector("#c-link");
-      var story = cForm.querySelector("#c-story");
-      var testimonial = cForm.querySelector("#c-testimonial");
-      var permission = cForm.querySelector("#c-permission");
-      var lines = [
-        "Name: " + name,
-        "Email: " + email,
-        "I am a: " + who,
-        "Project interest: " + interest
-      ];
-      if (address) lines.push("Property address: " + address);
-      lines.push("", "Message:", message || "(none)");
-
-      var linkVal = link ? fieldValue(link) : "";
-      var storyVal = story ? fieldValue(story) : "";
-      var quoteVal = testimonial ? fieldValue(testimonial) : "";
-      if (linkVal || storyVal || quoteVal || (permission && permission.checked)) {
-        lines.push("", "— Project story —");
-        if (linkVal) lines.push("Before / after link: " + linkVal);
-        if (storyVal) lines.push("", "What happened:", storyVal);
-        if (quoteVal) lines.push("", "Testimonial in their words:", quoteVal);
-        lines.push(
-          "",
-          "Permission to publish: " + (permission && permission.checked ? "yes, with name and photos as supplied" : "not given"),
-          "Photos: attach them to this email before sending — the form cannot upload files."
-        );
-      }
-
-      lines.push("", "— Sent from the PlotVisionAI page");
-      var href =
-        "mailto:" + CONTACT_MAILTO +
-        "?subject=" + encodeURIComponent("PlotVisionAI enquiry — " + name + " (" + who + ")") +
-        "&body=" + encodeURIComponent(lines.join("\n"));
-
-      cDoneText.textContent =
-        "Your email app should now be opening with this message drafted to " + CONTACT_MAILTO +
-        ". Nothing has been sent yet — press send in your email app to finish. If nothing opened, email " +
-        CONTACT_MAILTO + " directly.";
-      cDone.hidden = false;
-      if (cDone.focus) cDone.focus();
-      window.location.href = href;
-    }
-
     cForm.addEventListener("submit", function (event) {
       event.preventDefault();
       if (cSending) return;
@@ -1898,12 +1851,12 @@
       /* Honeypot: a real person never fills a field that is off screen and out of
          tab order, so stop without a request and without a false success. */
       if (cHoneypot && cHoneypot.value.trim() !== "") {
-        showContactStatus("That submission could not go through. If you are a real person, email " + CONTACT_MAILTO + ".");
+        showContactStatus("That submission could not go through. Please use the contact form if you are a real person.");
         return;
       }
 
       if (!contactCfg.CONTACT_ENDPOINT) {
-        openMailtoDraft(name, email, who, interest, message, address);
+        showContactStatus("The form could not be sent from this page. Please try again in a moment.");
         return;
       }
 
@@ -1966,7 +1919,7 @@
           window.pvTurnstile.reset("c-turnstile");
           showContactStatus(
             (sendError && sendError.message ? sendError.message : "The request could not be sent.") +
-            " Please try again or email " + CONTACT_MAILTO + "."
+            " Please try again."
           );
         })
         .then(function () {
