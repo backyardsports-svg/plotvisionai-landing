@@ -2250,6 +2250,17 @@ button {
   color: var(--teal);
 }
 
+.pricing__pro {
+  margin-top: var(--sp-5);
+  max-width: 62ch;
+  color: var(--fg-soft);
+  line-height: 1.65;
+}
+
+.pricing__pro a {
+  color: var(--teal);
+}
+
 .pullquote {
   margin: var(--sp-5) 0 0;
   max-width: 58ch;
@@ -4152,6 +4163,55 @@ select.field__input {
   max-width: 34ch;
 }
 
+.sf__oursites {
+  display: grid;
+  gap: var(--sp-2);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line);
+}
+
+.sf__oursites .sf__h {
+  margin-bottom: 0;
+}
+
+.sf__oursites-by {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--fg-soft);
+  line-height: 1.5;
+}
+
+.sf__oursites-list {
+  max-width: 68ch;
+}
+
+.sf__oursites-list a {
+  display: inline;
+  white-space: normal;
+  max-width: 100%;
+  min-height: 0;
+  padding-block: 0.35rem;
+}
+
+.sf__otherbiz {
+  margin: var(--sp-2) 0 0;
+  font-size: var(--text-xs);
+  color: var(--fg-mute);
+  line-height: 1.55;
+  max-width: 68ch;
+}
+
+.sf__otherbiz a {
+  color: var(--fg-soft);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.sf__otherbiz a:hover,
+.sf__otherbiz a:focus-visible {
+  color: var(--teal);
+}
+
 .sf__base {
   display: flex;
   flex-wrap: wrap;
@@ -4199,6 +4259,18 @@ select.field__input {
 @media (max-width: 47.99rem) {
   .sf__list a {
     min-height: 42px;
+  }
+
+  .sf__oursites-list a {
+    display: inline-block;
+    min-height: 44px;
+    padding-block: 0.7rem;
+  }
+
+  .sf__otherbiz a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 
   .sf__base {
