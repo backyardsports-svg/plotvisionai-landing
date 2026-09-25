@@ -2423,3 +2423,58 @@
     });
   }
 })();
+
+/* Installable app: network-first worker, plus a footer button that opens the
+   browser install prompt when Chrome offers one. */
+(function () {
+  "use strict";
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("/sw.js", { scope: "/" }).catch(function () {});
+    });
+  }
+
+  var buttons = document.querySelectorAll("[data-install-app]");
+  if (!buttons.length) return;
+
+  var standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  if (standalone) {
+    Array.prototype.forEach.call(buttons, function (button) { button.hidden = true; });
+    return;
+  }
+
+  var deferred = null;
+  var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+  function instructions() {
+    if (ios) return "Share, then Add to Home Screen.";
+    return "Browser menu, then Install app.";
+  }
+
+  window.addEventListener("beforeinstallprompt", function (event) {
+    event.preventDefault();
+    deferred = event;
+  });
+
+  Array.prototype.forEach.call(buttons, function (button) {
+    var note = button.parentElement && button.parentElement.querySelector("[data-install-help]");
+    button.addEventListener("click", function () {
+      if (!deferred) {
+        if (!note) return;
+        note.hidden = false;
+        note.textContent = instructions();
+        return;
+      }
+      var promptEvent = deferred;
+      deferred = null;
+      promptEvent.prompt();
+      var choice = promptEvent.userChoice;
+      if (choice && typeof choice.then === "function") {
+        choice.then(function () {}, function () {});
+      }
+      if (note) note.hidden = true;
+    });
+  });
+})();

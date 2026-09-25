@@ -124,11 +124,20 @@
       ]
     },
     {
-      "source": "/(styles.css|script.js|config.js)",
+      "source": "/(styles.css|script.js|config.js|sw.js|site.webmanifest)",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/site.webmanifest",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json; charset=utf-8"
         }
       ]
     },

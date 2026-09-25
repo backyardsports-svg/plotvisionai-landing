@@ -6104,6 +6104,10 @@ select.field__input {
   margin: var(--sp-4) 0 0;
 }
 
+.sf__tools .install-help {
+  flex: 1 1 100%;
+}
+
 .viewbar {
   position: sticky;
   top: 0;
