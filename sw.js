@@ -1,12 +1,31 @@
-/* Network-first. Same-origin GET requests fall back to the cache when the network fails. */
-var CACHE = "plotvisionai-v1";
+/* Network-first. The install step stores the homepage so an installed launch
+   still opens PlotVisionAI when the network is down. Later visits try the
+   network first and fall back to that cache. */
+var CACHE = "plotvisionai-v2";
+var SHELL = ["/", "/styles.css", "/hero-lock.css", "/script.js", "/config.js"];
 
 self.addEventListener("install", function (event) {
-  event.waitUntil(self.skipWaiting());
+  event.waitUntil(
+    caches.open(CACHE).then(function (cache) {
+      return cache.addAll(SHELL);
+    }).then(function () {
+      return self.skipWaiting();
+    })
+  );
 });
 
 self.addEventListener("activate", function (event) {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys().then(function (keys) {
+      return Promise.all(keys.filter(function (key) {
+        return key !== CACHE;
+      }).map(function (key) {
+        return caches.delete(key);
+      }));
+    }).then(function () {
+      return self.clients.claim();
+    })
+  );
 });
 
 self.addEventListener("fetch", function (event) {
@@ -29,7 +48,9 @@ self.addEventListener("fetch", function (event) {
       })
       .catch(function () {
         return caches.match(request).then(function (cached) {
-          return cached || Promise.reject(new Error("offline"));
+          if (cached) return cached;
+          if (request.mode === "navigate") return caches.match("/");
+          return Promise.reject(new Error("offline"));
         });
       })
   );
