@@ -4786,6 +4786,10 @@ select.field__input {
   .hero--home-sequence .hero__stage {
     width: 100%;
     min-width: 0;
+    /* 2x hero files are about 1600px wide. Stop the column growing past that
+       bitmap so a wide desktop does not scale the photo above its source. */
+    max-width: 100rem;
+    justify-self: end;
     height: clamp(32rem, 70svh, 42rem);
     aspect-ratio: auto;
   }
@@ -7598,6 +7602,12 @@ html:not(.js) .billtoggle__state {
 .hero-pair__frame {
   position: absolute;
   inset: 0;
+}
+
+.hero-pair__frame picture {
+  position: absolute;
+  inset: 0;
+  display: block;
 }
 
 .hero-pair__frame img {
