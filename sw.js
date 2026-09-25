@@ -1,8 +1,8 @@
 /* Network-first. The install step stores the homepage so an installed launch
    still opens PlotVisionAI when the network is down. Later visits try the
    network first and fall back to that cache. */
-var CACHE = "plotvisionai-v2";
-var SHELL = ["/", "/styles.css", "/hero-lock.css", "/script.js", "/config.js"];
+var CACHE = "plotvisionai-v3";
+var SHELL = ["/", "/styles.css", "/hero-lock.css", "/script.js", "/config.js", "/family-sites.js"];
 
 self.addEventListener("install", function (event) {
   event.waitUntil(

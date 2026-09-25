@@ -4163,52 +4163,28 @@ select.field__input {
   max-width: 34ch;
 }
 
-.sf__oursites {
-  display: grid;
-  gap: var(--sp-2);
+.sf__family {
+  margin: 0;
   padding-top: var(--sp-5);
   border-top: 1px solid var(--line);
-}
-
-.sf__oursites .sf__h {
-  margin-bottom: 0;
-}
-
-.sf__oursites-by {
-  margin: 0;
-  font-size: var(--text-sm);
-  color: var(--fg-soft);
-  line-height: 1.5;
-}
-
-.sf__oursites-list {
-  max-width: 68ch;
-}
-
-.sf__oursites-list a {
-  display: inline;
-  white-space: normal;
-  max-width: 100%;
-  min-height: 0;
-  padding-block: 0.35rem;
-}
-
-.sf__otherbiz {
-  margin: var(--sp-2) 0 0;
   font-size: var(--text-xs);
   color: var(--fg-mute);
-  line-height: 1.55;
-  max-width: 68ch;
+  line-height: 1.7;
 }
 
-.sf__otherbiz a {
+.sf__family:empty {
+  display: none;
+}
+
+.sf__family a {
   color: var(--fg-soft);
   text-decoration: underline;
   text-underline-offset: 0.15em;
+  white-space: nowrap;
 }
 
-.sf__otherbiz a:hover,
-.sf__otherbiz a:focus-visible {
+.sf__family a:hover,
+.sf__family a:focus-visible {
   color: var(--teal);
 }
 
@@ -4259,18 +4235,6 @@ select.field__input {
 @media (max-width: 47.99rem) {
   .sf__list a {
     min-height: 42px;
-  }
-
-  .sf__oursites-list a {
-    display: inline-block;
-    min-height: 44px;
-    padding-block: 0.7rem;
-  }
-
-  .sf__otherbiz a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
   }
 
   .sf__base {
