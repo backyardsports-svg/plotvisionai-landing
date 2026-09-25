@@ -6176,6 +6176,10 @@ select.field__input {
   margin: var(--sp-4) 0 0;
 }
 
+.sf__tools .install-help {
+  flex: 1 1 100%;
+}
+
 .viewbar {
   position: sticky;
   top: 0;
@@ -7672,6 +7676,12 @@ html:not(.js) .billtoggle__state {
   inset: 0;
 }
 
+.hero-pair__frame picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
 .hero-pair__frame img {
   display: block;
   width: 100%;
@@ -7881,6 +7891,111 @@ html:not(.js) .billtoggle__state {
 @media (min-width: 90rem) {
   .hero__copy .shell {
     max-width: 38rem;
+  }
+}
+
+/* Desktop (>=1024px): the photo matches the copy column and the pair fits
+   one screen. The hero and the page shell share one centered width, wider
+   than the old 84rem measure, with equal side margins. Mobile is unchanged. */
+@media (min-width: 64rem) {
+  :root {
+    --shell: min(94vw, 116rem);
+  }
+
+  .hero--home-sequence .hero__grid {
+    grid-template-columns: minmax(22rem, 0.9fr) minmax(0, 1.15fr);
+    align-items: stretch;
+    width: 100%;
+    max-width: var(--shell);
+    margin-inline: auto;
+    min-height: calc(100svh - var(--header-h, 4.25rem) - 2.65rem);
+  }
+
+  .hero--home-sequence .hero__stage {
+    width: auto;
+    max-width: none;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    justify-self: stretch;
+    align-self: stretch;
+    aspect-ratio: auto;
+  }
+
+  .hero--home-sequence .hero-pair__frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .hero--home-sequence .hero__copy {
+    align-content: center;
+    padding-block: clamp(0.85rem, 1.8vh, 1.5rem);
+  }
+
+  .hero--home-sequence .hero__copy .shell {
+    width: min(100%, 34rem);
+    max-width: 34rem;
+    margin-inline: auto;
+    justify-items: center;
+    gap: 0.4rem;
+    padding-inline: 1.25rem;
+  }
+
+  .hero--home-sequence .hero__copy .shell,
+  .hero--home-sequence .hero__copy .shell > * {
+    text-align: center;
+  }
+
+  .hero--home-sequence .hero__links {
+    justify-content: center;
+  }
+
+  .hero--home-sequence .vision-brand-current {
+    width: min(100%, 19.5rem);
+  }
+
+  .hero--home-sequence .hero__tagline {
+    max-width: 24ch;
+    font-size: clamp(1.35rem, 0.7rem + 1.15vw, 1.85rem);
+    line-height: 1.16;
+  }
+
+  .hero--home-sequence .hero__lede {
+    max-width: 42ch;
+    font-size: 0.98rem;
+    line-height: 1.45;
+  }
+
+  .hero--home-sequence .hero__actions--single {
+    margin-top: 0.15rem;
+    margin-inline: auto;
+    justify-items: center;
+    gap: 0.2rem;
+    max-width: 18rem;
+  }
+
+  .hero--home-sequence .hero__actions--single .btn--primary {
+    min-height: 46px;
+    padding-block: 0.7rem;
+  }
+
+  .hero--home-sequence .hero__links a {
+    min-height: 2rem;
+  }
+
+  .hero--home-sequence .hero__reassure {
+    margin-top: 0.15rem;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    max-width: 42ch;
+  }
+
+  .hero--home-sequence .hero__trust {
+    font-size: 0.78rem;
+    line-height: 1.4;
+    max-width: 48ch;
   }
 }
 
