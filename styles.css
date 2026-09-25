@@ -7819,11 +7819,19 @@ html:not(.js) .billtoggle__state {
 }
 
 /* Desktop (>=1024px): the photo matches the copy column and the pair fits
-   one screen. Mobile and the stacked layout below 64rem are unchanged. */
+   one screen. The hero and the page shell share one centered width, wider
+   than the old 84rem measure, with equal side margins. Mobile is unchanged. */
 @media (min-width: 64rem) {
+  :root {
+    --shell: min(94vw, 116rem);
+  }
+
   .hero--home-sequence .hero__grid {
-    grid-template-columns: minmax(24rem, 0.86fr) minmax(0, 1.24fr);
+    grid-template-columns: minmax(22rem, 0.9fr) minmax(0, 1.15fr);
     align-items: stretch;
+    width: 100%;
+    max-width: var(--shell);
+    margin-inline: auto;
     min-height: calc(100svh - var(--header-h, 4.25rem) - 2.65rem);
   }
 
@@ -7851,12 +7859,21 @@ html:not(.js) .billtoggle__state {
   }
 
   .hero--home-sequence .hero__copy .shell {
-    width: 100%;
-    max-width: none;
-    margin-inline: 0;
-    justify-items: start;
+    width: min(100%, 34rem);
+    max-width: 34rem;
+    margin-inline: auto;
+    justify-items: center;
     gap: 0.4rem;
-    padding-inline: clamp(1.75rem, 3vw, 3.25rem);
+    padding-inline: 1.25rem;
+  }
+
+  .hero--home-sequence .hero__copy .shell,
+  .hero--home-sequence .hero__copy .shell > * {
+    text-align: center;
+  }
+
+  .hero--home-sequence .hero__links {
+    justify-content: center;
   }
 
   .hero--home-sequence .vision-brand-current {
@@ -7877,6 +7894,8 @@ html:not(.js) .billtoggle__state {
 
   .hero--home-sequence .hero__actions--single {
     margin-top: 0.15rem;
+    margin-inline: auto;
+    justify-items: center;
     gap: 0.2rem;
     max-width: 18rem;
   }
