@@ -1,8 +1,19 @@
 /* Network-first. The install step stores the homepage so an installed launch
    still opens PlotVisionAI when the network is down. Later visits try the
    network first and fall back to that cache. */
-var CACHE = "plotvisionai-v3";
-var SHELL = ["/", "/styles.css", "/hero-lock.css", "/script.js", "/config.js", "/family-sites.js"];
+var CACHE = "plotvisionai-v4";
+var SHELL = [
+  "/",
+  "/styles.css",
+  "/hero-lock.css",
+  "/script.js",
+  "/config.js",
+  "/family-sites.js",
+  "/assets/hero-home-01-before.jpg",
+  "/assets/hero-home-01-after.jpg",
+  "/assets/hero-home-01-before-2x.jpg",
+  "/assets/hero-home-01-after-2x.jpg"
+];
 
 self.addEventListener("install", function (event) {
   event.waitUntil(
@@ -49,7 +60,11 @@ self.addEventListener("fetch", function (event) {
       .catch(function () {
         return caches.match(request).then(function (cached) {
           if (cached) return cached;
-          if (request.mode === "navigate") return caches.match("/");
+          /* Only the installed start URL may fall back to the saved homepage.
+             Any other address should fail instead of showing the wrong page. */
+          if (request.mode === "navigate" && (url.pathname === "/" || url.pathname === "/index.html")) {
+            return caches.match("/");
+          }
           return Promise.reject(new Error("offline"));
         });
       })
