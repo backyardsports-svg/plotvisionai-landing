@@ -2066,11 +2066,20 @@ button {
 }
 
 .signup {
+  position: relative;
   width: 100%;
   max-width: 30rem;
   display: grid;
   gap: var(--sp-3);
   text-align: left;
+}
+
+.signup__turnstile {
+  min-height: 0;
+}
+
+.signup__turnstile:empty {
+  display: none;
 }
 
 .field {
@@ -2150,6 +2159,19 @@ button {
   background: linear-gradient(180deg, rgba(63, 224, 193, 0.13), rgba(3, 16, 15, 0.2));
 }
 
+.tier__badge {
+  justify-self: start;
+  margin: 0;
+  padding: 0.22rem 0.58rem;
+  border-radius: 999px;
+  background: rgba(63, 224, 193, 0.18);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .tier__name {
   font-size: var(--text-sm);
   font-weight: 600;
@@ -2182,6 +2204,7 @@ button {
 .tier__meta {
   font-size: var(--text-sm);
   color: var(--teal);
+  line-height: 1.45;
 }
 
 .tier__list {
@@ -2225,6 +2248,47 @@ button {
 
 .pricing__note a {
   color: var(--teal);
+}
+
+.pricing__pro {
+  margin-top: var(--sp-5);
+  max-width: 62ch;
+  color: var(--fg-soft);
+  line-height: 1.65;
+}
+
+.pricing__pro a {
+  color: var(--teal);
+}
+
+.pullquote {
+  margin: var(--sp-5) 0 0;
+  max-width: 58ch;
+  padding-left: var(--sp-4);
+  border-left: 2px solid var(--teal);
+}
+
+.pullquote blockquote {
+  margin: 0;
+}
+
+.pullquote p {
+  margin: 0;
+  color: var(--fg-warm);
+  font-family: var(--serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.pullquote figcaption {
+  margin-top: var(--sp-2);
+  color: var(--fg-mute);
+  font-size: var(--text-xs);
+}
+
+.about__body .pullquote {
+  margin-top: var(--sp-5);
 }
 
 /* form additions */
@@ -4099,6 +4163,31 @@ select.field__input {
   max-width: 34ch;
 }
 
+.sf__family {
+  margin: 0;
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line);
+  font-size: var(--text-xs);
+  color: var(--fg-mute);
+  line-height: 1.7;
+}
+
+.sf__family:empty {
+  display: none;
+}
+
+.sf__family a {
+  color: var(--fg-soft);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  white-space: nowrap;
+}
+
+.sf__family a:hover,
+.sf__family a:focus-visible {
+  color: var(--teal);
+}
+
 .sf__base {
   display: flex;
   flex-wrap: wrap;
@@ -5333,6 +5422,13 @@ select.field__input {
   min-height: 52px;
 }
 
+.mnav__signin {
+  margin-top: 0.5rem;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+}
+
 .mnav__foot {
   margin-top: 0.6rem;
   text-align: center;
@@ -6044,6 +6140,10 @@ select.field__input {
   margin: var(--sp-4) 0 0;
 }
 
+.sf__tools .install-help {
+  flex: 1 1 100%;
+}
+
 .viewbar {
   position: sticky;
   top: 0;
@@ -6615,7 +6715,8 @@ html[data-view="desktop"] .mnav {
 }
 
 /* Honeypot: off-screen rather than display:none so bots still fill it, and
-   hidden from assistive tech and from tab order. */
+   hidden from assistive tech and from tab order. Used on free-preview signup
+   and on the marketing contact forms. */
 .gate__hp {
   position: absolute;
   left: -9999px;
@@ -7112,6 +7213,26 @@ html:not(.js) .billtoggle__state {
     border: 0;
   }
 
+  /* Sign in reused the share control; keep a labeled pill, not an empty circle. */
+  .hshare--text {
+    width: auto;
+    min-width: 0;
+    height: 48px;
+    min-height: 48px;
+    padding: 0 0.9rem;
+    border-radius: 999px;
+  }
+
+  .hshare--text .hshare__label {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip-path: none;
+    white-space: nowrap;
+  }
+
   .hshare__flash {
     left: auto;
     right: 0;
@@ -7519,6 +7640,12 @@ html:not(.js) .billtoggle__state {
   inset: 0;
 }
 
+.hero-pair__frame picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
 .hero-pair__frame img {
   display: block;
   width: 100%;
@@ -7728,6 +7855,111 @@ html:not(.js) .billtoggle__state {
 @media (min-width: 90rem) {
   .hero__copy .shell {
     max-width: 38rem;
+  }
+}
+
+/* Desktop (>=1024px): the photo matches the copy column and the pair fits
+   one screen. The hero and the page shell share one centered width, wider
+   than the old 84rem measure, with equal side margins. Mobile is unchanged. */
+@media (min-width: 64rem) {
+  :root {
+    --shell: min(94vw, 116rem);
+  }
+
+  .hero--home-sequence .hero__grid {
+    grid-template-columns: minmax(22rem, 0.9fr) minmax(0, 1.15fr);
+    align-items: stretch;
+    width: 100%;
+    max-width: var(--shell);
+    margin-inline: auto;
+    min-height: calc(100svh - var(--header-h, 4.25rem) - 2.65rem);
+  }
+
+  .hero--home-sequence .hero__stage {
+    width: auto;
+    max-width: none;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    justify-self: stretch;
+    align-self: stretch;
+    aspect-ratio: auto;
+  }
+
+  .hero--home-sequence .hero-pair__frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .hero--home-sequence .hero__copy {
+    align-content: center;
+    padding-block: clamp(0.85rem, 1.8vh, 1.5rem);
+  }
+
+  .hero--home-sequence .hero__copy .shell {
+    width: min(100%, 34rem);
+    max-width: 34rem;
+    margin-inline: auto;
+    justify-items: center;
+    gap: 0.4rem;
+    padding-inline: 1.25rem;
+  }
+
+  .hero--home-sequence .hero__copy .shell,
+  .hero--home-sequence .hero__copy .shell > * {
+    text-align: center;
+  }
+
+  .hero--home-sequence .hero__links {
+    justify-content: center;
+  }
+
+  .hero--home-sequence .vision-brand-current {
+    width: min(100%, 19.5rem);
+  }
+
+  .hero--home-sequence .hero__tagline {
+    max-width: 24ch;
+    font-size: clamp(1.35rem, 0.7rem + 1.15vw, 1.85rem);
+    line-height: 1.16;
+  }
+
+  .hero--home-sequence .hero__lede {
+    max-width: 42ch;
+    font-size: 0.98rem;
+    line-height: 1.45;
+  }
+
+  .hero--home-sequence .hero__actions--single {
+    margin-top: 0.15rem;
+    margin-inline: auto;
+    justify-items: center;
+    gap: 0.2rem;
+    max-width: 18rem;
+  }
+
+  .hero--home-sequence .hero__actions--single .btn--primary {
+    min-height: 46px;
+    padding-block: 0.7rem;
+  }
+
+  .hero--home-sequence .hero__links a {
+    min-height: 2rem;
+  }
+
+  .hero--home-sequence .hero__reassure {
+    margin-top: 0.15rem;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    max-width: 42ch;
+  }
+
+  .hero--home-sequence .hero__trust {
+    font-size: 0.78rem;
+    line-height: 1.4;
+    max-width: 48ch;
   }
 }
 

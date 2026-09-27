@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script defer src="/_vercel/insights/script.js"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GVT2M7WT6J"></script>
     <script>
@@ -40,7 +41,7 @@
     <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png" />
     <link rel="icon" type="image/svg+xml" href="assets/icon-master.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/plotvisionai-gift-icon-180.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="PlotVisionAI" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -99,6 +100,12 @@
         { "@type": "Offer", "name": "1,000 credit pack", "price": "249", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://www.landscapedesignsonline.com/corporate-pricing.html", "description": "One-time top-up of 1,000 pooled credits." },
         { "@type": "Offer", "name": "5,000 credit pack", "price": "999", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://www.landscapedesignsonline.com/corporate-pricing.html", "description": "One-time top-up of 5,000 pooled credits." }
       ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.landscapedesignsonline.com/#organization",
+      "name": "PlotVisionAI",
+      "url": "https://www.landscapedesignsonline.com/"
     }
   ]
 }
@@ -230,7 +237,7 @@
 
     <header class="site-header" id="site-header">
       <div class="shell site-header__inner">
-        <a class="brand" href="index.html" aria-label="PlotVisionAI — home">
+        <a class="brand" href="/" aria-label="PlotVisionAI — home">
           <img class="brand__mark" src="assets/plotvisionai-approved-mark-transparent.png" alt="" width="980" height="500" />
           <span>
             <span class="brand__word">PlotVision<span class="brand__ai">AI</span><span class="tm">&trade;</span></span>
@@ -273,7 +280,7 @@
               <a href="night-lighting.html">Night Lighting</a>
               <a href="fencing.html">Fencing</a>
               <a href="backyard-sports-center.html">Backyard Sports Center&trade;</a>
-              <a class="dtnav__all" href="index.html#categories">Compare all eight</a>
+              <a class="dtnav__all" href="/#categories">Compare all eight</a>
             </div>
           </details>
             <a href="gallery.html">Gallery</a>
@@ -320,7 +327,7 @@
 
                 <p class="mnav__h">Pages</p>
                 <nav class="mnav__nav" aria-label="Main pages">
-                <a href="index.html">Home</a>
+                <a href="/">Home</a>
                 <a href="how-it-works.html">How it works</a>
                 <a href="homeowners.html">Homeowners</a>
                 <a href="professionals.html">Professionals</a>
@@ -336,7 +343,7 @@
                 <a href="login.html">Early access</a>
                 </nav>
 
-                <a class="btn btn--primary mnav__cta" href="https://getplotvisionai.com/app" target="_blank" rel="noopener">Try PlotVisionAI Free</a>
+                <a class="btn btn--primary mnav__cta" href="https://getplotvisionai.com/app" target="_blank" rel="noopener">Start now</a>
                 <div class="mnav__tools">
                   <button class="toolbtn" type="button" data-share data-testid="share-site">
                     <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 16V4m0 0L8 8m4-4 4 4M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
@@ -352,12 +359,12 @@
                     <input id="share-link-mnav" type="text" readonly value="" data-testid="share-link" />
                   </div>
                 </div>
-                <p class="mnav__foot">Preview first. No payment required.</p>
+                <p class="mnav__foot">Start with the $29 Starter Pack in the app.</p>
               </div>
             </div>
           </details>
 
-          <a class="btn btn--primary btn--sm" href="https://getplotvisionai.com/app" target="_blank" rel="noopener">Try Free</a>
+          <a class="btn btn--primary btn--sm" href="https://getplotvisionai.com/app" target="_blank" rel="noopener">Start now</a>
         </div>
       </div>
     </header>
@@ -376,7 +383,7 @@
     <main class="page" id="main">
       <nav class="crumbs shell" aria-label="Breadcrumb">
         <ol role="list">
-          <li><a href="index.html">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="pricing.html">Pricing</a></li>
           <li aria-current="page">Corporate and teams</li>
         </ol>
@@ -417,8 +424,8 @@
 
           <ul class="tiers tiers--corp reveal" role="list">
             <li class="tier tier--corp" data-plan-card data-plan-key="team5"
-              data-m-amount="$299" data-m-per="/month" data-m-alt="or $2,990 a year &mdash; 12 months for the price of 10" data-m-cta="Request Team 5 &mdash; $299 a month"
-              data-a-amount="$2,990" data-a-per="/year" data-a-alt="$299 a month if you stay monthly &middot; onboarding fee waived" data-a-cta="Request Team 5 &mdash; $2,990 a year">
+              data-m-amount="$299" data-m-per="/month" data-m-alt="or $2,990 a year &mdash; 12 months for the price of 10" data-m-cta="Request Team 5"
+              data-a-amount="$2,990" data-a-per="/year" data-a-alt="$299 a month if you stay monthly &middot; onboarding fee waived" data-a-cta="Request Team 5">
               <p class="tier__name">Team 5</p>
               <p class="tier__price">
                 <span class="tier__amount" data-price-amount>$299</span><span class="tier__per" data-price-per>/month</span>
@@ -434,7 +441,7 @@
               <p class="tier__cta">
                 <a class="btn btn--ghost btn--full btn--request" data-checkout-plan="team5"
                   href="contact.html?plan=Team+5&amp;billing=monthly&amp;ref=corporate-pricing">
-                  <span data-cta-label>Request Team 5 &mdash; $299 a month</span>
+                  <span data-cta-label>Request Team 5</span>
                 </a>
               </p>
               <p class="tier__note"><span class="reqtag">Activation request</span>&nbsp;Opens a pre-filled message, not a
@@ -442,8 +449,8 @@
             </li>
 
             <li class="tier tier--corp" data-plan-card data-plan-key="team10"
-              data-m-amount="$499" data-m-per="/month" data-m-alt="or $4,990 a year &mdash; 12 months for the price of 10" data-m-cta="Request Team 10 &mdash; $499 a month"
-              data-a-amount="$4,990" data-a-per="/year" data-a-alt="$499 a month if you stay monthly &middot; onboarding fee waived" data-a-cta="Request Team 10 &mdash; $4,990 a year">
+              data-m-amount="$499" data-m-per="/month" data-m-alt="or $4,990 a year &mdash; 12 months for the price of 10" data-m-cta="Request Team 10"
+              data-a-amount="$4,990" data-a-per="/year" data-a-alt="$499 a month if you stay monthly &middot; onboarding fee waived" data-a-cta="Request Team 10">
               <p class="tier__name">Team 10</p>
               <p class="tier__price">
                 <span class="tier__amount" data-price-amount>$499</span><span class="tier__per" data-price-per>/month</span>
@@ -459,7 +466,7 @@
               <p class="tier__cta">
                 <a class="btn btn--ghost btn--full btn--request" data-checkout-plan="team10"
                   href="contact.html?plan=Team+10&amp;billing=monthly&amp;ref=corporate-pricing">
-                  <span data-cta-label>Request Team 10 &mdash; $499 a month</span>
+                  <span data-cta-label>Request Team 10</span>
                 </a>
               </p>
               <p class="tier__note"><span class="reqtag">Activation request</span>&nbsp;Opens a pre-filled message, not a
@@ -467,8 +474,8 @@
             </li>
 
             <li class="tier tier--corp" data-plan-card data-plan-key="team15"
-              data-m-amount="$699" data-m-per="/month" data-m-alt="or $6,990 a year &mdash; 12 months for the price of 10" data-m-cta="Request Team 15 &mdash; $699 a month"
-              data-a-amount="$6,990" data-a-per="/year" data-a-alt="$699 a month if you stay monthly &middot; onboarding fee waived" data-a-cta="Request Team 15 &mdash; $6,990 a year">
+              data-m-amount="$699" data-m-per="/month" data-m-alt="or $6,990 a year &mdash; 12 months for the price of 10" data-m-cta="Request Team 15"
+              data-a-amount="$6,990" data-a-per="/year" data-a-alt="$699 a month if you stay monthly &middot; onboarding fee waived" data-a-cta="Request Team 15">
               <p class="tier__name">Team 15</p>
               <p class="tier__price">
                 <span class="tier__amount" data-price-amount>$699</span><span class="tier__per" data-price-per>/month</span>
@@ -484,7 +491,7 @@
               <p class="tier__cta">
                 <a class="btn btn--ghost btn--full btn--request" data-checkout-plan="team15"
                   href="contact.html?plan=Team+15&amp;billing=monthly&amp;ref=corporate-pricing">
-                  <span data-cta-label>Request Team 15 &mdash; $699 a month</span>
+                  <span data-cta-label>Request Team 15</span>
                 </a>
               </p>
               <p class="tier__note"><span class="reqtag">Activation request</span>&nbsp;Opens a pre-filled message, not a
@@ -492,8 +499,8 @@
             </li>
 
             <li class="tier tier--corp" data-plan-card data-plan-key="team25"
-              data-m-amount="$999" data-m-per="/month" data-m-alt="or $9,990 a year &mdash; 12 months for the price of 10" data-m-cta="Request Team 25 &mdash; $999 a month"
-              data-a-amount="$9,990" data-a-per="/year" data-a-alt="$999 a month if you stay monthly &middot; onboarding fee waived" data-a-cta="Request Team 25 &mdash; $9,990 a year">
+              data-m-amount="$999" data-m-per="/month" data-m-alt="or $9,990 a year &mdash; 12 months for the price of 10" data-m-cta="Request Team 25"
+              data-a-amount="$9,990" data-a-per="/year" data-a-alt="$999 a month if you stay monthly &middot; onboarding fee waived" data-a-cta="Request Team 25">
               <p class="tier__name">Team 25</p>
               <p class="tier__price">
                 <span class="tier__amount" data-price-amount>$999</span><span class="tier__per" data-price-per>/month</span>
@@ -509,7 +516,7 @@
               <p class="tier__cta">
                 <a class="btn btn--ghost btn--full btn--request" data-checkout-plan="team25"
                   href="contact.html?plan=Team+25&amp;billing=monthly&amp;ref=corporate-pricing">
-                  <span data-cta-label>Request Team 25 &mdash; $999 a month</span>
+                  <span data-cta-label>Request Team 25</span>
                 </a>
               </p>
               <p class="tier__note"><span class="reqtag">Activation request</span>&nbsp;Opens a pre-filled message, not a
@@ -590,7 +597,7 @@
               <p class="tier__cta">
                 <a class="btn btn--ghost btn--full btn--request" data-checkout="creditPack1000"
                   href="contact.html?plan=1%2C000+credit+pack&amp;billing=one-time&amp;ref=corporate-pricing">
-                  Request the 1,000 pack &mdash; $249
+                  Request the 1,000 pack
                 </a>
               </p>
             </li>
@@ -601,7 +608,7 @@
               <p class="tier__cta">
                 <a class="btn btn--ghost btn--full btn--request" data-checkout="creditPack5000"
                   href="contact.html?plan=5%2C000+credit+pack&amp;billing=one-time&amp;ref=corporate-pricing">
-                  Request the 5,000 pack &mdash; $999
+                  Request the 5,000 pack
                 </a>
               </p>
             </li>
@@ -713,7 +720,7 @@
           <nav class="sf__col" aria-labelledby="sf-explore">
             <h2 class="sf__h" id="sf-explore">Explore</h2>
             <ul class="sf__list" role="list">
-              <li><a href="index.html">Home</a></li>
+              <li><a href="/">Home</a></li>
               <li><a href="how-it-works.html">How it works</a></li>
               <li><a href="homeowners.html">For homeowners</a></li>
               <li><a href="professionals.html">For professionals</a></li>
@@ -749,15 +756,6 @@
               <li>
                 <a
                   class="exlink"
-                  href="https://www.landformsusa.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Landforms Design Inc (opens in a new tab)"
-                  >Landforms Design Inc<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-external" /></svg></a>
-              </li>
-              <li>
-                <a
-                  class="exlink"
                   href="https://www.facebook.com/LandformsUSA/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -770,14 +768,14 @@
           <div class="sf__col">
             <h2 class="sf__h">Contact</h2>
             <ul class="sf__list" role="list">
-              <li><a href="tel:+13198994322">Call or text (319) 899-4322</a></li>
-              <li><a href="mailto:darin@getplotvisionai.com">darin@getplotvisionai.com</a></li>
               <li><a href="contact.html">Contact PlotVisionAI</a></li>
             </ul>
             <p class="sf__fine">A sister platform of Landforms Design Inc, the design and build company behind the
               reference projects.</p>
           </div>
         </div>
+
+        <p class="sf__family" data-family-sites>Check out our partner sites: <a href="https://www.landformsusa.com/" title="Cedar Rapids landscape design &amp; installation">Landforms USA</a> · <a href="https://getplotvisionai.com/" title="AI yard design app">Plot Vision AI</a> · <a href="https://scrapmetalcedarrapids.com/" title="scrap metal pickup &amp; prices">Cedar Rapids Scrap</a> · <a href="https://www.resinatecoatings.com/" title="epoxy floor coatings">Resinate Coatings</a> · <a href="https://desmoinesscrap.com/" title="Des Moines scrap metal pickup">Des Moines Scrap</a> · <a href="https://desmoinesepoxy.com/" title="Des Moines epoxy floors">Des Moines Epoxy</a> · <a href="https://dallasscrappickup.com/" title="Dallas–Fort Worth scrap pickup">Dallas Scrap Pickup</a> · <a href="https://dallasepoxycoatings.com/" title="Dallas–Fort Worth epoxy floors">Dallas Epoxy Coatings</a> · <a href="https://phoenixscrappickup.com/" title="Phoenix scrap metal pickup">Phoenix Scrap Pickup</a> · <a href="https://phoenixepoxygarage.com/" title="Phoenix garage floor epoxy">Phoenix Epoxy Garage</a> · <a href="https://tampascrappickup.com/" title="Tampa scrap metal pickup">Tampa Scrap Pickup</a> · <a href="https://tampaepoxypros.com/" title="Tampa epoxy floors">Tampa Epoxy Pros</a> · <a href="https://atlantascrappickup.com/" title="Atlanta scrap metal pickup">Atlanta Scrap Pickup</a> · <a href="https://atlantafloorcoatings.com/" title="Atlanta epoxy floor coatings">Atlanta Floor Coatings</a> · <a href="https://denverscrapbuyer.com/" title="Denver scrap metal buyer">Denver Scrap Buyer</a> · <a href="https://denverepoxygarage.com/" title="Denver garage floor epoxy">Denver Epoxy Garage</a></p>
 
         <div class="sf__base">
           <p class="sf__copy">© <span id="year">2026</span> PlotVisionAI. All rights reserved.</p>
@@ -790,6 +788,10 @@
               <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 5h18v11H3zM9 20h6M12 16v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
               <span data-view-label>Desktop view</span>
             </button>
+            <button class="toolbtn" type="button" data-install-app>
+              Install the app
+            </button>
+            <p class="toolnote install-help" data-install-help role="status" hidden></p>
             <p class="toolnote" data-share-state role="status" aria-live="polite" hidden></p>
           </div>
           <nav class="sf__legalnav" aria-label="Legal">
@@ -820,6 +822,7 @@
     </aside>
 
     <script src="checkout-links.js"></script>
+    <script src="family-sites.js" defer></script>
     <script src="script.js" defer></script>
   </body>
 </html>

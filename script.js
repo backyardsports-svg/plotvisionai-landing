@@ -2,6 +2,280 @@
    PlotVisionAI launch page — progressive enhancement only.
    Everything on this page is readable and usable with JS disabled.
    ========================================================================== */
+
+/* Cloudflare Turnstile for marketing contact + preview signup.
+   Tokens are sent as both `cf-turnstile-response` and `turnstileToken` so Edge
+   turnstileTokenFromRecord can read either. Widget `data-action` values must
+   match Edge expectedAction exactly: `contact` and `preview_signup` (underscore;
+   TURNSTILE_ACTION_CONTACT / TURNSTILE_ACTION_PREVIEW_SIGNUP). Do not use the
+   hyphenated function name `preview-signup`. The matching secret TURNSTILE_SECRET
+   is never in this file. If the Cloudflare script fails to load, forms stay
+   usable and a later submit retries the load. */
+(function () {
+  "use strict";
+
+  var SCRIPT_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+  var widgets = {};
+  var loadPromise = null;
+
+  function cfgKey() {
+    var cfg = window.PV_CONFIG || {};
+    var key = cfg.TURNSTILE_SITE_KEY;
+    return typeof key === "string" ? key.trim() : "";
+  }
+
+  function hostKey(host) {
+    var key = cfgKey();
+    if (key) return key;
+    return (host && host.getAttribute("data-sitekey") ? host.getAttribute("data-sitekey") : "").trim();
+  }
+
+  function hostAction(host, fallback) {
+    var action = host && host.getAttribute("data-action");
+    return action || fallback || "";
+  }
+
+  function markFailed(el) {
+    if (el) el.setAttribute("data-pv-turnstile-failed", "1");
+    window.pvTurnstileLoadError = true;
+  }
+
+  function findScript() {
+    return document.querySelector("script[data-pv-turnstile], script[src*=\"challenges.cloudflare.com/turnstile\"]");
+  }
+
+  function loadApi(forceReload) {
+    if (window.turnstile && !forceReload) return Promise.resolve();
+    if (loadPromise && !forceReload) return loadPromise;
+
+    loadPromise = new Promise(function (resolve, reject) {
+      var settled = false;
+      var timer = window.setTimeout(function () {
+        finish(new Error("The bot check did not load. Try again."));
+      }, 12000);
+
+      function finish(err) {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timer);
+        if (err) {
+          loadPromise = null;
+          window.pvTurnstileLoadError = true;
+          reject(err);
+        } else {
+          window.pvTurnstileLoadError = false;
+          resolve();
+        }
+      }
+
+      if (window.turnstile && !forceReload) {
+        finish(null);
+        return;
+      }
+
+      var existing = findScript();
+      if (forceReload && existing) {
+        try { existing.parentNode.removeChild(existing); } catch (removeErr) { /* ignore */ }
+        existing = null;
+        try { window.turnstile = undefined; } catch (clearErr) { /* ignore */ }
+        Object.keys(widgets).forEach(function (id) {
+          widgets[id].id = null;
+          widgets[id].waiter = null;
+        });
+      }
+
+      function watch(el) {
+        el.addEventListener("load", function () {
+          if (window.turnstile) finish(null);
+          else {
+            markFailed(el);
+            finish(new Error("The bot check did not load. Try again."));
+          }
+        });
+        el.addEventListener("error", function () {
+          markFailed(el);
+          finish(new Error("The bot check could not load. Check your connection and try again."));
+        });
+      }
+
+      if (existing && !existing.getAttribute("data-pv-turnstile-failed")) {
+        if (window.turnstile) {
+          finish(null);
+          return;
+        }
+        watch(existing);
+        return;
+      }
+
+      var script = document.createElement("script");
+      script.src = SCRIPT_SRC;
+      script.async = true;
+      script.defer = true;
+      script.setAttribute("data-pv-turnstile", "1");
+      watch(script);
+      document.head.appendChild(script);
+    });
+
+    return loadPromise;
+  }
+
+  function slotFor(host) {
+    if (!host || !host.id) return null;
+    if (!widgets[host.id]) widgets[host.id] = { host: host, id: null, waiter: null };
+    widgets[host.id].host = host;
+    return widgets[host.id];
+  }
+
+  function mountHost(host) {
+    var slot = slotFor(host);
+    var key = hostKey(host);
+    if (!slot || !key || !window.turnstile || slot.id !== null) return slot;
+    var fallback = host.id === "gate-turnstile" ? "preview_signup" : "contact";
+    try {
+      slot.id = window.turnstile.render(host, {
+        sitekey: key,
+        theme: "dark",
+        size: "flexible",
+        appearance: "interaction-only",
+        execution: "execute",
+        action: hostAction(host, fallback),
+        callback: function (token) {
+          if (!slot.waiter) return;
+          var done = slot.waiter;
+          slot.waiter = null;
+          done(null, token);
+        },
+        "error-callback": function () {
+          if (!slot.waiter) return;
+          var done = slot.waiter;
+          slot.waiter = null;
+          done(new Error("The bot check could not run. Try again."));
+        },
+        "expired-callback": function () {
+          resetSlot(slot);
+        }
+      });
+      if (slot.id === undefined || slot.id === null) slot.id = null;
+    } catch (renderErr) {
+      slot.id = null;
+    }
+    return slot;
+  }
+
+  function mountAll() {
+    Array.prototype.forEach.call(document.querySelectorAll(".signup__turnstile"), mountHost);
+  }
+
+  function resetSlot(slot) {
+    if (!slot || slot.id === null || !window.turnstile) return;
+    try { window.turnstile.reset(slot.id); } catch (err) { /* ignore */ }
+  }
+
+  function executeSlot(slot) {
+    return new Promise(function (resolve, reject) {
+      if (!window.turnstile || !slot || slot.id === null) {
+        reject(new Error("The bot check did not load. Try again."));
+        return;
+      }
+      var existing = "";
+      try { existing = window.turnstile.getResponse(slot.id) || ""; } catch (getErr) { existing = ""; }
+      if (existing) {
+        resolve(existing);
+        return;
+      }
+      var settled = false;
+      var timer = window.setTimeout(function () {
+        if (settled) return;
+        settled = true;
+        slot.waiter = null;
+        reject(new Error("Please complete the bot check and try again."));
+      }, 20000);
+      slot.waiter = function (err, token) {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timer);
+        if (err) reject(err);
+        else if (!token) reject(new Error("Please complete the bot check and try again."));
+        else resolve(token);
+      };
+      try {
+        window.turnstile.execute(slot.id);
+      } catch (executeErr) {
+        settled = true;
+        window.clearTimeout(timer);
+        slot.waiter = null;
+        reject(executeErr && executeErr.message
+          ? executeErr
+          : new Error("The bot check could not run. Try again."));
+      }
+    });
+  }
+
+  function requestToken(hostId) {
+    var host = typeof hostId === "string" ? document.getElementById(hostId) : hostId;
+    if (!host) {
+      return Promise.reject(new Error("The bot check is missing from this page. Refresh and try again."));
+    }
+
+    function once(forceReload) {
+      return loadApi(forceReload).then(function () {
+        mountAll();
+        var slot = slotFor(host) || mountHost(host);
+        if (!slot || slot.id === null) {
+          throw new Error("The bot check did not load. Try again.");
+        }
+        return executeSlot(slot);
+      });
+    }
+
+    return once(!!window.pvTurnstileLoadError).catch(function (err) {
+      var msg = err && err.message ? String(err.message) : "";
+      var loadFail = !!window.pvTurnstileLoadError || /did not load|could not load/i.test(msg);
+      if (!loadFail) throw err;
+      return once(true);
+    });
+  }
+
+  function reset(hostId) {
+    var host = typeof hostId === "string" ? document.getElementById(hostId) : hostId;
+    if (!host) return;
+    resetSlot(slotFor(host));
+  }
+
+  function attachToken(target, token) {
+    if (!target || !token) return target;
+    if (typeof target.append === "function") {
+      target.append("cf-turnstile-response", token);
+      target.append("turnstileToken", token);
+      return target;
+    }
+    target["cf-turnstile-response"] = token;
+    target.turnstileToken = token;
+    return target;
+  }
+
+  window.pvTurnstile = {
+    mountAll: mountAll,
+    requestToken: requestToken,
+    reset: reset,
+    attachToken: attachToken
+  };
+
+  window.pvMountTurnstile = mountAll;
+  var previousLoad = window.pvOnTurnstileLoad;
+  window.pvOnTurnstileLoad = function () {
+    window.pvTurnstileReady = true;
+    window.pvTurnstileLoadError = false;
+    if (typeof previousLoad === "function") previousLoad();
+    mountAll();
+  };
+
+  if (window.turnstile || window.pvTurnstileReady) mountAll();
+  else if (document.querySelector(".signup__turnstile")) {
+    loadApi(false).then(mountAll).catch(function () { /* submit retries */ });
+  }
+})();
+
 (function () {
   "use strict";
 
@@ -1437,18 +1711,33 @@
   }
 
   /* --------------------------- contact form --------------------------- */
-  /* Project requests are sent to a Supabase Edge Function. The function
-     validates the fields, stores the private intake record, and uploads no more
-     than three private photos. Nothing is stored in browser-side storage. */
+  /* contact.html and the homepage contact form load config.js, mount the
+     existing Turnstile widget, and post a private intake record to a Supabase
+     Edge Function. contact.html also sends optional photos. Both use the same
+     off-screen company honeypot as free-preview. Missing optional fields are
+     skipped rather than throwing. */
   var cForm = document.getElementById("contact-form");
   var cDone = document.getElementById("contact-done");
   var cDoneText = document.getElementById("contact-done-text");
-
   if (cForm && cDone && cDoneText) {
     var contactCfg = window.PV_CONFIG || {};
     var cSubmit = document.getElementById("contact-submit");
     var cSubmitLabel = cSubmit ? cSubmit.querySelector("[data-contact-submit-label]") : null;
     var cSending = false;
+    var cHoneypot = cForm.querySelector("#c-company");
+    /* Contact is Expert Design, Corporate, Landforms construction, the
+       native-app list, or a privacy / data request. DIY patio/pool/fence/trial
+       options are rejected here even if someone edits the markup and posts them. */
+    var PRIVACY_INTEREST = "Privacy / data request";
+    var HELP_URL = "https://getplotvisionai.com";
+    var ALLOWED_INTERESTS = {
+      "Expert Design ($350)": true,
+      "Corporate / team seats": true,
+      "Landforms construction / outdoor build work": true,
+      "Native iPhone / Android app list": true,
+      "Privacy / data request": true
+    };
+
     var f = {
       name: document.getElementById("c-name"),
       email: document.getElementById("c-email"),
@@ -1457,6 +1746,30 @@
       message: document.getElementById("c-message"),
       photos: document.getElementById("c-photos")
     };
+
+    if (f.interest && wantedPlan && !f.interest.value) {
+      var planInterest = wantedPlan === "Expert Design Service"
+        ? "Expert Design ($350)"
+        : "Corporate / team seats";
+      if (ALLOWED_INTERESTS[planInterest]) f.interest.value = planInterest;
+    }
+    if (f.interest && !f.interest.value && planParams.get("interest") === "privacy") {
+      f.interest.value = PRIVACY_INTEREST;
+    }
+
+    function privacyRequestSelected() {
+      return !!(f.interest && f.interest.value === PRIVACY_INTEREST);
+    }
+
+    function syncAddressRequirement() {
+      if (!f.address) return;
+      var optional = privacyRequestSelected();
+      if (optional) f.address.removeAttribute("required");
+      else f.address.setAttribute("required", "");
+      var opt = document.getElementById("c-address-opt");
+      if (opt) opt.hidden = !optional;
+      if (optional && err.address) flag(f.address, err.address, false);
+    }
     var err = {
       name: document.getElementById("c-name-error"),
       email: document.getElementById("c-email-error"),
@@ -1469,6 +1782,10 @@
     function role() {
       var picked = cForm.querySelector('input[name="role"]:checked');
       return picked ? picked.value : "";
+    }
+
+    function fieldValue(field) {
+      return field && typeof field.value === "string" ? field.value.trim() : "";
     }
 
     function flag(field, node, bad) {
@@ -1492,6 +1809,9 @@
       });
     });
 
+    if (f.interest) f.interest.addEventListener("change", syncAddressRequirement);
+    syncAddressRequirement();
+
     function validPhotos(files) {
       if (files.length > 3) return false;
       var accepted = /^(image\/jpeg|image\/png|image\/webp|image\/heic|image\/heif)$/i;
@@ -1501,39 +1821,86 @@
       return true;
     }
 
+    function showContactStatus(message) {
+      cDoneText.textContent = message;
+      cDone.hidden = false;
+      if (cDone.focus) cDone.focus();
+    }
+
+    /* Failure keeps every field so the visitor can resubmit. Help is the
+       in-app chat, not a personal phone number or email. */
+    function showContactFailure(detail) {
+      var lead = detail && String(detail).trim() ? String(detail).trim() : "The request could not be sent.";
+      if (!/[.!?]$/.test(lead)) lead += ".";
+      cDoneText.textContent = "";
+      cDoneText.appendChild(document.createTextNode(lead + " Your entries are still in the form. Try again, or open "));
+      var help = document.createElement("a");
+      help.href = HELP_URL;
+      help.target = "_blank";
+      help.rel = "noopener noreferrer";
+      help.textContent = "Help";
+      help.title = "In-app Help and help chat";
+      cDoneText.appendChild(help);
+      cDoneText.appendChild(document.createTextNode(" in the app."));
+      cDone.hidden = false;
+      if (cDone.focus) cDone.focus();
+    }
+
+    function setContactBusy(on) {
+      cSending = on;
+      if (!cSubmit) return;
+      cSubmit.disabled = on;
+      cSubmit.setAttribute("aria-busy", on ? "true" : "false");
+      if (cSubmitLabel) cSubmitLabel.textContent = on ? "Sending request" : "Send project request";
+    }
+
     cForm.addEventListener("submit", function (event) {
       event.preventDefault();
       if (cSending) return;
 
-      var name = f.name.value.trim();
-      var email = f.email.value.trim();
-      var address = f.address.value.trim();
+      var name = fieldValue(f.name);
+      var email = fieldValue(f.email);
+      var address = fieldValue(f.address);
       var who = role();
-      var interest = f.interest.value;
-      var message = f.message.value.trim();
+      var interest = f.interest ? f.interest.value : "";
+      var message = fieldValue(f.message);
       var photos = f.photos && f.photos.files ? Array.prototype.slice.call(f.photos.files) : [];
 
       var ok = true;
       var first = null;
       if (!flag(f.name, err.name, name.length < 2)) { ok = false; first = first || f.name; }
       if (!flag(f.email, err.email, !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))) { ok = false; first = first || f.email; }
-      if (!flag(f.address, err.address, address.length < 8)) { ok = false; first = first || f.address; }
+      if (f.address && !privacyRequestSelected()) {
+        if (!flag(f.address, err.address, address.length < 8)) { ok = false; first = first || f.address; }
+      } else if (f.address) {
+        flag(f.address, err.address, false);
+      }
       if (err.role) {
         err.role.hidden = !!who;
         if (!who) { ok = false; first = first || cForm.querySelector('input[name="role"]'); }
       }
-      if (!flag(f.interest, err.interest, !interest)) { ok = false; first = first || f.interest; }
-      if (!flag(f.photos, err.photos, !validPhotos(photos))) { ok = false; first = first || f.photos; }
+      if (!flag(f.interest, err.interest, !interest || !ALLOWED_INTERESTS[interest])) {
+        ok = false;
+        first = first || f.interest;
+      }
+      if (f.photos) {
+        if (!flag(f.photos, err.photos, !validPhotos(photos))) { ok = false; first = first || f.photos; }
+      }
 
       if (!ok) {
         if (first && first.focus) first.focus();
         return;
       }
 
+      /* Honeypot: a real person never fills a field that is off screen and out of
+         tab order, so stop without a request and without a false success. */
+      if (cHoneypot && cHoneypot.value.trim() !== "") {
+        showContactStatus("That submission could not go through. Please use the contact form if you are a real person.");
+        return;
+      }
+
       if (!contactCfg.CONTACT_ENDPOINT) {
-        cDoneText.textContent = "The secure form connection is temporarily unavailable. Please email backyardsports@gmail.com directly.";
-        cDone.hidden = false;
-        if (cDone.focus) cDone.focus();
+        showContactFailure("The form could not be sent from this page.");
         return;
       }
 
@@ -1541,38 +1908,41 @@
       var story = cForm.querySelector("#c-story");
       var testimonial = cForm.querySelector("#c-testimonial");
       var permission = cForm.querySelector("#c-permission");
-      var body = new FormData();
-      body.append("name", name);
-      body.append("email", email);
-      body.append("address", address);
-      body.append("role", who);
-      body.append("interest", interest);
-      body.append("message", message);
-      body.append("plan", wantedPlan || "");
-      body.append("billing", planParams.get("billing") || "");
-      body.append("projectLink", link ? link.value.trim() : "");
-      body.append("story", story ? story.value.trim() : "");
-      body.append("testimonial", testimonial ? testimonial.value.trim() : "");
-      body.append("permission", permission && permission.checked ? "true" : "false");
-      body.append("page", window.location.pathname);
-      photos.forEach(function (photo) { body.append("photos", photo, photo.name); });
-
       var headers = {};
       if (contactCfg.SIGNUP_ANON_KEY) {
         headers.apikey = contactCfg.SIGNUP_ANON_KEY;
         headers.Authorization = "Bearer " + contactCfg.SIGNUP_ANON_KEY;
       }
 
-      cSending = true;
-      if (cSubmit) {
-        cSubmit.disabled = true;
-        cSubmit.setAttribute("aria-busy", "true");
-        if (cSubmitLabel) cSubmitLabel.textContent = "Sending request";
-      }
+      setContactBusy(true);
       cDone.hidden = true;
 
-      fetch(contactCfg.CONTACT_ENDPOINT, { method: "POST", headers: headers, body: body })
+      window.pvTurnstile.requestToken("c-turnstile")
+        .then(function (token) {
+          if (!token) {
+            throw new Error("Please complete the bot check and try again.");
+          }
+          var body = new FormData();
+          body.append("name", name);
+          body.append("email", email);
+          body.append("address", address);
+          body.append("role", who);
+          body.append("interest", interest);
+          body.append("message", message);
+          body.append("plan", wantedPlan || "");
+          body.append("billing", planParams.get("billing") || "");
+          body.append("projectLink", link ? fieldValue(link) : "");
+          body.append("story", story ? fieldValue(story) : "");
+          body.append("testimonial", testimonial ? fieldValue(testimonial) : "");
+          body.append("permission", permission && permission.checked ? "true" : "false");
+          body.append("page", window.location.pathname);
+          body.append("company", cHoneypot && cHoneypot.value ? cHoneypot.value : "");
+          window.pvTurnstile.attachToken(body, token);
+          photos.forEach(function (photo) { body.append("photos", photo, photo.name); });
+          return fetch(contactCfg.CONTACT_ENDPOINT, { method: "POST", headers: headers, body: body });
+        })
         .then(function (response) {
+          if (!response) return {};
           return response.json().catch(function () { return {}; }).then(function (data) {
             if (!response.ok) {
               throw new Error(
@@ -1586,23 +1956,17 @@
         })
         .then(function () {
           cForm.reset();
-          cDoneText.textContent = "Your project request was sent. Darin will review it and reply personally.";
-          cDone.hidden = false;
-          if (cDone.focus) cDone.focus();
+          window.pvTurnstile.reset("c-turnstile");
+          showContactStatus("Your message was sent. We will reply to the address you used.");
         })
         .catch(function (sendError) {
-          cDoneText.textContent = (sendError && sendError.message ? sendError.message : "The request could not be sent.") +
-            " Please try again or email backyardsports@gmail.com.";
-          cDone.hidden = false;
-          if (cDone.focus) cDone.focus();
+          window.pvTurnstile.reset("c-turnstile");
+          var detail = sendError && sendError.message ? sendError.message : "The request could not be sent.";
+          if (/failed to fetch|networkerror|load failed/i.test(detail)) detail = "The request could not be sent.";
+          showContactFailure(detail);
         })
         .then(function () {
-          cSending = false;
-          if (cSubmit) {
-            cSubmit.disabled = false;
-            cSubmit.setAttribute("aria-busy", "false");
-            if (cSubmitLabel) cSubmitLabel.textContent = "Send project request";
-          }
+          setContactBusy(false);
         });
     });
   }
@@ -1782,6 +2146,12 @@
   var stage = document.querySelector("[data-homeowner-hero]");
   if (!stage) return;
 
+  if (stage.hasAttribute("data-hero-lock")) {
+    var locked = stage.querySelector("[data-hero-pair].is-active") || stage.querySelector("[data-hero-pair]");
+    if (locked) locked.classList.add("is-active", "is-concept");
+    return;
+  }
+
   var pairs = Array.prototype.slice.call(stage.querySelectorAll("[data-hero-pair]"));
   var state = stage.querySelector("[data-hero-state]");
   var count = stage.querySelector("[data-hero-count]");
@@ -1901,6 +2271,7 @@
   var alertBox = form.querySelector("[data-gate-alert]");
   var nocapture = form.querySelector("[data-gate-nocapture]");
   var sending = false;
+  var idleLabel = label ? label.textContent : "Notify me about the native apps";
 
   function say(node, msg) {
     if (!node) return;
@@ -1920,7 +2291,7 @@
     if (!submit) return;
     submit.setAttribute("aria-busy", on ? "true" : "false");
     submit.disabled = on;
-    if (label) label.textContent = on ? "Adding you\u2026" : "Notify me at launch";
+    if (label) label.textContent = on ? "Adding you\u2026" : idleLabel;
   }
 
   /* No endpoint: do not pretend to save the address. Switch the form off and say
@@ -1951,11 +2322,12 @@
 
   /* Payload for the signup function. Both naming conventions are sent because the
      function accepts either; company is the honeypot and is always empty for a
-     real person, so the server can reject bots as well. */
-  function payload(value) {
+     real person, so the server can reject bots as well. Turnstile tokens use the
+     same field names Edge turnstileTokenFromRecord reads. */
+  function payload(value, token) {
     var optedIn = !!(optin && optin.checked);
     var consent = cfg.CONSENT_VERSION || "";
-    return {
+    var body = {
       email: value,
       source: cfg.SIGNUP_SOURCE || "free-preview",
       page: window.location.pathname,
@@ -1966,6 +2338,7 @@
       consent_version: consent,
       company: pot && pot.value ? pot.value : ""
     };
+    return window.pvTurnstile.attachToken(body, token);
   }
 
   form.addEventListener("submit", function (e) {
@@ -1997,11 +2370,15 @@
       headers.Authorization = "Bearer " + cfg.SIGNUP_ANON_KEY;
     }
 
-    fetch(cfg.SIGNUP_ENDPOINT, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(payload(value))
-    })
+    window.pvTurnstile.requestToken("gate-turnstile")
+      .then(function (token) {
+        if (!token) throw new Error("Please complete the bot check and try again.");
+        return fetch(cfg.SIGNUP_ENDPOINT, {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(payload(value, token))
+        });
+      })
       .then(function (res) {
         return res.json().catch(function () { return {}; }).then(function (data) {
           return { ok: res.ok, statusCode: res.status, data: data || {} };
@@ -2009,6 +2386,7 @@
       })
       .then(function (r) {
         busy(false);
+        window.pvTurnstile.reset("gate-turnstile");
         /* Duplicate-safe: an address already on the list is a success, not an error. */
         var duplicate = r.statusCode === 409 || r.data.duplicate === true || r.data.status === "duplicate" ||
           r.data.status === "existing" || r.data.status === "already_registered";
@@ -2023,10 +2401,15 @@
         var srvMsg = (r.data.error && r.data.error.message) || r.data.message || "";
         say(alertBox, srvMsg || "We could not save that address just now. Try again in a moment, or use the contact form. The preview link above is unaffected.");
       })
-      .catch(function () {
+      .catch(function (err) {
         busy(false);
+        window.pvTurnstile.reset("gate-turnstile");
         say(status, "");
-        say(alertBox, "That did not reach our server \u2014 check your connection and try again, or use the contact form. The preview link above is unaffected.");
+        if (err && err.name === "TypeError") {
+          say(alertBox, "That did not reach our server \u2014 check your connection and try again, or use the contact form. The preview link above is unaffected.");
+          return;
+        }
+        say(alertBox, (err && err.message ? err.message : "We could not save that address just now.") + " Try again, or use the contact form. The preview link above is unaffected.");
       });
   });
 
@@ -2035,4 +2418,59 @@
       if (emailErr && !emailErr.hidden && valid(email.value.trim())) fieldError("");
     });
   }
+})();
+
+/* Installable app: network-first worker, plus a footer button that opens the
+   browser install prompt when Chrome offers one. */
+(function () {
+  "use strict";
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("/sw.js", { scope: "/" }).catch(function () {});
+    });
+  }
+
+  var buttons = document.querySelectorAll("[data-install-app]");
+  if (!buttons.length) return;
+
+  var standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  if (standalone) {
+    Array.prototype.forEach.call(buttons, function (button) { button.hidden = true; });
+    return;
+  }
+
+  var deferred = null;
+  var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+  function instructions() {
+    if (ios) return "Share, then Add to Home Screen.";
+    return "Browser menu, then Install app.";
+  }
+
+  window.addEventListener("beforeinstallprompt", function (event) {
+    event.preventDefault();
+    deferred = event;
+  });
+
+  Array.prototype.forEach.call(buttons, function (button) {
+    var note = button.parentElement && button.parentElement.querySelector("[data-install-help]");
+    button.addEventListener("click", function () {
+      if (!deferred) {
+        if (!note) return;
+        note.hidden = false;
+        note.textContent = instructions();
+        return;
+      }
+      var promptEvent = deferred;
+      deferred = null;
+      promptEvent.prompt();
+      var choice = promptEvent.userChoice;
+      if (choice && typeof choice.then === "function") {
+        choice.then(function () {}, function () {});
+      }
+      if (note) note.hidden = true;
+    });
+  });
 })();
