@@ -1715,27 +1715,27 @@
      existing Turnstile widget, and post a private intake record to a Supabase
      Edge Function. contact.html also sends optional photos. Both use the same
      off-screen company honeypot as free-preview. Missing optional fields are
-     skipped rather than throwing. Mailto is only a fallback if the endpoint
-     is not configured. */
+     skipped rather than throwing. */
   var cForm = document.getElementById("contact-form");
   var cDone = document.getElementById("contact-done");
   var cDoneText = document.getElementById("contact-done-text");
-  var CONTACT_MAILTO = "darin@getplotvisionai.com";
-
   if (cForm && cDone && cDoneText) {
     var contactCfg = window.PV_CONFIG || {};
     var cSubmit = document.getElementById("contact-submit");
     var cSubmitLabel = cSubmit ? cSubmit.querySelector("[data-contact-submit-label]") : null;
     var cSending = false;
     var cHoneypot = cForm.querySelector("#c-company");
-    /* Contact is Expert Design, Corporate, Landforms construction, or the
-       native-app list. DIY patio/pool/fence/trial options are rejected here
-       even if someone edits the markup and posts them. */
+    /* Contact is Expert Design, Corporate, Landforms construction, the
+       native-app list, or a privacy / data request. DIY patio/pool/fence/trial
+       options are rejected here even if someone edits the markup and posts them. */
+    var PRIVACY_INTEREST = "Privacy / data request";
+    var HELP_URL = "https://getplotvisionai.com";
     var ALLOWED_INTERESTS = {
       "Expert Design ($350)": true,
       "Corporate / team seats": true,
       "Landforms construction / outdoor build work": true,
-      "Native iPhone / Android app list": true
+      "Native iPhone / Android app list": true,
+      "Privacy / data request": true
     };
 
     var f = {
@@ -1752,6 +1752,23 @@
         ? "Expert Design ($350)"
         : "Corporate / team seats";
       if (ALLOWED_INTERESTS[planInterest]) f.interest.value = planInterest;
+    }
+    if (f.interest && !f.interest.value && planParams.get("interest") === "privacy") {
+      f.interest.value = PRIVACY_INTEREST;
+    }
+
+    function privacyRequestSelected() {
+      return !!(f.interest && f.interest.value === PRIVACY_INTEREST);
+    }
+
+    function syncAddressRequirement() {
+      if (!f.address) return;
+      var optional = privacyRequestSelected();
+      if (optional) f.address.removeAttribute("required");
+      else f.address.setAttribute("required", "");
+      var opt = document.getElementById("c-address-opt");
+      if (opt) opt.hidden = !optional;
+      if (optional && err.address) flag(f.address, err.address, false);
     }
     var err = {
       name: document.getElementById("c-name-error"),
@@ -1792,6 +1809,9 @@
       });
     });
 
+    if (f.interest) f.interest.addEventListener("change", syncAddressRequirement);
+    syncAddressRequirement();
+
     function validPhotos(files) {
       if (files.length > 3) return false;
       var accepted = /^(image\/jpeg|image\/png|image\/webp|image\/heic|image\/heif)$/i;
@@ -1807,56 +1827,31 @@
       if (cDone.focus) cDone.focus();
     }
 
+    /* Failure keeps every field so the visitor can resubmit. Help is the
+       in-app chat, not a personal phone number or email. */
+    function showContactFailure(detail) {
+      var lead = detail && String(detail).trim() ? String(detail).trim() : "The request could not be sent.";
+      if (!/[.!?]$/.test(lead)) lead += ".";
+      cDoneText.textContent = "";
+      cDoneText.appendChild(document.createTextNode(lead + " Your entries are still in the form. Try again, or open "));
+      var help = document.createElement("a");
+      help.href = HELP_URL;
+      help.target = "_blank";
+      help.rel = "noopener noreferrer";
+      help.textContent = "Help";
+      help.title = "In-app Help and help chat";
+      cDoneText.appendChild(help);
+      cDoneText.appendChild(document.createTextNode(" in the app."));
+      cDone.hidden = false;
+      if (cDone.focus) cDone.focus();
+    }
+
     function setContactBusy(on) {
       cSending = on;
       if (!cSubmit) return;
       cSubmit.disabled = on;
       cSubmit.setAttribute("aria-busy", on ? "true" : "false");
       if (cSubmitLabel) cSubmitLabel.textContent = on ? "Sending request" : "Send project request";
-    }
-
-    function openMailtoDraft(name, email, who, interest, message, address) {
-      var link = cForm.querySelector("#c-link");
-      var story = cForm.querySelector("#c-story");
-      var testimonial = cForm.querySelector("#c-testimonial");
-      var permission = cForm.querySelector("#c-permission");
-      var lines = [
-        "Name: " + name,
-        "Email: " + email,
-        "I am a: " + who,
-        "Project interest: " + interest
-      ];
-      if (address) lines.push("Property address: " + address);
-      lines.push("", "Message:", message || "(none)");
-
-      var linkVal = link ? fieldValue(link) : "";
-      var storyVal = story ? fieldValue(story) : "";
-      var quoteVal = testimonial ? fieldValue(testimonial) : "";
-      if (linkVal || storyVal || quoteVal || (permission && permission.checked)) {
-        lines.push("", "— Project story —");
-        if (linkVal) lines.push("Before / after link: " + linkVal);
-        if (storyVal) lines.push("", "What happened:", storyVal);
-        if (quoteVal) lines.push("", "Testimonial in their words:", quoteVal);
-        lines.push(
-          "",
-          "Permission to publish: " + (permission && permission.checked ? "yes, with name and photos as supplied" : "not given"),
-          "Photos: attach them to this email before sending — the form cannot upload files."
-        );
-      }
-
-      lines.push("", "— Sent from the PlotVisionAI page");
-      var href =
-        "mailto:" + CONTACT_MAILTO +
-        "?subject=" + encodeURIComponent("PlotVisionAI enquiry — " + name + " (" + who + ")") +
-        "&body=" + encodeURIComponent(lines.join("\n"));
-
-      cDoneText.textContent =
-        "Your email app should now be opening with this message drafted to " + CONTACT_MAILTO +
-        ". Nothing has been sent yet — press send in your email app to finish. If nothing opened, email " +
-        CONTACT_MAILTO + " directly.";
-      cDone.hidden = false;
-      if (cDone.focus) cDone.focus();
-      window.location.href = href;
     }
 
     cForm.addEventListener("submit", function (event) {
@@ -1875,8 +1870,10 @@
       var first = null;
       if (!flag(f.name, err.name, name.length < 2)) { ok = false; first = first || f.name; }
       if (!flag(f.email, err.email, !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))) { ok = false; first = first || f.email; }
-      if (f.address) {
+      if (f.address && !privacyRequestSelected()) {
         if (!flag(f.address, err.address, address.length < 8)) { ok = false; first = first || f.address; }
+      } else if (f.address) {
+        flag(f.address, err.address, false);
       }
       if (err.role) {
         err.role.hidden = !!who;
@@ -1898,12 +1895,12 @@
       /* Honeypot: a real person never fills a field that is off screen and out of
          tab order, so stop without a request and without a false success. */
       if (cHoneypot && cHoneypot.value.trim() !== "") {
-        showContactStatus("That submission could not go through. If you are a real person, email " + CONTACT_MAILTO + ".");
+        showContactStatus("That submission could not go through. Please use the contact form if you are a real person.");
         return;
       }
 
       if (!contactCfg.CONTACT_ENDPOINT) {
-        openMailtoDraft(name, email, who, interest, message, address);
+        showContactFailure("The form could not be sent from this page.");
         return;
       }
 
@@ -1964,10 +1961,9 @@
         })
         .catch(function (sendError) {
           window.pvTurnstile.reset("c-turnstile");
-          showContactStatus(
-            (sendError && sendError.message ? sendError.message : "The request could not be sent.") +
-            " Please try again or email " + CONTACT_MAILTO + "."
-          );
+          var detail = sendError && sendError.message ? sendError.message : "The request could not be sent.";
+          if (/failed to fetch|networkerror|load failed/i.test(detail)) detail = "The request could not be sent.";
+          showContactFailure(detail);
         })
         .then(function () {
           setContactBusy(false);

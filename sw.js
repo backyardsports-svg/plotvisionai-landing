@@ -1,13 +1,14 @@
-/* Network-first. The install step stores the homepage and its hero photos so
-   an installed launch still opens PlotVisionAI when the network is down.
-   Later visits try the network first and fall back to that cache. */
-var CACHE = "plotvisionai-v3";
+/* Network-first. The install step stores the homepage so an installed launch
+   still opens PlotVisionAI when the network is down. Later visits try the
+   network first and fall back to that cache. */
+var CACHE = "plotvisionai-v4";
 var SHELL = [
   "/",
   "/styles.css",
   "/hero-lock.css",
   "/script.js",
   "/config.js",
+  "/family-sites.js",
   "/assets/hero-home-01-before.jpg",
   "/assets/hero-home-01-after.jpg",
   "/assets/hero-home-01-before-2x.jpg",
