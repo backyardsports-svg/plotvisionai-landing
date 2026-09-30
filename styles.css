@@ -8216,6 +8216,11 @@ body:not([data-home-hero-cta]) .site-header__controls > .btn--primary {
   border-bottom-color: currentColor;
 }
 
+.contractor-promo__link:hover .contractor-promo__label,
+.contractor-promo__link:focus-visible .contractor-promo__label {
+  color: var(--lume);
+}
+
 .contractor-promo__link svg {
   width: 0.9em;
   height: 0.9em;
