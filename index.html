@@ -1635,6 +1635,126 @@
         </div>
       </section>
 
+      <!-- ─────────────────────────── MEET COSMO ─────────────────────────── -->
+      <section class="band meet-cosmo" id="meet-cosmo" aria-labelledby="meet-cosmo-title">
+        <style>
+          .meet-cosmo .mc-intro{display:grid;gap:var(--sp-6);align-items:center}
+          @media (min-width:900px){.meet-cosmo .mc-intro{grid-template-columns:1.1fr 1fr}}
+          .meet-cosmo .mc-copy p{color:var(--fg-soft);max-width:60ch}
+          .meet-cosmo .mc-copy h2{margin-bottom:var(--sp-4)}
+          .meet-cosmo .mc-copy p + p{margin-top:var(--sp-4)}
+          .meet-cosmo .mc-work > p{margin-top:var(--sp-2)}
+          .meet-cosmo .mc-avatar{margin:0;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--line-strong);box-shadow:0 18px 50px rgba(0,0,0,.45)}
+          .meet-cosmo .mc-avatar figcaption{padding:var(--sp-3) var(--sp-4);font-size:var(--text-sm);color:var(--fg-mute);background:var(--ink-200)}
+          .meet-cosmo .mc-protect{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
+          .meet-cosmo .mc-protect img{display:block;width:100%;height:auto;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
+          .meet-cosmo .mc-work{margin-top:var(--sp-8)}
+          .meet-cosmo .mc-work h3{font-size:var(--text-2xl);margin-bottom:var(--sp-2)}
+          .meet-cosmo .mc-work > p{color:var(--fg-soft);max-width:62ch}
+          .meet-cosmo .mc-pairs{display:grid;gap:var(--sp-6);margin-top:var(--sp-5)}
+          @media (min-width:900px){.meet-cosmo .mc-pairs{grid-template-columns:1fr 1fr}}
+          .meet-cosmo .mc-pair{margin:0;background:var(--ink-200);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
+          .meet-cosmo .mc-compare{position:relative;--pos:50%;aspect-ratio:4/3;overflow:hidden;background:var(--ink-100)}
+          .meet-cosmo .mc-compare img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+          .meet-cosmo .mc-compare .mc-night{clip-path:inset(0 0 0 var(--pos))}
+          .meet-cosmo .mc-compare .mc-line{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:var(--lume);box-shadow:0 0 12px var(--lume);pointer-events:none}
+          .meet-cosmo .mc-tag{position:absolute;top:10px;padding:3px 10px;border-radius:999px;font-size:var(--text-xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;background:rgba(3,16,15,.72);color:var(--fg-warm);pointer-events:none}
+          .meet-cosmo .mc-tag--day{left:10px}
+          .meet-cosmo .mc-tag--night{right:10px;color:var(--lume)}
+          .meet-cosmo .mc-pair figcaption{padding:var(--sp-3) var(--sp-4) var(--sp-4)}
+          .meet-cosmo .mc-pair figcaption strong{display:block;color:var(--fg-warm);margin-bottom:var(--sp-2)}
+          .meet-cosmo .mc-range{width:100%;accent-color:var(--lume);min-height:32px;cursor:ew-resize}
+          .meet-cosmo .mc-copyright{margin-top:var(--sp-5);font-size:var(--text-sm);color:var(--fg-mute);max-width:none}
+          .meet-cosmo .mc-cta{margin-top:var(--sp-5)}
+        </style>
+        <div class="shell">
+          <div class="mc-intro">
+            <div class="mc-copy">
+              <p class="eyebrow">Meet Cosmo</p>
+              <h2 id="meet-cosmo-title">Cosmo learned how I design. Soon he&rsquo;ll be working inside PlotVisionAI.</h2>
+              <p>
+                I&rsquo;ve spent 42 years laying out yards for Landforms Design in Cedar Rapids. Cosmo is the AI designer
+                I trained on that work: how I shape a patio, where a wall needs to step down, and the block, stone and
+                plants my suppliers actually stock.
+              </p>
+              <p>
+                Hand him a drone shot or a few photos of the yard and he draws the front and the back. Every design
+                comes two ways, daytime and at night with the lights on, because that&rsquo;s how I&rsquo;ve always
+                shown a job.
+              </p>
+              <p>The family voted for the picture with the dog, so that&rsquo;s the one you get.</p>
+            </div>
+            <figure class="mc-avatar mc-protect" data-mc-protect>
+              <img src="assets/meet-cosmo/meet-cosmo.svg" width="1200" height="675" loading="lazy" decoding="async" draggable="false"
+                alt="Illustration of Cosmo, the PlotVisionAI landscape designer: a smiling man in sunglasses and a black Landforms Design T-shirt with a tool belt, holding a shovel and a tablet showing a lit patio design, with a golden retriever lying on a stone patio behind him at night" />
+              <figcaption>Cosmo, with the dog.</figcaption>
+            </figure>
+          </div>
+
+          <div class="mc-work">
+            <h3>His first designs</h3>
+            <p>
+              A recent Cedar Rapids-area backyard and front-yard concept. Slide each one from day to night.
+            </p>
+            <div class="mc-pairs">
+              <figure class="mc-pair">
+                <div class="mc-compare mc-protect" data-mc-protect data-mc-compare>
+                  <img src="assets/meet-cosmo/cosmo-backyard-day.svg" width="1200" height="900" loading="lazy" decoding="async" draggable="false"
+                    alt="Backyard concept by Cosmo in daylight: a round paver patio with a fire pit and outdoor chairs, wrapped by two curved tiers of block retaining wall, with flower beds of hydrangeas and perennials along a screened porch" />
+                  <img class="mc-night" src="assets/meet-cosmo/cosmo-backyard-night.svg" width="1200" height="900" loading="lazy" decoding="async" draggable="false"
+                    alt="The same backyard concept at night: lights set under the retaining wall caps, lanterns on the stone pillars, a glowing fire pit and a lit screened porch" />
+                  <span class="mc-line" aria-hidden="true"></span>
+                  <span class="mc-tag mc-tag--day" aria-hidden="true">Day</span>
+                  <span class="mc-tag mc-tag--night" aria-hidden="true">Night</span>
+                </div>
+                <figcaption>
+                  <strong>Backyard: day and night</strong>
+                  <input class="mc-range" type="range" min="0" max="100" value="50" data-mc-range
+                    aria-label="Slide between the daytime and night lighting views of the backyard concept" />
+                </figcaption>
+              </figure>
+              <figure class="mc-pair">
+                <div class="mc-compare mc-protect" data-mc-protect data-mc-compare>
+                  <img src="assets/meet-cosmo/cosmo-frontyard-day.svg" width="1200" height="900" loading="lazy" decoding="async" draggable="false"
+                    alt="Front-yard concept by Cosmo in daylight: curved flower beds along the front of a split-level house, a lamp post bed and young trees in the lawn, and a perennial border down the driveway" />
+                  <img class="mc-night" src="assets/meet-cosmo/cosmo-frontyard-night.svg" width="1200" height="900" loading="lazy" decoding="async" draggable="false"
+                    alt="The same front-yard concept at dusk: uplights on the young trees, a lit lamp post, path lights along the driveway border and warm porch lights" />
+                  <span class="mc-line" aria-hidden="true"></span>
+                  <span class="mc-tag mc-tag--day" aria-hidden="true">Day</span>
+                  <span class="mc-tag mc-tag--night" aria-hidden="true">Night</span>
+                </div>
+                <figcaption>
+                  <strong>Front yard: day and night</strong>
+                  <input class="mc-range" type="range" min="0" max="100" value="50" data-mc-range
+                    aria-label="Slide between the daytime and night lighting views of the front-yard concept" />
+                </figcaption>
+              </figure>
+            </div>
+            <p class="mc-copyright">&copy; Darin Chamberlin / Landforms Design Inc. All designs and images copyrighted. All rights reserved. No use or copying without written permission.</p>
+            <a class="btn btn--primary mc-cta" href="#contact">Ask about Cosmo</a>
+          </div>
+        </div>
+        <script>
+          (function () {
+            var sec = document.getElementById("meet-cosmo");
+            if (!sec) return;
+            var block = function (e) { e.preventDefault(); };
+            sec.querySelectorAll("[data-mc-protect], [data-mc-protect] img").forEach(function (el) {
+              el.addEventListener("contextmenu", block);
+              el.addEventListener("dragstart", block);
+            });
+            sec.querySelectorAll(".mc-pair").forEach(function (pair) {
+              var box = pair.querySelector("[data-mc-compare]");
+              var range = pair.querySelector("[data-mc-range]");
+              if (!box || !range) return;
+              var set = function () { box.style.setProperty("--pos", range.value + "%"); };
+              range.addEventListener("input", set);
+              set();
+            });
+          })();
+        </script>
+      </section>
+
       <!-- ────────────────────────── PROJECT STORIES ───────────────────── -->
       <section class="band band--panel stories" id="stories" aria-labelledby="stories-title">
         <div class="shell">
